@@ -2,8 +2,8 @@ module MongoBrowser
   class Application < Sinatra::Base
     set :root, File.join(File.dirname(__FILE__), "../../app")
 
-    set :mongodb_host, ENV['MONGODB_HOST'] || 'localhost'
-    set :mongodb_port, ENV['MONGODB_PORT'] || 27017
+    set :mongodb_host, ENV["MONGODB_HOST"] || "localhost"
+    set :mongodb_port, ENV["MONGODB_PORT"] || 27017
 
     use MongoBrowser::SprocketsSinatraMiddleware, :root => settings.root, :path => "assets"
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'optparse'
-require 'methadone'
-require 'mongo_browser'
+require "optparse"
+require "methadone"
+require "mongo_browser"
 
 class App
   include Methadone::Main
