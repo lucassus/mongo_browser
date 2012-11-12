@@ -14,8 +14,12 @@ Gem::Specification.new do |gem|
   gem.name          = "mongo_browser"
   gem.require_paths = ["lib"]
   gem.version       = MongoBrowser::VERSION
+
   gem.add_development_dependency('rdoc')
   gem.add_development_dependency('aruba')
   gem.add_development_dependency('rake', '~> 0.9.2')
+  gem.add_development_dependency('shotgun')
+
   gem.add_dependency('methadone', '~> 1.2.2')
+  gem.add_dependency('sinatra', '~> 1.3.3')
 end
