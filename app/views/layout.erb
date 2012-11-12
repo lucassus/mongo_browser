@@ -24,19 +24,17 @@
   </div>
 
   <div class="container">
-    <ul class="breadcrumb">
-      <li><a href="/">Databases</a>
-
-      <% if params[:db_name] %>
-        <span class="divider">/</span></li>
+    <% if params[:db_name] %>
+      <ul class="breadcrumb">
+        <li><a href="/">Databases</a><span class="divider">/</span></li>
         <li><a href="/databases/<%= params[:db_name] %>">db: activecell_development</a>
-      <% end %>
 
-      <% if params[:collection_name] %>
-        <span class="divider">/</span></li>
-        <li class="active">collection: <%= params[:collection_name] %></li>
-      <% end %>
-    </ul>
+        <% if params[:collection_name] %>
+          <span class="divider">/</span></li>
+          <li class="active">collection: <%= params[:collection_name] %></li>
+        <% end %>
+      </ul>
+    <% end %>
 
     <%= yield %>
   </div>

@@ -2,7 +2,7 @@
 require File.expand_path('../lib/mongo_browser/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Łukasz Bandzarewicz"]
+  gem.authors       = ["Lukasz Bandzarewicz"]
   gem.email         = ["lucassus@gmail.com"]
   gem.description   = %q{TODO: Write a gem description}
   gem.summary       = %q{TODO: Write a gem summary}
