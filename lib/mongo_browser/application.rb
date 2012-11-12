@@ -4,11 +4,19 @@ module MongoBrowser
     use MongoBrowser::SprocketsSinatraMiddleware, :root => settings.root, :path => 'assets'
 
     get '/' do
-      connection = Mongo::Connection.new('localhost', 27017)
       @databases = connection.database_info
-      @server_info = connection.server_info
-
       erb :index
+    end
+
+    get '/server_info' do
+      @server_info = connection.server_info
+      erb :server_info
+    end
+
+    private
+
+    def connection
+      @connection ||= Mongo::Connection.new('localhost', 27017)
     end
   end
 end
