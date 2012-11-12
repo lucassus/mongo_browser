@@ -23,17 +23,36 @@ Capybara.app = MongoBrowser::Application
 
 def check_mongodb_server
   if `lsof -i :#{ENV['MONGODB_PORT']}`.size == 0
-    test_dbpath = "/tmp/mongo_browser_test/#{Time.now.to_i}"
+    clean_up
+
+    test_dbpath = "/tmp/mongo_browser/db"
     FileUtils.mkdir_p(test_dbpath) unless Dir.exist?(test_dbpath)
-    system "mongod --port #{ENV['MONGODB_PORT']} --dbpath #{test_dbpath} --fork --logpath /tmp/mongo_browser_test.log"
+    `mongod --port #{ENV['MONGODB_PORT']} --dbpath #{test_dbpath} --fork --logpath /tmp/mongo_browser/db.log`
   end
 end
 
 def load_fixtures
   connection = Mongo::Connection.new('localhost', ENV['MONGODB_PORT'])
 
+  # Delete all databases
+  connection.database_names do |db_name|
+    connection.drop_database(db_name)
+  end
+
+  # Load fixtures
   connection.db('first_database').create_collection('first_collection')
   connection.db('second_database').create_collection('first_collection')
+end
+
+def clean_up
+  out = `ps aux | grep "mongod --port #{ENV['MONGODB_PORT']}"`
+  out.lines.each do |line|
+    unless line.match /ps aux/ or line.match /grep/
+      pid = line.split(/\s/)[2]
+      `kill -9 #{pid}`
+    end
+  end
+  FileUtils.rm_rf("/tmp/mongo_browser")
 end
 
 RSpec.configure do |config|
@@ -41,7 +60,8 @@ RSpec.configure do |config|
     check_mongodb_server
     load_fixtures
   end
+end
 
-  config.after do
-  end
+at_exit do
+  clean_up
 end
