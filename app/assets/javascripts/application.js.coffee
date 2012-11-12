@@ -13,14 +13,22 @@ $(document).ready ->
 
   filter = (filterVal) ->
     $table = $("table.collections")
-    $table.find("tr.collection").show()
 
-    return if filterVal is ""
     $table.find("tr.collection").each (index, row) ->
       $row = $(row)
       collectionName = $row.find("td:first").text()
-      unless collectionName.match(new RegExp(filterVal))
+      if filterVal is "" or collectionName.match(new RegExp(filterVal))
+        $row.show()
+      else
         $row.hide()
+
+    $table.show()
+    if $table.find("tr.collection:visible").size() == 0
+      $table.hide()
+      $(".alert").show()
+    else
+      $table.show()
+      $(".alert").hide()
 
   clearFilter()
 
@@ -28,6 +36,8 @@ $(document).ready ->
     Escape = 27
     if event.keyCode is Escape
       clearFilter()
+    else
+      $form.submit()
 
   $form.find("button.clear").click (event) ->
     event?.preventDefault()
