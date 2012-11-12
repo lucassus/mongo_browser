@@ -1,6 +1,10 @@
 module MongoBrowser
   class Application < Sinatra::Base
     set :root, File.join(File.dirname(__FILE__), "../../app")
+
+    set :mongodb_host, ENV['MONGODB_HOST'] || 'localhost'
+    set :mongodb_port, ENV['MONGODB_PORT'] || 27017
+
     use MongoBrowser::SprocketsSinatraMiddleware, :root => settings.root, :path => "assets"
 
     get "/" do
@@ -33,7 +37,7 @@ module MongoBrowser
     private
 
     def connection
-      @connection ||= Mongo::Connection.new("localhost", 27017)
+      @connection ||= Mongo::Connection.new(settings.mongodb_host, settings.mongodb_port)
     end
   end
 end
