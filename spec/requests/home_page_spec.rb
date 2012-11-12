@@ -7,13 +7,16 @@ describe 'Home page', type: :request do
     page.should have_content('Available databases')
 
     within 'table' do
-      # TODO ...
+      page.should have_content('first_database')
+      page.should have_content('second_database')
     end
+  end
 
-    click_link 'activecell_development'
+  specify do
+    click_link 'first_database'
 
     within 'table' do
-      # TODO ...
+      page.should have_content('first_collection')
     end
   end
 
