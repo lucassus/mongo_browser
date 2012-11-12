@@ -24,4 +24,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency('bson_ext', '~> 1.7.0')
   gem.add_dependency('methadone', '~> 1.2.2')
   gem.add_dependency('sinatra', '~> 1.3.3')
+  gem.add_dependency('awesome_print', '~> 1.1.0')
 end

@@ -3,6 +3,7 @@ require "mongo_browser/version"
 require "sinatra"
 require "mongo"
 require "sprockets"
+require "ap"
 
 module MongoBrowser
   # Your code goes here...

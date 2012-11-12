@@ -1,24 +1,23 @@
 <table class="table table-striped">
-  <caption>Collections</caption>
+  <caption>Documents</caption>
   <thead>
   <tr>
-    <th>Name</th>
-    <th>Size</th>
+    <th>Id</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
-  <tr>
-    <% @collections.each do |collection| %>
-    <tr>
-      <td><a href="/databases/<%= params[:db_name] %>/collections/<%= collection.name %>"><%= collection.name %></a></td>
-      <td><%= collection.size %></td>
+    <% @documents.to_a.each do |document| %>
+    <tr class="document">
+      <td><%= document['_id'] %></td>
+      <td><%= document.ai(html: true) %></td>
     </tr>
   <% end %>
   </tbody>
 </table>
 
 <table class="table table-striped">
-  <caption>Collection info</caption>
+  <caption>Collection stats</caption>
   <thead>
   <tr>
     <th>Property</th>

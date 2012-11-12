@@ -16,6 +16,15 @@ module MongoBrowser
       erb :"databases/show"
     end
 
+    get "/databases/:db_name/collections/:collection_name" do
+      database = connection.db(params[:db_name])
+      collection = database.collection(params[:collection_name])
+      @documents = collection.find()
+      @stats = collection.stats
+
+      erb :"collections/show"
+    end
+
     get "/server_info" do
       @server_info = connection.server_info
       erb :"server_info"
