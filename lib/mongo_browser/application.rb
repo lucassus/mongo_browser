@@ -5,12 +5,20 @@ module MongoBrowser
 
     get "/" do
       @databases = connection.database_info
-      erb :index
+      erb :"index"
+    end
+
+    get "/databases/:db_name" do
+      database = connection.db(params[:db_name])
+      @collections = database.collections
+      @stats = database.stats
+
+      erb :"databases/show"
     end
 
     get "/server_info" do
       @server_info = connection.server_info
-      erb :server_info
+      erb :"server_info"
     end
 
     private

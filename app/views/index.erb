@@ -10,7 +10,7 @@
   <tr>
     <% @databases.each do |db_name, db_size| %>
     <tr>
-      <td><%= db_name %></td>
+      <td><a href="/databases/<%= db_name %>"><%= db_name %></a></td>
       <td><%= db_size %></td>
     </tr>
   <% end %>

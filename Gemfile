@@ -7,3 +7,7 @@ gem 'sprockets'
 gem 'coffee-script'
 gem 'sass'
 gem 'less'
+
+group :development, :test do
+  gem 'debugger'
+end
