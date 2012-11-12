@@ -7,7 +7,20 @@
 
 <div class="tab-content">
   <div class="tab-pane active" id="collections">
-    <table class="table table-striped">
+    <form class="filter">
+      <div class="input-append">
+        <input type="text" value="" class="span3" placeholder="Collection name">
+
+        <button type="button" class="btn clear">
+          <i class="icon-remove-circle"></i>Clear
+        </button>
+        <button type="submit" class="btn btn-info">
+          <i class="icon-filter"></i>Filter
+        </button>
+      </div>
+    </form>
+
+    <table class="table table-striped collections">
       <thead>
       <tr>
         <th>Name</th>
@@ -16,7 +29,7 @@
       </thead>
       <tbody>
       <% @collections.each do |collection| %>
-        <tr>
+        <tr class="collection">
           <td><a href="/databases/<%= params[:db_name] %>/collections/<%= collection.name %>"><%= collection.name %></a></td>
           <td><%= collection.size %></td>
         </tr>
