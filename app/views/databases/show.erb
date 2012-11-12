@@ -1,39 +1,48 @@
-<h2>Collections</h2>
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#collections" data-toggle="tab">Collections</a>
+  </li>
+  <li><a href="#stats" data-toggle="tab">Stats</a></li>
+</ul>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Size</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <% @collections.each do |collection| %>
-    <tr>
-      <td><a href="/databases/<%= params[:db_name] %>/collections/<%= collection.name %>"><%= collection.name %></a></td>
-      <td><%= collection.size %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<div class="tab-content">
+  <div class="tab-pane active" id="collections">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Size</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <% @collections.each do |collection| %>
+        <tr>
+          <td><a href="/databases/<%= params[:db_name] %>/collections/<%= collection.name %>"><%= collection.name %></a></td>
+          <td><%= collection.size %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 
-<h2>Database stats</h2>
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Property</th>
-    <th>Value</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <% @stats.each do |property, value| %>
-    <tr>
-      <td><%= property %></td>
-      <td><%= value %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+  <div class="tab-pane" id="stats">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Property</th>
+        <th>Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <% @stats.each do |property, value| %>
+        <tr>
+          <td><%= property %></td>
+          <td><%= value %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
