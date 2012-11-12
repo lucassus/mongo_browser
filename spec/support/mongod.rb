@@ -38,7 +38,7 @@ module Mongod
     out = `ps aux | grep "mongod"`
     out.lines.each do |line|
       if line.include?("mongod") and line.include?("--dbpath #{MONGODB_DBPATH}")
-        pid = line.split(/\s/)[1]
+        pid = line.split[1]
         `kill -9 #{pid}`
       end
     end
