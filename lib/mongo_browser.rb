@@ -1,6 +1,7 @@
 require "mongo_browser/version"
 
 require "sinatra"
+require "mongo"
 require "sprockets"
 
 module MongoBrowser
