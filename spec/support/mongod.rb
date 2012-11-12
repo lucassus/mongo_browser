@@ -30,6 +30,9 @@ module Mongod
     doc = { "name" => "This is the second sample record", "position" => { "x" => 203, "y" => "102" } }
     first_collection.insert(doc)
 
+    first_database.create_collection("second_collection")
+    first_database.create_collection("third_collection")
+
     second_database = connection.db("second_database")
     second_database.create_collection("first_collection")
   end
