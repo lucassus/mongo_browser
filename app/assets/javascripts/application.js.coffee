@@ -1,3 +1,6 @@
 #= require vendor/jquery
-#= require bootstrap
-#= require_tree app
+#= require vendor/bootstrap
+#= require vendor/underscore
+#= require vendor/backbone
+#
+#= require_tree ./app
