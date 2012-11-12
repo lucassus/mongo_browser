@@ -1,38 +1,47 @@
-<h2>Documents</h2>
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#documents" data-toggle="tab">Documents</a>
+  </li>
+  <li><a href="#stats" data-toggle="tab">Stats</a></li>
+</ul>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-    <% @documents.to_a.each do |document| %>
-    <tr class="document">
-      <td><%= document['_id'] %></td>
-      <td><%= document.ai(html: true) %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<div class="tab-content">
+  <div class="tab-pane active" id="documents">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @documents.to_a.each do |document| %>
+        <tr class="document">
+          <td><%= document['_id'] %></td>
+          <td><%= document.ai(html: true) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 
-<h2>Collection stats</h2>
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Property</th>
-    <th>Value</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <% @stats.each do |property, value| %>
-    <tr>
-      <td><%= property %></td>
-      <td><%= value %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+  <div class="tab-pane" id="stats">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Property</th>
+        <th>Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <% @stats.each do |property, value| %>
+        <tr>
+          <td><%= property %></td>
+          <td><%= value %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
