@@ -8,8 +8,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr>
-    <% @databases.each do |db_name, db_size| %>
+  <% @databases.each do |db_name, db_size| %>
     <tr>
       <td><a href="/databases/<%= db_name %>"><%= db_name %></a></td>
       <td><%= db_size %></td>

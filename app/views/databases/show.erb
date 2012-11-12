@@ -15,8 +15,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <% @collections.each do |collection| %>
+      <% @collections.each do |collection| %>
         <tr>
           <td><a href="/databases/<%= params[:db_name] %>/collections/<%= collection.name %>"><%= collection.name %></a></td>
           <td><%= collection.size %></td>
@@ -35,8 +34,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <% @stats.each do |property, value| %>
+      <% @stats.each do |property, value| %>
         <tr>
           <td><%= property %></td>
           <td><%= value %></td>
