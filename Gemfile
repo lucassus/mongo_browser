@@ -11,6 +11,7 @@ gem "less"
 group :development, :test do
   gem "rspec"
   gem "capybara"
+  gem "launchy"
   gem "simplecov"
 
   gem "debugger"

@@ -16,13 +16,22 @@ module Mongod
     connection = Mongo::Connection.new(MongoBrowser.mongodb_host, MongoBrowser.mongodb_port)
 
     # Delete all databases
-    connection.database_names do |db_name|
+    connection.database_names.each do |db_name|
       connection.drop_database(db_name)
     end
 
     # Load fixtures
-    connection.db("first_database").create_collection("first_collection")
-    connection.db("second_database").create_collection("first_collection")
+    first_database = connection.db("first_database")
+    first_collection = first_database.create_collection("first_collection")
+
+    doc = { "name" => "This is a sample record", "position" => { "x" => 203, "y" => "102" } }
+    first_collection.insert(doc)
+
+    doc = { "name" => "This is the second sample record", "position" => { "x" => 203, "y" => "102" } }
+    first_collection.insert(doc)
+
+    second_database = connection.db("second_database")
+    second_database.create_collection("first_collection")
   end
 
   def clean_up

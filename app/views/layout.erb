@@ -27,7 +27,7 @@
     <% if params[:db_name] %>
       <ul class="breadcrumb">
         <li><a href="/">Databases</a><span class="divider">/</span></li>
-        <li><a href="/databases/<%= params[:db_name] %>">db: activecell_development</a>
+        <li><a href="/databases/<%= params[:db_name] %>">db: <%= params[:db_name] %></a>
 
         <% if params[:collection_name] %>
           <span class="divider">/</span></li>
