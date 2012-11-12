@@ -31,7 +31,7 @@
 
         <% if params[:collection_name] %>
           <span class="divider">/</span></li>
-          <li class="active">collection: <%= params[:collection_name] %></li>
+          <li><a href="/databases/<%= params[:db_name] %>/collections/<%= params[:collection_name] %>">collection: <%= params[:collection_name] %></a></li>
         <% end %>
       </ul>
     <% end %>
