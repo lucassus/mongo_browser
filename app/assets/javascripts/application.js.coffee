@@ -1,50 +1,57 @@
 #= require vendor/jquery
 #= require vendor/bootstrap
 
-$(document).ready ->
-  $form = $("form.filter")
-  return if $form.size() is 0
+class TableFilter
+  constructor: (@$form, @$table) ->
+    @$form.find("input[type='text']").keyup (event) =>
+      Escape = 27
+      if event.keyCode is Escape
+        @clearFilter()
+      else
+        @$form.submit()
 
-  $filterInput = $form.find("input[type='text']")
+    @$form.find("button.clear").click (event) =>
+      event?.preventDefault()
+      @clearFilter()
 
-  clearFilter = ->
-    $filterInput.val("")
-    filter("")
+    @$form.submit (event) =>
+      event?.preventDefault()
 
-  filter = (filterVal) ->
-    $table = $("table.collections")
+      filterVal = @getFilterInput()
+      @filter(filterVal)
 
-    $table.find("tr.collection").each (index, row) ->
+    @filter()
+
+  filter: ->
+    filterVal = @getFilterInput()
+    @$table.find("tbody tr").each (index, row) =>
       $row = $(row)
-      collectionName = $row.find("td:first").text()
-      if filterVal is "" or collectionName.match(new RegExp(filterVal))
+      name = $row.find("td:first").text()
+      if filterVal is "" or name.match(new RegExp(filterVal))
         $row.show()
       else
         $row.hide()
 
-    $table.show()
-    if $table.find("tr.collection:visible").size() == 0
-      $table.hide()
+    @$table.show()
+    if @$table.find("tbody tr:visible").size() == 0
+      @$table.hide()
       $(".alert").show()
     else
-      $table.show()
+      @$table.show()
       $(".alert").hide()
 
-  clearFilter()
+  clearFilter: ->
+    @setFilterInput('')
+    @filter()
 
-  $filterInput.keyup (event) ->
-    Escape = 27
-    if event.keyCode is Escape
-      clearFilter()
-    else
-      $form.submit()
+  setFilterInput: (value) ->
+    @$form.find("input[type='text']").val(value)
 
-  $form.find("button.clear").click (event) ->
-    event?.preventDefault()
-    clearFilter()
+  getFilterInput: ->
+    @$form.find("input[type='text']").val()
 
-  $form.submit (event) ->
-    event?.preventDefault()
-
-    filterVal = $filterInput.val()
-    filter(filterVal)
+$(document).ready ->
+  $("form.filter").each (index, form) ->
+    $form = $(form)
+    $table = $("table.#{$form.data('filter-for')}")
+    filter = new TableFilter($form, $table)

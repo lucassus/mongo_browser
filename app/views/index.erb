@@ -1,6 +1,17 @@
 <h2>Available databases</h2>
 
-<table class="table table-striped">
+<form class="filter" data-filter-for="databases">
+  <div class="input-append">
+    <input type="text" value="" class="span3" placeholder="Database name">
+
+    <button type="button" class="btn clear">
+      <i class="icon-remove-circle"></i>Clear
+    </button>
+  </div>
+  <span class="help-block">Press ESC to clear the filter</span>
+</form>
+
+<table class="table table-striped databases">
   <thead>
   <tr>
     <th>Name</th>
