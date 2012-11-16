@@ -31,6 +31,7 @@ Capybara.app = MongoBrowser::Application
 
 require "support/mongod"
 require "support/integration"
+require "support/have_flash_message_matcher"
 
 RSpec.configure do |config|
   config.include Integration

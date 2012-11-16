@@ -24,6 +24,8 @@
   </div>
 
   <div class="container">
+    <%= erb :"shared/_flash_messages" %>
+
     <% if params[:db_name] %>
       <ul class="breadcrumb">
         <li><a href="/">Databases</a><span class="divider">/</span></li>
