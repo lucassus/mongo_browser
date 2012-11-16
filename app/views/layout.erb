@@ -1,52 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Mongo Browser</title>
-  <link href="/assets/application.css" rel="stylesheet" media="screen">
-</head>
-<body>
-  <div class="navbar navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container">
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </a>
-        <a class="brand" href="/">Mongo Browser</a>
-        <div class="nav-collapse collapse">
-          <ul class="nav">
-            <li><a href="/server_info">Server Info</a></li>
-          </ul>
+  <head>
+    <title>Mongo Browser</title>
+    <link href="/assets/application.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <%= erb :"layout/_navbar" %>
 
-          <ul class="nav pull-right">
-            <li><a>v. <%= MongoBrowser::VERSION %></a></li>
-          </ul>
-        </div>
-      </div>
+    <div class="container">
+      <%= erb :"layout/_flash_messages" %>
+      <%= erb :"layout/_breadcrumb" %>
+
+      <%= yield %>
     </div>
-  </div>
 
-  <div class="container">
-    <%= erb :"shared/_flash_messages" %>
-
-    <% if params[:db_name] %>
-      <ul class="breadcrumb">
-        <li><a href="/">Databases</a><span class="divider">/</span></li>
-
-        <% unless params[:collection_name] %>
-          <li>db: <%= params[:db_name] %></li>
-        <% else %>
-          <li><a href="/databases/<%= params[:db_name] %>">db: <%= params[:db_name] %></a>
-          <span class="divider">/</span></li>
-          <li>collection: <%= params[:collection_name] %></li>
-        <% end %>
-      </ul>
-    <% end %>
-
-    <%= yield %>
-  </div>
-
-  <script src="/assets/application.js"></script>
-</body>
+    <script src="/assets/application.js"></script>
+  </body>
 </html>
