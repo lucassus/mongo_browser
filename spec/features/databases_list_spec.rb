@@ -37,6 +37,8 @@ describe "Databases list", type: :request do
       click_delete_button_for("second_database")
       confirm_dialog
 
+      expect(page).to have_flash_message("Database second_database has been deleted.")
+
       within "table.databases" do
         expect(page).to have_link("first_database")
         expect(page).to_not have_link("second_database")
@@ -44,6 +46,8 @@ describe "Databases list", type: :request do
 
       click_delete_button_for("first_database")
       confirm_dialog
+
+      expect(page).to have_flash_message("Database first_database has been deleted.")
 
       should_hide_the_table_and_display_a_notification
     end

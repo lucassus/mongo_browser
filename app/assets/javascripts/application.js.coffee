@@ -14,5 +14,5 @@ $(document).ready ->
       return unless confirmed
 
       $btn = $(event.target)
-      $form = $btn.parent().find("form")
+      $form = $btn.parents('td').find("form")
       $form.submit()

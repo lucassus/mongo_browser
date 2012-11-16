@@ -1,5 +1,12 @@
 module MongoBrowser
   class Application < Sinatra::Base
+    configure :development do
+      register Sinatra::Reloader
+    end
+
+    enable :sessions
+    register Sinatra::Flash
+
     set :root, File.join(File.dirname(__FILE__), "../../app")
     set :method_override, true
 
@@ -20,6 +27,8 @@ module MongoBrowser
 
     delete "/databases/:db_name" do
       connection.drop_database(params[:db_name])
+
+      flash[:notice] = "Database #{params[:db_name]} has been deleted."
       redirect "/"
     end
 
