@@ -1,5 +1,7 @@
 # MongoBrowser
 
+[![Build status](https://secure.travis-ci.org/lucassus/mongo_browser.png)](http://travis-ci.org/lucassus/mongo_browser)
+
 TODO: Write a gem description
 
 ## Installation
