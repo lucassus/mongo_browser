@@ -24,8 +24,9 @@ end
 MongoBrowser.mongodb_host = "localhost"
 MongoBrowser.mongodb_port = find_available_port
 
-require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
+require "capybara/webkit"
+Capybara.javascript_driver = :webkit
+
 Capybara.ignore_hidden_elements = true
 Capybara.app = MongoBrowser::Application
 
@@ -39,6 +40,13 @@ RSpec.configure do |config|
   config.before do
     Mongod.start_server
     Mongod.load_fixtures
+  end
+
+  config.after do
+    if example.metadata[:js] and example.exception
+      file_name = example.full_description.downcase.gsub(/\s/, "-")
+      page.driver.render("/tmp/#{file_name}.png", full: true)
+    end
   end
 end
 
