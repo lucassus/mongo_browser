@@ -26,7 +26,7 @@ describe "Databases list", type: :request do
       end
     end
 
-    it "displays notification when nothing has been found" do
+    it "displays a notification when nothing has been found" do
       fill_in_filter("third")
 
       expect(page).to_not have_css("table.databases")
