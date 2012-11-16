@@ -1,6 +1,8 @@
 module MongoBrowser
   class Application < Sinatra::Base
     set :root, File.join(File.dirname(__FILE__), "../../app")
+    set :method_override, true
+
     use MongoBrowser::SprocketsSinatraMiddleware, :root => settings.root, :path => "assets"
 
     get "/" do
@@ -14,6 +16,11 @@ module MongoBrowser
       @stats = database.stats
 
       erb :"databases/show"
+    end
+
+    delete "/databases/:db_name" do
+      connection.drop_database(params[:db_name])
+      redirect "/"
     end
 
     get "/databases/:db_name/collections/:collection_name" do

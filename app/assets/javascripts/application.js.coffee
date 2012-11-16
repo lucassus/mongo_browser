@@ -7,3 +7,10 @@ $(document).ready ->
   $("form.filter").each (index, form) ->
     $form = $(form)
     filter = new TableFilter($form)
+
+  $(".btn.delete-database").click (event) ->
+    return unless confirm("Are you sure?")
+
+    $btn = $(event.target)
+    $form = $btn.parent().find("form")
+    $form.submit()

@@ -7,6 +7,7 @@
   <tr>
     <th>Name</th>
     <th>Size</th>
+    <th>&nbsp;</th>
   </tr>
   </thead>
   <tbody>
@@ -14,6 +15,16 @@
     <tr>
       <td><a href="/databases/<%= db_name %>"><%= db_name %></a></td>
       <td><%= db_size %></td>
+      <td>
+        <form action="/databases/<%= db_name %>" method="post" style="position: absolute; left: -1000px;">
+          <input name="_method" type="hidden" value="delete" />
+        </form>
+
+        <a href="#" class="btn btn-danger delete-database">
+          <i class="icon-remove-circle"></i>
+          Delete
+        </a>
+      </td>
     </tr>
   <% end %>
   </tbody>
