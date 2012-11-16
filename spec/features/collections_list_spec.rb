@@ -75,6 +75,17 @@ describe "Collections list", type: :request do
       should_hide_the_table_and_display_a_notification
     end
 
+    it "displays error message when the collection cannot be deleted" do
+      click_delete_button_for("system.indexes")
+      confirm_dialog
+
+      expect(page).to have_flash_message("Database command 'drop' failed")
+
+      within "table.collections" do
+        expect(page).to have_link("system.indexes")
+      end
+    end
+
     def click_delete_button_for(collection_name)
       collection_row = find(:xpath, %Q{//table//tr//*[contains(text(), "#{collection_name}")]/../..})
       within(collection_row) { click_link "Delete" }
