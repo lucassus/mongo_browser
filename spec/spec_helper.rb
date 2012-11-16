@@ -22,8 +22,10 @@ end
 MongoBrowser.mongodb_host = "localhost"
 MongoBrowser.mongodb_port = find_available_port
 
-Capybara.app = MongoBrowser::Application
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
 Capybara.ignore_hidden_elements = true
+Capybara.app = MongoBrowser::Application
 
 require "support/mongod"
 require "support/integration"
