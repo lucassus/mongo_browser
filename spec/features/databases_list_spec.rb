@@ -35,6 +35,7 @@ describe "Databases list", type: :request do
   describe "click on delete database button", js: true do
     it "deletes a database" do
       click_delete_button_for("second_database")
+      confirm_dialog
 
       within "table.databases" do
         expect(page).to have_link("first_database")
@@ -42,12 +43,27 @@ describe "Databases list", type: :request do
       end
 
       click_delete_button_for("first_database")
+      confirm_dialog
+
       should_hide_the_table_and_display_a_notification
     end
 
     def click_delete_button_for(database_name)
       database_row = find(:xpath, %Q{//table//tr//*[contains(text(), "#{database_name}")]/../..})
       within(database_row) { click_link "Delete" }
+    end
+
+    def confirm_dialog(message = 'Are you sure?')
+      begin
+        wait_until { page.has_css?("div.bootbox.modal") }
+      rescue Capybara::TimeoutError
+        flunk "Expected confirmation modal to be visible."
+      end
+
+      within "div.bootbox.modal" do
+        page.should have_content(message)
+        click_link "OK"
+      end
     end
   end
 

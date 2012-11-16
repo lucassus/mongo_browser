@@ -1,5 +1,6 @@
 #= require vendor/jquery
 #= require vendor/bootstrap
+#= require vendor/bootbox
 #
 #= require app/table_filter
 
@@ -9,8 +10,9 @@ $(document).ready ->
     filter = new TableFilter($form)
 
   $(".btn.delete-database").click (event) ->
-    return unless confirm("Are you sure?")
+    bootbox.confirm 'Are you sure?', (confirmed) =>
+      return unless confirmed
 
-    $btn = $(event.target)
-    $form = $btn.parent().find("form")
-    $form.submit()
+      $btn = $(event.target)
+      $form = $btn.parent().find("form")
+      $form.submit()
