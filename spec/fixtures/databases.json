@@ -1,0 +1,40 @@
+[
+  {
+    "name": "first_database",
+    "collections": [
+      {
+        "name": "first_collection",
+        "documents": [
+          {
+            "name": "This is a sample record",
+            "position": {
+              "x": 123,
+              "y": "135"
+            }
+          },
+          {
+            "name": "This is the second sample record",
+            "position": {
+              "x": 567,
+              "y": "246"
+            }
+          }
+        ]
+      },
+      {
+        "name": "second_collection"
+      },
+      {
+        "name": "third_collection"
+      }
+    ]
+  },
+  {
+    "name": "second_database",
+    "collections": [
+      {
+        "name": "first_collection"
+      }
+    ]
+  }
+]

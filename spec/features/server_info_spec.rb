@@ -11,14 +11,9 @@ describe "Server info", type: :request do
 
   it "displays information about the server" do
     within "table" do
-      expect(page).to have_content("version")
-      expect(page).to have_content("gitVersion")
-      expect(page).to have_content("sysInfo")
-      expect(page).to have_content("versionArray")
-      expect(page).to have_content("bits")
-      expect(page).to have_content("debug")
-      expect(page).to have_content("maxBsonObjectSize")
-      expect(page).to have_content("ok")
+      %w(version gitVersion sysInfo versionArray bits debug maxBsonObjectSize ok).each do |field|
+        expect(page).to have_content(field)
+      end
     end
   end
 end
