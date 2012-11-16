@@ -23,10 +23,14 @@ MongoBrowser.mongodb_host = "localhost"
 MongoBrowser.mongodb_port = find_available_port
 
 Capybara.app = MongoBrowser::Application
+Capybara.ignore_hidden_elements = true
 
 require "support/mongod"
+require "support/integration"
 
 RSpec.configure do |config|
+  config.include Integration
+
   config.before do
     Mongod.start_server
     Mongod.load_fixtures

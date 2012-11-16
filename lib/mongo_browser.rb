@@ -2,6 +2,9 @@ require "mongo_browser/version"
 
 require "sinatra"
 require "sprockets"
+require "sass"
+require "coffee_script"
+
 require "mongo"
 require "json"
 require "ap"
