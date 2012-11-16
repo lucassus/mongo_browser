@@ -41,7 +41,7 @@ describe "Collections list", type: :request do
       fill_in_filter("fifth")
 
       expect(page).to_not have_css("table.collections")
-      expect(page).to have_content("Nothing has been found. ")
+      expect(page).to have_content("Nothing has been found.")
     end
   end
 end

@@ -28,9 +28,7 @@ describe "Databases list", type: :request do
 
     it "displays a notification when nothing has been found" do
       fill_in_filter("third")
-
-      expect(page).to_not have_css("table.databases")
-      expect(page).to have_content("Nothing has been found. ")
+      should_hide_the_table_and_display_a_notification
     end
   end
 
@@ -42,11 +40,19 @@ describe "Databases list", type: :request do
         expect(page).to have_link("first_database")
         expect(page).to_not have_link("second_database")
       end
+
+      click_delete_button_for("first_database")
+      should_hide_the_table_and_display_a_notification
     end
 
     def click_delete_button_for(database_name)
       database_row = find(:xpath, %Q{//table//tr//*[contains(text(), "#{database_name}")]/../..})
       within(database_row) { click_link "Delete" }
     end
+  end
+
+  def should_hide_the_table_and_display_a_notification
+    expect(page).to_not have_css("table.databases")
+    expect(page).to have_content("Nothing has been found.")
   end
 end
