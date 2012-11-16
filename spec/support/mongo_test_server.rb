@@ -1,4 +1,4 @@
-module Mongod
+module MongoTestServer
   extend self
   
   MONGODB_DBPATH = "/tmp/mongo_browser/db"
