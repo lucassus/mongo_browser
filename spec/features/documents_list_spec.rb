@@ -10,11 +10,11 @@ describe "Documents list", type: :request do
   it "displays the breadcrumb" do
     within ".breadcrumb" do
       within "li:nth-child(1)" do
-        expect(page).to have_content("Databases")
+        expect(page).to have_link("Databases")
       end
 
       within "li:nth-child(2)" do
-        expect(page).to have_content("db: first_database")
+        expect(page).to have_link("db: first_database")
       end
 
       within "li:nth-child(3)" do

@@ -13,7 +13,7 @@ describe "Collections list", type: :request do
       end
 
       within "li:nth-child(2)" do
-        expect(page).to have_link("db: first_database")
+        expect(page).to have_content("db: first_database")
       end
     end
   end
