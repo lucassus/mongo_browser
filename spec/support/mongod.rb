@@ -21,20 +21,18 @@ module Mongod
     end
 
     # Load fixtures
-    first_database = connection.db("first_database")
-    first_collection = first_database.create_collection("first_collection")
+    data = JSON.parse(File.open(File.expand_path("spec/fixtures/databases.json"), "r").read)
+    data.each do |database_data|
+      database = connection.db(database_data["name"])
 
-    doc = { "name" => "This is a sample record", "position" => { "x" => 203, "y" => "102" } }
-    first_collection.insert(doc)
+      (database_data["collections"] || []).each do |collection_data|
+        collection = database.create_collection(collection_data["name"])
 
-    doc = { "name" => "This is the second sample record", "position" => { "x" => 203, "y" => "102" } }
-    first_collection.insert(doc)
-
-    first_database.create_collection("second_collection")
-    first_database.create_collection("third_collection")
-
-    second_database = connection.db("second_database")
-    second_database.create_collection("first_collection")
+        (collection_data["documents"] || []).each do |document_data|
+          collection.insert(document_data)
+        end
+      end
+    end
   end
 
   def clean_up
