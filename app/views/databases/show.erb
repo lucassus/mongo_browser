@@ -7,20 +7,7 @@
 
 <div class="tab-content">
   <div class="tab-pane active" id="collections">
-    <form class="filter" data-filter-for="collections">
-      <div class="input-append">
-        <input type="text" value="" class="span3" placeholder="Collection name">
-
-        <button type="button" class="btn clear">
-          <i class="icon-remove-circle"></i>Clear
-        </button>
-      </div>
-      <span class="help-block">Press ESC to clear the filter</span>
-    </form>
-
-    <div class="alert" style="display: none;">
-      Nothing has been found.
-    </div>
+    <%= erb :"shared/_filter", {}, { filter_for: "collections", placeholder: "Collection name" } %>
 
     <table class="table table-striped collections">
       <thead>
