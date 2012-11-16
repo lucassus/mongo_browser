@@ -16,12 +16,12 @@ $(document).ready ->
 
     createAndSubmitForm = ->
       action = $link.attr("href")
-      $form = $("<form method='post' action='#{action}'></form>")
+      $form = $("<form />").attr("method", "post").attr("action", action)
 
       method = $link.data("method")
-      metadata_input = "<input name='_method' value='#{method}' type='hidden' />"
+      $metadataInput = $("<input />").attr("type", "hidden").attr("name", "_method").val(method)
 
-      $form.hide().append(metadata_input).appendTo("body");
+      $form.hide().append($metadataInput).appendTo("body");
       $form.submit()
 
     confirmationMessage = $link.data("confirm")
