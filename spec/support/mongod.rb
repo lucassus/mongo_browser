@@ -3,7 +3,7 @@ module Mongod
   
   MONGODB_DBPATH = "/tmp/mongo_browser/db"
 
-  def start_server
+  def ensure_test_server_is_running
     if `lsof -i :#{MongoBrowser.mongodb_port}`.size == 0
       clean_up
 

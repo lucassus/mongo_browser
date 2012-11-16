@@ -30,15 +30,15 @@ Capybara.javascript_driver = :webkit
 Capybara.ignore_hidden_elements = true
 Capybara.app = MongoBrowser::Application
 
-require "support/mongod"
-require "support/integration"
-require "support/have_flash_message_matcher"
+# Requires supporting ruby files with custom matchers and macros, etc,
+# from spec/support/ and its subdirectories.
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   config.include Integration
 
   config.before do
-    Mongod.start_server
+    Mongod.ensure_test_server_is_running
     Mongod.load_fixtures
   end
 
