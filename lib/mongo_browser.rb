@@ -1,6 +1,9 @@
 require "mongo_browser/version"
 
 require "sinatra"
+require "sinatra/reloader"
+require "sinatra/flash"
+
 require "sprockets"
 require "sass"
 require "coffee_script"

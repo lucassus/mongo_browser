@@ -34,10 +34,10 @@ window.TableFilter = class TableFilter
     @$table.show()
     if @$table.find("tbody tr:visible").size() == 0
       @$table.hide()
-      $(".alert").show()
+      $(".filter.alert").show()
     else
       @$table.show()
-      $(".alert").hide()
+      $(".filter.alert").hide()
 
   clearFilter: ->
     @setFilterInput('')

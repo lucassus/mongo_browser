@@ -6,7 +6,7 @@ describe "Collections list", type: :request do
     click_link "first_database"
   end
 
-  it "displays breadcrumb" do
+  it "displays the breadcrumb" do
     within ".breadcrumb" do
       within "li:nth-child(1)" do
         expect(page).to have_link("Databases")
@@ -41,7 +41,7 @@ describe "Collections list", type: :request do
       fill_in_filter("fifth")
 
       expect(page).to_not have_css("table.collections")
-      expect(page).to have_content("Nothing has been found. ")
+      expect(page).to have_content("Nothing has been found.")
     end
   end
 end
