@@ -1,6 +1,11 @@
 $:.unshift(File.dirname(__FILE__))
 $:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 
+require "simplecov"
+SimpleCov.start do
+  add_group "Application", "lib"
+end
+
 require "mongo_browser"
 
 require "debugger"
@@ -8,9 +13,6 @@ require "rspec"
 require "capybara"
 require "capybara/rspec"
 require "socket"
-
-require "simplecov"
-SimpleCov.start
 
 def find_available_port
   server = TCPServer.new("127.0.0.1", 0)
