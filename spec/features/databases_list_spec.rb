@@ -3,7 +3,7 @@ require "spec_helper"
 describe "Databases list", type: :request do
   before { visit "/" }
 
-  it "hides breadcrumb" do
+  it "hides the breadcrumb" do
     expect(page).not_to have_css(".breadcrumb")
   end
 
