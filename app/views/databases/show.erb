@@ -27,11 +27,7 @@
           <td><a href="/databases/<%= params[:db_name] %>/collections/<%= collection.name %>"><%= collection.name %></a></td>
           <td><%= collection.size %></td>
           <td>
-            <form action="/databases/<%= params[:db_name] %>/collections/<%= collection.name %>" method="post" style="position: absolute; left: -1000px;">
-              <input name="_method" type="hidden" value="delete" />
-            </form>
-
-            <a href="#" class="btn btn-danger delete-database">
+            <a href="/databases/<%= params[:db_name] %>/collections/<%= collection.name %>" class="btn btn-danger" data-method="delete" data-confirm="Are you sure?">
               <i class="icon-remove-circle"></i>
               Delete
             </a>

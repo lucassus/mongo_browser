@@ -9,10 +9,24 @@ $(document).ready ->
     $form = $(form)
     filter = new TableFilter($form)
 
-  $(".btn.delete-database").click (event) ->
-    bootbox.confirm 'Are you sure?', (confirmed) =>
-      return unless confirmed
+  $("a[data-method]").click (event) ->
+    event.preventDefault()
 
-      $btn = $(event.target)
-      $form = $btn.parents('td').find("form")
+    $link = $(event.target)
+
+    createAndSubmitForm = ->
+      action = $link.attr("href")
+      $form = $("<form method='post' action='#{action}'></form>")
+
+      method = $link.data("method")
+      metadata_input = "<input name='_method' value='#{method}' type='hidden' />"
+
+      $form.hide().append(metadata_input).appendTo("body");
       $form.submit()
+
+    confirmationMessage = $link.data("confirm")
+    if confirmationMessage?
+      bootbox.confirm confirmationMessage, (confirmed) =>
+        createAndSubmitForm() if confirmed
+    else
+      createAndSubmitForm()
