@@ -41,6 +41,14 @@ module MongoBrowser
       erb :"collections/show"
     end
 
+    delete "/databases/:db_name/collections/:collection_name" do
+      database = connection.db(params[:db_name])
+      database.drop_collection(params[:collection_name])
+
+      flash[:notice] = "Collection #{params[:collection_name]} has been deleted."
+      redirect "/databases/#{params[:db_name]}"
+    end
+
     get "/server_info" do
       @server_info = connection.server_info
       erb :"server_info"
