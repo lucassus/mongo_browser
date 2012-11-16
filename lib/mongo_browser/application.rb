@@ -28,7 +28,7 @@ module MongoBrowser
     delete "/databases/:db_name" do
       connection.drop_database(params[:db_name])
 
-      flash[:notice] = "Database #{params[:db_name]} has been deleted."
+      flash[:info] = "Database #{params[:db_name]} has been deleted."
       redirect "/"
     end
 
@@ -39,6 +39,19 @@ module MongoBrowser
       @stats = collection.stats
 
       erb :"collections/show"
+    end
+
+    delete "/databases/:db_name/collections/:collection_name" do
+      begin
+        database = connection.db(params[:db_name])
+        database.drop_collection(params[:collection_name])
+
+        flash[:info] = "Collection #{params[:collection_name]} has been deleted."
+      rescue Mongo::OperationFailure => e
+        flash[:error] = e.message
+      end
+
+      redirect "/databases/#{params[:db_name]}"
     end
 
     get "/server_info" do

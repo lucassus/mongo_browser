@@ -56,23 +56,5 @@ describe "Databases list", type: :request do
       database_row = find(:xpath, %Q{//table//tr//*[contains(text(), "#{database_name}")]/../..})
       within(database_row) { click_link "Delete" }
     end
-
-    def confirm_dialog(message = 'Are you sure?')
-      begin
-        wait_until { page.has_css?("div.bootbox.modal") }
-      rescue Capybara::TimeoutError
-        flunk "Expected confirmation modal to be visible."
-      end
-
-      within "div.bootbox.modal" do
-        page.should have_content(message)
-        click_link "OK"
-      end
-    end
-  end
-
-  def should_hide_the_table_and_display_a_notification
-    expect(page).to_not have_css("table.databases")
-    expect(page).to have_content("Nothing has been found.")
   end
 end

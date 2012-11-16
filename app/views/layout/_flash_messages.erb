@@ -1,9 +1,9 @@
 <% unless flash(:flash).empty? %>
   <div id="flash-messages">
     <% flash(:flash).each do |message| %>
-      <div class="alert alert-info">
+      <div class="alert alert-<%= message[0] %>">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>Notice!</strong> <%= message[1] %>
+        <strong><%= message[0].capitalize %>!</strong> <%= message[1] %>
       </div>
     <% end %>
   </div>
