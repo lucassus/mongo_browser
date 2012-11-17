@@ -11,6 +11,7 @@ module MongoBrowser
     set :method_override, true
 
     use MongoBrowser::SprocketsSinatraMiddleware, :root => settings.root, :path => "assets"
+    register WillPaginate::Sinatra
 
     get "/" do
       @databases = connection.database_info
@@ -35,7 +36,16 @@ module MongoBrowser
     get "/databases/:db_name/collections/:collection_name" do
       database = connection.db(params[:db_name])
       collection = database.collection(params[:collection_name])
-      @documents = collection.find()
+
+      count = collection.count
+      per_page = 25
+      page = params[:page].to_i
+      page = page > 0 ? page : 1
+      @documents = collection.find.skip((page - 1) * per_page).limit(per_page)
+      @paginated_documents = OpenStruct.new \
+        total_pages: (count.to_f / per_page).ceil,
+        current_page: page
+
       @stats = collection.stats
 
       erb :"collections/show"
