@@ -2,25 +2,44 @@
 
 [![Build status](https://secure.travis-ci.org/lucassus/mongo_browser.png)](http://travis-ci.org/lucassus/mongo_browser)
 
-TODO: Write a gem description
+Simple but powerful tool for managing mongodb databases
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'mongo_browser'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Install the gem:
 
     $ gem install mongo_browser
 
 ## Usage
 
-TODO: Write usage instructions here
+Run the application
+
+    $ mongo_browser
+
+Run the application as daemon
+
+    $ mongo_browser --demonize
+
+Application will be available by default at http://localhost:4567
+In order to run it on custom port number pass the `--port` option with selected port.
+
+Other options are:
+
+    $ mongo_browser --help
+    [17/11 16:10:06] Usage: mongo_browser [options]
+
+    v0.1.0
+
+    Options:
+            --version                    Show help/version info
+            --port PORT                  MongoBrowser port
+                                         (Default: 4567)
+            --mongodb-host HOST          Mongodb database host
+                                         (Default: localhost)
+            --mongodb-port PORT          Mongodb database port
+                                         (Default: 27017)
+            --demonize                   Run the app in the background
+            --log-level LEVEL            Set the logging level
+                                         (debug|info|warn|error|fatal)
+                                         (Default: info)
 
 ## Contributing
 
