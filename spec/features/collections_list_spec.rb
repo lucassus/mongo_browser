@@ -3,7 +3,8 @@ require "spec_helper"
 describe "Collections list", type: :request do
   before do
     visit "/"
-    click_link "first_database"
+
+    within("table.databases") { click_link "first_database" }
   end
 
   it "displays the breadcrumb" do

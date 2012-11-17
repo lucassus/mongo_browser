@@ -4,9 +4,7 @@ describe "Server info", type: :request do
   before do
     visit "/"
 
-    within ".navbar" do
-      click_link "Server Info"
-    end
+    within(".navbar") { click_link "Server Info" }
   end
 
   it "displays information about the server" do
