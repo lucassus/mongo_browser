@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe "Documents list", type: :request do
+  let(:connection) { MongoTestServer.connection }
+
   before do
     visit "/"
 
@@ -39,13 +41,39 @@ describe "Documents list", type: :request do
         expect(page).to have_content("This is the second sample record")
       end
     end
+
+    describe "click on delete document button", js: true do
+      let(:document) do
+        database = connection.db("first_database")
+        collection = database.collection(current_collection_name)
+        collection.find_one(name: "This is the second sample record")
+      end
+
+      it "removes a document from the collection" do
+        click_delete_button_for(document)
+        confirm_dialog
+
+        expect(page).to have_flash_message("Document #{document["_id"]} has been deleted.")
+
+        expect(page).to have_css("tr.document", count: 1)
+
+        within "table" do
+          expect(page).to have_content("This is a sample record")
+          expect(page).not_to have_content(document["name"])
+        end
+      end
+
+      def click_delete_button_for(document)
+        database_row = find(:xpath, %Q{//table//tr/td[1][contains(text(), "#{document["_id"]}")]/..})
+        within(database_row) { click_link "Delete" }
+      end
+    end
   end
 
   context "with large number of documents" do
     let(:current_collection_name) { "second_collection" }
 
     before do
-      connection = Mongo::Connection.new(MongoBrowser.mongodb_host, MongoBrowser.mongodb_port)
       database = connection.db("first_database")
       collection = database.collection(current_collection_name)
 

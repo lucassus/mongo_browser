@@ -13,8 +13,6 @@ module MongoTestServer
   end
 
   def load_fixtures
-    connection = Mongo::Connection.new(MongoBrowser.mongodb_host, MongoBrowser.mongodb_port)
-
     # Delete all databases
     connection.database_names.each do |db_name|
       connection.drop_database(db_name)
@@ -33,6 +31,10 @@ module MongoTestServer
         end
       end
     end
+  end
+
+  def connection
+    @connection ||= Mongo::Connection.new(MongoBrowser.mongodb_host, MongoBrowser.mongodb_port)
   end
 
   def clean_up
