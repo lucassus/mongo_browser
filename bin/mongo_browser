@@ -9,10 +9,23 @@ class App
   include Methadone::CLILogging
 
   main do
+    info("Running on the master node #{MongoBrowser.mongodb_host}:#{MongoBrowser.mongodb_port}")
     MongoBrowser::Application.run!
   end
 
   version MongoBrowser::VERSION
+
+  on("--mongodb-host HOST", "Mongodb database host",
+     "(Default: #{MongoBrowser.mongodb_host})") do |host|
+
+    MongoBrowser.mongodb_host = host
+  end
+
+  on("--mongodb-port PORT", "Mongodb database port",
+     "(Default: #{MongoBrowser.mongodb_port})") do |port|
+
+    MongoBrowser.mongodb_port = port.to_i
+  end
 
   use_log_level_option
 
