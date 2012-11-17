@@ -8,6 +8,7 @@ require "sprockets"
 require "sass"
 require "coffee_script"
 
+require "will_paginate-bootstrap"
 require "mongo"
 require "json"
 require "ap"
