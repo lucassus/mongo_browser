@@ -3,39 +3,49 @@
 require "optparse"
 require "methadone"
 require "mongo_browser"
+require "forever"
 
 class App
   include Methadone::Main
   include Methadone::CLILogging
 
-  main do # Add args you want: |like,so|
-    # your program code here
-    # You can access CLI options via
-    # the options Hash
+  main do
+    app_port = options[:port] || 4567
+    info("Running on the master node #{MongoBrowser.mongodb_host}:#{MongoBrowser.mongodb_port}")
+    info("Application is accessible at http://localhost:#{app_port}")
+
+    if options[:demonize]
+      Forever.run do
+        pid '/tmp/mongo_browser.pid'
+        log '/tmp/mongo_browser.log'
+
+        on_ready do
+          MongoBrowser::Application.run!(port: app_port)
+        end
+      end
+    else
+      MongoBrowser::Application.run!(port: app_port)
+    end
   end
 
-  # supplemental methods here
-
-  # Declare command-line interface here
-
-  # description "one line description of your app"
-  #
-  # Accept flags via:
-  # on("--flag VAL","Some flag")
-  # options[flag] will contain VAL
-  #
-  # Specify switches via:
-  # on("--[no-]switch","Some switch")
-  #
-  # Or, just call OptionParser methods on opts
-  #
-  # Require an argument
-  # arg :some_arg 
-  #
-  # # Make an argument optional
-  # arg :optional_arg, :optional
-
   version MongoBrowser::VERSION
+
+  on("--port PORT", "MongoBrowser port",
+     "(Default: 4567)")
+
+  on("--mongodb-host HOST", "Mongodb database host",
+     "(Default: #{MongoBrowser.mongodb_host})") do |host|
+
+    MongoBrowser.mongodb_host = host
+  end
+
+  on("--mongodb-port PORT", "Mongodb database port",
+     "(Default: #{MongoBrowser.mongodb_port})") do |port|
+
+    MongoBrowser.mongodb_port = port.to_i
+  end
+
+  on("--demonize", "Run the app in the background")
 
   use_log_level_option
 

@@ -22,6 +22,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency("mongo", "~> 1.7.0")
   gem.add_dependency("bson_ext", "~> 1.7.0")
   gem.add_dependency("methadone", "~> 1.2.2")
+  gem.add_dependency("foreverb", "~> 0.3.2")
   gem.add_dependency("sinatra", "~> 1.3.3")
   gem.add_dependency("sinatra-contrib", "~> 1.3.2")
   gem.add_dependency("sinatra-flash", "~> 0.3.0")
