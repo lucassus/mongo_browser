@@ -56,6 +56,17 @@ module MongoBrowser
       redirect "/databases/#{params[:db_name]}"
     end
 
+    delete "/databases/:db_name/collections/:collection_name/:id" do
+      database = connection.db(params[:db_name])
+      collection = database.collection(params[:collection_name])
+
+      id = BSON::ObjectId(params[:id])
+      collection.remove(_id: id)
+
+      flash[:info] = "Document #{params[:id]} has been deleted."
+      redirect "/databases/#{params[:db_name]}/collections/#{params[:collection_name]}"
+    end
+
     get "/server_info" do
       @server_info = connection.server_info
       erb :"server_info"
