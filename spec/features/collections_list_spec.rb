@@ -27,6 +27,16 @@ describe "Collections list", type: :request do
     end
   end
 
+  it "displays information about the database", js: true do
+    click_link "Stats"
+
+    within "table" do
+      %w(db collection objects avgObjSize dataSize storageSize numExtents indexes indexSize nsSizeMB ok).each do |field|
+        expect(page).to have_content(field)
+      end
+    end
+  end
+
   describe "filtering", js: true do
     it "filters collections by name" do
       fill_in_filter("second")

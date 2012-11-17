@@ -42,6 +42,16 @@ describe "Documents list", type: :request do
       end
     end
 
+    it "displays information about the collection", js: true do
+      click_link "Stats"
+
+      within "table" do
+        %w(ns count size avgObjSize storageSize numExtents nindexes lastExtentSize paddingFactor systemFlags userFlags totalIndexSize indexSizes ok).each do |field|
+          expect(page).to have_content(field)
+        end
+      end
+    end
+
     describe "click on delete document button", js: true do
       let(:document) do
         database = connection.db("first_database")
