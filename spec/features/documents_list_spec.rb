@@ -43,9 +43,9 @@ describe "Documents list", type: :request do
 
   context "with large number of documents" do
     let(:current_collection_name) { "second_collection" }
+    let(:connection) { MongoTestServer.connection }
 
     before do
-      connection = Mongo::Connection.new(MongoBrowser.mongodb_host, MongoBrowser.mongodb_port)
       database = connection.db("first_database")
       collection = database.collection(current_collection_name)
 
