@@ -10,10 +10,13 @@ class App
 
   main do
     info("Running on the master node #{MongoBrowser.mongodb_host}:#{MongoBrowser.mongodb_port}")
-    MongoBrowser::Application.run!
+    MongoBrowser::Application.run!(port: options[:port] || 4567)
   end
 
   version MongoBrowser::VERSION
+
+  on("--port PORT", "MongoBrowser port",
+     "(Default: 4567)")
 
   on("--mongodb-host HOST", "Mongodb database host",
      "(Default: #{MongoBrowser.mongodb_host})") do |host|
