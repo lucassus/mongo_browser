@@ -10,7 +10,7 @@ module MongoBrowser
     set :root, File.join(File.dirname(__FILE__), "../../app")
     set :method_override, true
 
-    use MongoBrowser::SprocketsSinatraMiddleware, :root => settings.root, :path => "assets"
+    use MongoBrowser::Middleware::SprocketsSinatra, :root => settings.root, :path => "assets"
     register WillPaginate::Sinatra
 
     # Databases list

@@ -28,5 +28,5 @@ module MongoBrowser
   end
 end
 
-require "mongo_browser/sprockets_sinatra_middleware"
+require "mongo_browser/middleware/sprockets_sinatra"
 require "mongo_browser/application"
