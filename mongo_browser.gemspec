@@ -4,9 +4,9 @@ require File.expand_path("../lib/mongo_browser/version", __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Lukasz Bandzarewicz"]
   gem.email         = ["lucassus@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{Simple but powerful tool for managing mongodb databases}
+  gem.summary       = %q{Web-based application for managing mongodb databases}
+  gem.homepage      = "https://github.com/lucassus/mongo_browser"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
