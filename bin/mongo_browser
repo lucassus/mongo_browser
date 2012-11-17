@@ -3,14 +3,29 @@
 require "optparse"
 require "methadone"
 require "mongo_browser"
+require "forever"
 
 class App
   include Methadone::Main
   include Methadone::CLILogging
 
   main do
+    app_port = options[:port] || 4567
     info("Running on the master node #{MongoBrowser.mongodb_host}:#{MongoBrowser.mongodb_port}")
-    MongoBrowser::Application.run!(port: options[:port] || 4567)
+    info("Application is accessible at http://localhost:#{app_port}")
+
+    if options[:demonize]
+      Forever.run do
+        pid '/tmp/mongo_browser.pid'
+        log '/tmp/mongo_browser.log'
+
+        on_ready do
+          MongoBrowser::Application.run!(port: app_port)
+        end
+      end
+    else
+      MongoBrowser::Application.run!(port: app_port)
+    end
   end
 
   version MongoBrowser::VERSION
@@ -29,6 +44,8 @@ class App
 
     MongoBrowser.mongodb_port = port.to_i
   end
+
+  on("--demonize", "Run the app in the background")
 
   use_log_level_option
 
