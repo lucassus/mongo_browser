@@ -11,7 +11,7 @@
 
 <div class="tab-content">
   <div class="tab-pane active" id="documents">
-    <%= will_paginate(@paginated_documents, renderer: BootstrapPagination::Sinatra) %>
+    <%= will_paginate(@pagination, renderer: BootstrapPagination::Sinatra) %>
 
     <table class="table table-striped table-hover documents">
       <thead>
@@ -30,7 +30,7 @@
       </tbody>
     </table>
 
-    <%= will_paginate(@paginated_documents, renderer: BootstrapPagination::Sinatra) %>
+    <%= will_paginate(@pagination, renderer: BootstrapPagination::Sinatra) %>
   </div>
 
   <div class="tab-pane" id="stats">

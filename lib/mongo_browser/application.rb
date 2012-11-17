@@ -37,16 +37,8 @@ module MongoBrowser
       database = connection.db(params[:db_name])
       collection = database.collection(params[:collection_name])
 
-      count = collection.count
-      per_page = 25
-      page = params[:page].to_i
-      page = page > 0 ? page : 1
-      @documents = collection.find.skip((page - 1) * per_page).limit(per_page)
-      @paginated_documents = OpenStruct.new \
-        total_pages: (count.to_f / per_page).ceil,
-        current_page: page
-
       @stats = collection.stats
+      @documents, @pagination = paginate_documents_for(collection, params[:page])
 
       erb :"collections/show"
     end
@@ -70,6 +62,26 @@ module MongoBrowser
     end
 
     private
+
+    def paginate_documents_for(collection, page = 1)
+      per_page = 25
+
+      count = collection.count
+      total_pages = (count.to_f / per_page).ceil
+
+      page = if page.to_i <= 0 then 1
+             else
+               [page.to_i, total_pages].min
+             end
+
+      offset = (page - 1) * per_page
+      documents = collection.find.skip(offset).limit(per_page)
+      pagination = OpenStruct.new \
+        total_pages: total_pages,
+        current_page: page
+
+      return documents, pagination
+    end
 
     def connection
       @connection ||= Mongo::Connection.new(MongoBrowser.mongodb_host, MongoBrowser.mongodb_port)

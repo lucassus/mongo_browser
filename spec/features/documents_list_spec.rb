@@ -60,6 +60,11 @@ describe "Documents list", type: :request do
 
     it "displays a pagination" do
       expect(page).to have_css("div.pagination", count: 2)
+      within "div.pagination" do
+        (1..3).each do |n|
+          expect(page).to have_link(n.to_s)
+        end
+      end
     end
 
     it "paginates documents" do
