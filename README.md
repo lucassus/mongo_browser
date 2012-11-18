@@ -15,7 +15,7 @@ Run the application
 
     $ mongo_browser
 
-Run the application as daemon
+Run the application as a daemon
 
     $ mongo_browser --demonize
 
