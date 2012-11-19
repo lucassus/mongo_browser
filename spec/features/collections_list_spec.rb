@@ -15,6 +15,12 @@ describe "Collections list", type: :request do
     end
   end
 
+  it "has a valid title" do
+    within "h2" do
+      expect(page).to have_content("first_database collections")
+    end
+  end
+
   it "displays all available collections for the selected database" do
     within "table" do
       expect(page).to have_link("first_collection")

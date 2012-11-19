@@ -7,8 +7,13 @@ describe "Databases list", type: :request do
     expect(page).not_to have_css(".breadcrumb")
   end
 
+  it "has a valid title" do
+    within "h2" do
+      expect(page).to have_content("localhost databases")
+    end
+  end
+
   it "displays list with available databases" do
-    expect(page).to have_content("Available databases")
 
     within "table" do
       expect(page).to have_link("first_database")

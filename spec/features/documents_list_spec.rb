@@ -22,6 +22,12 @@ describe "Documents list", type: :request do
         end
       end
     end
+
+    it "has a valid title" do
+      within "h2" do
+        expect(page).to have_content("#{current_collection_name} documents")
+      end
+    end
   end
 
   context "with small number for documents" do
