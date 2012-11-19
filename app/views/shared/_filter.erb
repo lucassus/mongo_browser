@@ -1,8 +1,8 @@
-<form class="filter" data-filter-for="<%= filter_for %>">
+<form ng-controller="FilterCtrl" class="filter" data-filter-for="<%= filter_for %>">
   <div class="input-append">
-    <input type="text" value="" class="span3" placeholder="<%= placeholder %>">
+    <input ng-model="filter" on-esc="clear()" type="text" value="" class="span3" placeholder="<%= placeholder %>">
 
-    <button type="button" class="btn clear">
+    <button ng-click="clear()" type="button" class="btn">
       <i class="icon-remove-circle"></i>Clear
     </button>
   </div>

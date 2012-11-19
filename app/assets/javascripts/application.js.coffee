@@ -2,13 +2,20 @@
 #= require vendor/bootstrap
 #= require vendor/bootbox
 #= require vendor/angular
-#
-#= require app/table_filter
+
+window.FilterCtrl = ($scope) ->
+  $scope.clear = ->
+    @filter = null
+
+angular.module('MongoBrowser', [])
+  # Handles ESC key
+  .directive 'onEsc', ->
+    (scope, element, attrs) ->
+      element.bind 'keyup', (event) ->
+        EscapeCode = 27
+        scope.$apply(attrs.onEsc) if event.keyCode is EscapeCode
 
 $(document).ready ->
-  $("form.filter").each (index, form) ->
-    $form = $(form)
-    filter = new TableFilter($form)
 
   $("a[data-method]").click (event) ->
     event.preventDefault()
