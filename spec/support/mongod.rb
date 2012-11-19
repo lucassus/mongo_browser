@@ -19,8 +19,7 @@ class Mongod
     log_file = File.open(File.expand_path("log/test_mongod.log"), "w+")
     @pid = Process.spawn(command, out: log_file)
 
-    # TODO wait for the connection (waiting for connections on port xxxx)
-    sleep 2
+    wait_until_responsive
 
     yield port if block_given?
   end
@@ -34,6 +33,14 @@ class Mongod
     @pid = nil
   end
 
+  # Returns true is mongodb server is ready to use
+  def responsive?
+    Mongo::Connection.new(MongoBrowser.mongodb_host, port)
+    true
+  rescue Mongo::ConnectionFailure
+    false
+  end
+
   def running?
     not pid.nil?
   end
@@ -45,5 +52,19 @@ class Mongod
     server.addr[1]
   ensure
     server.close if server
+  end
+
+  # Uses exponential back-off technique for waiting for the mongodb server
+  def wait_until_responsive
+    wait_time = 0.01
+    timeout = 10
+    start_time = Time.now
+
+    until responsive?
+      raise "Could not start mongd" if Time.now - start_time >= timeout
+
+      sleep wait_time
+      wait_time *= 2
+    end
   end
 end
