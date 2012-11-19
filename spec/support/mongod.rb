@@ -37,31 +37,6 @@ class Mongod
     not pid.nil?
   end
 
-  def load_fixtures!
-    # Delete all databases
-    connection.database_names.each do |db_name|
-      connection.drop_database(db_name)
-    end
-
-    # Load fixtures
-    data = JSON.parse(File.open(File.expand_path("spec/fixtures/databases.json"), "r").read)
-    data.each do |database_data|
-      database = connection.db(database_data["name"])
-
-      (database_data["collections"] || []).each do |collection_data|
-        collection = database.create_collection(collection_data["name"])
-
-        (collection_data["documents"] || []).each do |document_data|
-          collection.insert(document_data)
-        end
-      end
-    end
-  end
-
-  def connection
-    @connection ||= Mongo::Connection.new(MongoBrowser.mongodb_host, MongoBrowser.mongodb_port)
-  end
-
   private
 
   def find_available_port

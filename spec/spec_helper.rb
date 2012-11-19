@@ -24,19 +24,21 @@ Capybara.app = MongoBrowser::Application
 # from spec/support/ and its subdirectories.
 Dir[File.expand_path("spec/support/**/*.rb")].each { |f| require f }
 
+test_server = Mongod.instance
+fixtures = Fixtures.instance
+
 RSpec.configure do |config|
   config.include Integration
 
   config.before do
     # TODO do it only for request specs
 
-    test_server = Mongod.instance
     test_server.run! do |port|
       MongoBrowser.mongodb_host = "localhost"
       MongoBrowser.mongodb_port = port
     end
 
-    test_server.load_fixtures!
+    fixtures.load!
   end
 
   config.after do
@@ -49,6 +51,5 @@ RSpec.configure do |config|
 end
 
 at_exit do
-  test_server = Mongod.instance
   test_server.shutdown!
 end

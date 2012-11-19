@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Documents list", type: :request do
-  let(:connection) { Mongod.instance.connection }
+  let(:connection) { Fixtures.instance.connection }
 
   before do
     visit "/"
