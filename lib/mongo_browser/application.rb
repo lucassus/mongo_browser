@@ -20,8 +20,8 @@ module MongoBrowser
     end
 
     # Collections list
-    get "/databases/:db_name" do
-      database = connection.db(params[:db_name])
+    get "/databases/:db_name" do |db_name|
+      database = connection.db(db_name)
       @collections = database.collections
       @stats = database.stats
 
@@ -29,17 +29,17 @@ module MongoBrowser
     end
 
     # Delete a database
-    delete "/databases/:db_name" do
-      connection.drop_database(params[:db_name])
+    delete "/databases/:db_name" do |db_name|
+      connection.drop_database(db_name)
 
-      flash[:info] = "Database #{params[:db_name]} has been deleted."
+      flash[:info] = "Database #{db_name} has been deleted."
       redirect "/"
     end
 
     # Documents list
-    get "/databases/:db_name/collections/:collection_name" do
-      database = connection.db(params[:db_name])
-      collection = database.collection(params[:collection_name])
+    get "/databases/:db_name/collections/:collection_name" do |db_name, collection_name|
+      database = connection.db(db_name)
+      collection = database.collection(collection_name)
 
       @stats = collection.stats
       @documents, @pagination = paginate_documents_for(collection, params[:page])
@@ -48,29 +48,29 @@ module MongoBrowser
     end
 
     # Delete a collection
-    delete "/databases/:db_name/collections/:collection_name" do
+    delete "/databases/:db_name/collections/:collection_name" do |db_name, collection_name|
       begin
-        database = connection.db(params[:db_name])
-        database.drop_collection(params[:collection_name])
+        database = connection.db(db_name)
+        database.drop_collection(collection_name)
 
-        flash[:info] = "Collection #{params[:collection_name]} has been deleted."
+        flash[:info] = "Collection #{collection_name} has been deleted."
       rescue Mongo::OperationFailure => e
         flash[:error] = e.message
       end
 
-      redirect "/databases/#{params[:db_name]}"
+      redirect "/databases/#{db_name}"
     end
 
     # Delete a document
-    delete "/databases/:db_name/collections/:collection_name/:id" do
-      database = connection.db(params[:db_name])
-      collection = database.collection(params[:collection_name])
+    delete "/databases/:db_name/collections/:collection_name/:id" do |db_name, collection_name, id|
+      database = connection.db(db_name)
+      collection = database.collection(collection_name)
 
-      id = BSON::ObjectId(params[:id])
+      id = BSON::ObjectId(id)
       collection.remove(_id: id)
 
-      flash[:info] = "Document #{params[:id]} has been deleted."
-      redirect "/databases/#{params[:db_name]}/collections/#{params[:collection_name]}"
+      flash[:info] = "Document #{id} has been deleted."
+      redirect "/databases/#{db_name}/collections/#{collection_name}"
     end
 
     # Server info
