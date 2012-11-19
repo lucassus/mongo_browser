@@ -8,13 +8,9 @@ describe "Collections list", type: :request do
   end
 
   it "displays the breadcrumb" do
-    within ".breadcrumb" do
+    within ".breadcrumbs" do
       within "li:nth-child(1)" do
-        expect(page).to have_link("Databases")
-      end
-
-      within "li:nth-child(2)" do
-        expect(page).to have_content("db: first_database")
+        expect(page).to have_link("first_database", href: "#")
       end
     end
   end

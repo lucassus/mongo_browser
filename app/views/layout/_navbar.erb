@@ -7,11 +7,25 @@
     </a>
     <a class="brand" href="/">MongoBrowser</a>
     <div class="nav-collapse collapse">
-      <ul class="nav">
-        <li><a href="/server_info">Server Info</a></li>
-      </ul>
+      <!--<ul class="nav">-->
+        <!--<li class="dropdown-toggle">-->
+          <!--<a class="dropdown">Test</a>-->
+        <!--</li>-->
+      <!--</ul>-->
+
+      <% if params[:db_name] %>
+        <ul class="nav breadcrumbs">
+          <% unless params[:collection_name] %>
+            <li><a href="#"><%= params[:db_name] %></a></li>
+          <% else %>
+            <li><a href="/databases/<%= params[:db_name] %>"><%= params[:db_name] %></a></li>
+            <li><a href="#"><%= params[:collection_name] %></a></li>
+          <% end %>
+        </ul>
+      <% end %>
 
       <ul class="nav pull-right">
+        <li><a href="/server_info">Server Info</a></li>
         <li><a>v. <%= MongoBrowser::VERSION %></a></li>
       </ul>
     </div>

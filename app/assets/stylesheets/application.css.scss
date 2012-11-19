@@ -24,3 +24,12 @@ table.table {
     }
   }
 }
+
+ul.nav.breadcrumbs {
+  a {
+    background-image: url("breadcrumb-separator.png");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-color: transparent;
+  }
+}

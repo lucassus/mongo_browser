@@ -12,17 +12,13 @@ describe "Documents list", type: :request do
 
   shared_examples "breadcrumbs for documents list" do
     it "displays the breadcrumb" do
-      within ".breadcrumb" do
+      within ".breadcrumbs" do
         within "li:nth-child(1)" do
-          expect(page).to have_link("Databases")
+          expect(page).to have_link("first_database")
         end
 
         within "li:nth-child(2)" do
-          expect(page).to have_link("db: first_database")
-        end
-
-        within "li:nth-child(3)" do
-          expect(page).to have_content("collection: #{current_collection_name}")
+          expect(page).to have_link(current_collection_name, href: "#")
         end
       end
     end
