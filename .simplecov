@@ -1,5 +1,5 @@
 SimpleCov.start do
-  add_group "Application", "lib"
+  add_filter "spec"
 end
 
-SimpleCov.coverage_dir('reports/coverage')
+SimpleCov.coverage_dir("reports/coverage")

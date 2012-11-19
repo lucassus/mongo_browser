@@ -54,7 +54,7 @@ class Mongod
   # Starts a core MongoDB daemon on the given port.
   def self.start(port)
     command = "mongod --port #{port} --dbpath #{MONGODB_DBPATH} --nojournal"
-    log_file = File.open(File.expand_path("log/test_mongod.log"), "w+")
+    log_file = File.open(File.expand_path("log/test_mongod.log"), "w")
 
     Process.spawn(command, out: log_file)
   end
