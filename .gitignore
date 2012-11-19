@@ -3,3 +3,9 @@ results.html
 pkg
 html
 log/*.log
+tmp
+reports
+
+.idea
+*.iml
+*.gem
