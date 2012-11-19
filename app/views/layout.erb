@@ -3,6 +3,19 @@
   <head>
     <title>Mongo Browser</title>
     <link href="/assets/application.css" rel="stylesheet" media="screen">
+
+    <script id="filter-template" type="text">
+      <form>
+        <div class="input-append">
+          <input ng-model="value" on-esc="clear()" type="text" class="span3" placeholder="{{placeholder}}">
+
+          <button ng-click="clear()" type="button" class="btn">
+            <i class="icon-remove-circle"></i>Clear
+          </button>
+        </div>
+        <span class="help-block">Press ESC to clear the filter</span>
+      </form>
+    </script>
   </head>
   <body>
     <div class="navbar navbar navbar-fixed-top">
@@ -14,6 +27,7 @@
       <%= yield %>
     </div>
 
+    <script src="/assets/vendor.js"></script>
     <script src="/assets/application.js"></script>
   </body>
 </html>

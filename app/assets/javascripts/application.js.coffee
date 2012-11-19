@@ -1,11 +1,6 @@
-#= require vendor/jquery
-#= require vendor/bootstrap
-#= require vendor/bootbox
-#= require vendor/angular
-
-window.FilterCtrl = ($scope) ->
+FilterCtrl = ($scope) ->
   $scope.clear = ->
-    @filter = null
+    @value = null
 
 angular.module('MongoBrowser', [])
   # Handles ESC key
@@ -13,7 +8,19 @@ angular.module('MongoBrowser', [])
     (scope, element, attrs) ->
       element.bind 'keyup', (event) ->
         EscapeCode = 27
-        scope.$apply(attrs.onEsc) if event.keyCode is EscapeCode
+        return unless event.keyCode is EscapeCode
+        scope.$apply(attrs.onEsc)
+
+  # Filter for databases and collections
+  .directive 'filter', ->
+    restrict: 'E'
+    replace: true
+    transclude: true
+    scope:
+      placeholder: '@placeholder'
+    controller: FilterCtrl
+    template: $("#filter-template").text()
+    link: (scope, element, attrs) ->
 
 $(document).ready ->
 
