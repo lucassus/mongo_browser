@@ -5,9 +5,11 @@
     <link href="/assets/application.css" rel="stylesheet" media="screen">
   </head>
   <body>
-    <%= erb :"layout/_navbar" %>
+    <div class="navbar navbar navbar-fixed-top">
+      <%= erb :"layout/_navbar" %>
+    </div>
 
-    <div class="container">
+    <div class="container-fluid">
       <%= erb :"layout/_flash_messages" %>
       <%= erb :"layout/_breadcrumb" %>
 
