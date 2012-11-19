@@ -2,9 +2,6 @@ $:.unshift(File.dirname(__FILE__))
 $:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 
 require "simplecov"
-SimpleCov.start do
-  add_group "Application", "lib"
-end
 
 require "mongo_browser"
 
