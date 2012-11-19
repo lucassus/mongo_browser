@@ -28,7 +28,7 @@ class Mongod
     return unless running?
 
     Process.kill('HUP', pid)
-    FileUtils.rm_rf("#{MONGODB_DBPATH}/..")
+    FileUtils.rm_rf(MONGODB_DBPATH)
 
     @pid = nil
   end
