@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Documents list", type: :request do
-  let(:connection) { MongoTestServer.connection }
+  let(:connection) { Mongod.instance.connection }
 
   before do
     visit "/"

@@ -14,16 +14,6 @@ require "capybara"
 require "capybara/rspec"
 require "socket"
 
-def find_available_port
-  server = TCPServer.new("127.0.0.1", 0)
-  server.addr[1]
-ensure
-  server.close if server
-end
-
-MongoBrowser.mongodb_host = "localhost"
-MongoBrowser.mongodb_port = find_available_port
-
 require "capybara/webkit"
 Capybara.javascript_driver = :webkit
 
@@ -38,8 +28,15 @@ RSpec.configure do |config|
   config.include Integration
 
   config.before do
-    MongoTestServer.ensure_test_server_is_running
-    MongoTestServer.load_fixtures
+    # TODO do it only for request specs
+
+    test_server = Mongod.instance
+    test_server.run! do |port|
+      MongoBrowser.mongodb_host = "localhost"
+      MongoBrowser.mongodb_port = port
+    end
+
+    test_server.load_fixtures!
   end
 
   config.after do
@@ -52,5 +49,6 @@ RSpec.configure do |config|
 end
 
 at_exit do
-  MongoTestServer.clean_up
+  test_server = Mongod.instance
+  test_server.shutdown!
 end
