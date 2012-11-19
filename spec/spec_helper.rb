@@ -34,19 +34,11 @@ RSpec.configure do |config|
     fixtures.load!
   end
 
-  # Take a screenshot when the scenario has failed
+  # Take a screenshot and html dump when the scenario has failed
   config.after type: :request do
     if example.exception
-      reports_path = File.expand_path("reports/capybara")
-      FileUtils.mkdir_p(reports_path)
-
       file_name = example.full_description.downcase.gsub(/\s/, "-")
-      file_path = File.join(reports_path, file_name)
-
-      File.open("#{file_path}.html", "w") { |f| f.write(page.body) }
-      if example.metadata[:js]
-        page.driver.render("#{file_path}.png", full: true)
-      end
+      capture_page(file_name)
     end
   end
 end
