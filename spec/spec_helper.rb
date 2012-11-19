@@ -25,11 +25,10 @@ test_server = Mongod.instance
 fixtures = Fixtures.instance
 
 RSpec.configure do |config|
-  config.include Integration
+  config.include FeatureExampleGroup, type: :request
 
-  config.before do
-    # TODO do it only for request specs
-
+  # Run test mongod instance and load database fixtures
+  config.before type: :request do
     test_server.run! do |port|
       MongoBrowser.mongodb_host = "localhost"
       MongoBrowser.mongodb_port = port
@@ -38,8 +37,8 @@ RSpec.configure do |config|
     fixtures.load!
   end
 
-  config.after do
-    # Take a screenshot when the scenario has failed
+  # Take a screenshot when the scenario has failed
+  config.after type: :request do
     if example.exception
       reports_path = File.expand_path("reports/capybara")
       FileUtils.mkdir_p(reports_path)

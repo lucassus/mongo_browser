@@ -1,4 +1,4 @@
-module Integration
+module FeatureExampleGroup
 
   def fill_in_filter(value)
     page.execute_script <<-JS
