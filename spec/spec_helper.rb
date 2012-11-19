@@ -40,9 +40,17 @@ RSpec.configure do |config|
 
   config.after do
     # Take a screenshot when the scenario has failed
-    if example.metadata[:js] and example.exception
+    if example.exception
+      reports_path = File.expand_path("reports/capybara")
+      FileUtils.mkdir_p(reports_path)
+
       file_name = example.full_description.downcase.gsub(/\s/, "-")
-      page.driver.render("/tmp/#{file_name}.png", full: true)
+      file_path = File.join(reports_path, file_name)
+
+      File.open("#{file_path}.html", "w") { |f| f.write(page.body) }
+      if example.metadata[:js]
+        page.driver.render("#{file_path}.png", full: true)
+      end
     end
   end
 end
