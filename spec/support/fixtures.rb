@@ -5,7 +5,7 @@ class Fixtures
   def load!
     cleanup!
 
-    data = JSON.parse(File.open(File.expand_path("spec/fixtures/databases.json"), "r").read)
+    data = JSON.parse(File.open(File.expand_path("spec/support/fixtures/databases.json"), "r").read)
     data.each do |database_data|
       database = connection.db(database_data["name"])
 
