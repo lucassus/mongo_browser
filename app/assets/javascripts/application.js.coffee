@@ -1,6 +1,7 @@
 FilterCtrl = ($scope) ->
+  $scope.value = ""
   $scope.clear = ->
-    @value = null
+    @value = ""
 
 angular.module('MongoBrowser', [])
   # Handles ESC key
@@ -17,10 +18,17 @@ angular.module('MongoBrowser', [])
     replace: true
     transclude: true
     scope:
-      placeholder: '@placeholder'
+      placeholder: "@placeholder"
     controller: FilterCtrl
     template: $("#filter-template").text()
     link: (scope, element, attrs) ->
+      scope.$watch 'value', ->
+        $clearButton = element.find("button")
+
+        if scope.value is ""
+          $clearButton.addClass("disabled")
+        else
+          $clearButton.removeClass("disabled")
 
 $(document).ready ->
 
