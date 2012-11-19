@@ -15,8 +15,9 @@ class Mongod
 
     FileUtils.mkdir_p(MONGODB_DBPATH)
 
+    command = "mongod --port #{port} --dbpath #{MONGODB_DBPATH} --nojournal"
     log_file = File.open(File.expand_path("log/test_mongod.log"), "w+")
-    @pid = spawn("mongod --port #{port} --dbpath #{MONGODB_DBPATH} --nojournal", out: log_file)
+    @pid = Process.spawn(command, out: log_file)
 
     # TODO wait for the connection (waiting for connections on port xxxx)
     sleep 2
