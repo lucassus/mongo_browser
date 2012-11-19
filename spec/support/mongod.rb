@@ -10,15 +10,12 @@ class Mongod
     @port = find_available_port
   end
 
-  def run!
+  def start!
     return if running?
 
     FileUtils.mkdir_p(MONGODB_DBPATH)
 
-    command = "mongod --port #{port} --dbpath #{MONGODB_DBPATH} --nojournal"
-    log_file = File.open(File.expand_path("log/test_mongod.log"), "w+")
-    @pid = Process.spawn(command, out: log_file)
-
+    @pid = Mongod.start(port)
     wait_until_responsive
 
     yield port if block_given?
@@ -54,11 +51,19 @@ class Mongod
     server.close if server
   end
 
+  # Starts a core MongoDB daemon on the given port.
+  def self.start(port)
+    command = "mongod --port #{port} --dbpath #{MONGODB_DBPATH} --nojournal"
+    log_file = File.open(File.expand_path("log/test_mongod.log"), "w+")
+
+    Process.spawn(command, out: log_file)
+  end
+
   # Uses exponential back-off technique for waiting for the mongodb server
   def wait_until_responsive
     wait_time = 0.01
-    timeout = 10
     start_time = Time.now
+    timeout = 10
 
     until responsive?
       raise "Could not start mongd" if Time.now - start_time >= timeout

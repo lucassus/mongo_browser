@@ -26,7 +26,7 @@ RSpec.configure do |config|
 
   # Run test mongod instance and load database fixtures
   config.before type: :request do
-    test_server.run! do |port|
+    test_server.start! do |port|
       MongoBrowser.mongodb_host = "localhost"
       MongoBrowser.mongodb_port = port
     end
