@@ -12,11 +12,15 @@ body {
 }
 
 table.table {
-  tr.document {
-    pre {
+  tr {
+    &.document pre {
       background: none;
       border: 0px;
       display: inline;
+    }
+
+    th.actions {
+      min-width: 90px;
     }
   }
 }
