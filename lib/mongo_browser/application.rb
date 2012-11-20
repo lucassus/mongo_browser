@@ -16,7 +16,7 @@ module MongoBrowser
     # Databases list
     get "/" do
       @databases = connection.database_info
-      erb :"index"
+      erb :"databases/index"
     end
 
     # Collections list
@@ -25,7 +25,7 @@ module MongoBrowser
       @collections = database.collections
       @stats = database.stats
 
-      erb :"databases/show"
+      erb :"collections/index"
     end
 
     # Delete a database
@@ -44,7 +44,7 @@ module MongoBrowser
       @stats = collection.stats
       @documents, @pagination = paginate_documents_for(collection, params[:page])
 
-      erb :"collections/show"
+      erb :"documents/index"
     end
 
     # Delete a collection
