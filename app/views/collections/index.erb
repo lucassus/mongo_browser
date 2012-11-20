@@ -13,7 +13,7 @@
   <div ng-controller="CollectionsCtrl" data-collections='<%= @collections.to_json %>' class="tab-pane active" id="collections">
     <filter placeholder="Enter collection name"></filter>
 
-    <table ng-hide="filteredCollections.length == 0" class="table table-striped table-hover collections">
+    <table ng-hide="noMatches()" class="table table-striped table-hover collections">
       <thead>
       <tr>
         <th>Name</th>
@@ -39,7 +39,7 @@
       </tbody>
     </table>
 
-    <div ng-show="filteredCollections.length == 0" class="filter alert">
+    <div ng-show="noMatches()" class="filter alert">
       Nothing has been found.
     </div>
   </div>
