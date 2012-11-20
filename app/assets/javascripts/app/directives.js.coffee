@@ -1,31 +1,32 @@
-angular.module('MongoBrowser', [])
-  # Handles ESC key
-  .directive 'onEsc', ->
-    (scope, element, attrs) ->
-      element.bind 'keyup', (event) ->
-        EscapeCode = 27
-        return unless event.keyCode is EscapeCode
-        scope.$apply(attrs.onEsc)
+module = angular.module("MongoBrowser", [])
 
-  # Filter for databases and collections
-  .directive 'filter', ->
-    template: $("#filter-template").text()
-    restrict: 'E'
-    replace: true
-    transclude: true
-    controller: ($scope) ->
-      $scope.clear = -> $scope.value = ""
-      # Initially clear the filter
-      $scope.clear()
-    scope:
-      placeholder: "@placeholder"
+# Handles ESC key
+module.directive "onEsc", ->
+  (scope, element, attrs) ->
+    element.bind "keyup", (event) ->
+      EscapeCode = 27
+      return unless event.keyCode is EscapeCode
+      scope.$apply(attrs.onEsc)
 
-    link: (scope, element, attrs) ->
-      scope.$watch 'value', ->
-        scope.$parent.filterValue = scope.value
+# Filter for databases and collections
+module.directive "filter", ->
+  template: $("#filter-template").text()
+  restrict: "E"
+  replace: true
+  transclude: true
+  controller: ($scope) ->
+    $scope.clear = -> $scope.value = ""
+    # Initially clear the filter
+    $scope.clear()
+  scope:
+    placeholder: "@placeholder"
 
-        $clearButton = element.find("button")
-        if scope.value is ""
-          $clearButton.addClass("disabled")
-        else
-          $clearButton.removeClass("disabled")
+  link: (scope, element, attrs) ->
+    scope.$watch "value", ->
+      scope.$parent.filterValue = scope.value
+
+      $clearButton = element.find("button")
+      if scope.value is ""
+        $clearButton.addClass("disabled")
+      else
+        $clearButton.removeClass("disabled")
