@@ -3,11 +3,17 @@ FilterCtrl = ($scope) ->
   $scope.clear = ->
     @value = ""
 
-window.DatabasesCtrl = ($scope, $element) ->
+window.DatabasesCtrl = ($scope, $element, $filter) ->
   $scope.databases = $element.data('databases')
 
-window.CollectionsCtrl = ($scope, $element) ->
+  $scope.$watch 'filterValue', ->
+    $scope.filteredDatabases = $filter('filter')($scope.databases, $scope.filterValue)
+
+window.CollectionsCtrl = ($scope, $element, $filter) ->
   $scope.collections = $element.data('collections')
+
+  $scope.$watch 'filterValue', ->
+    $scope.filteredCollections = $filter('filter')($scope.collections, $scope.filterValue)
 
 angular.module('MongoBrowser', [])
   # Handles ESC key

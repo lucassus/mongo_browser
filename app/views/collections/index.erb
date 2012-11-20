@@ -13,7 +13,7 @@
   <div ng-controller="CollectionsCtrl" data-collections='<%= @collections.to_json %>' class="tab-pane active" id="collections">
     <filter placeholder="Enter collection name"></filter>
 
-    <table class="table table-striped table-hover collections">
+    <table ng-hide="filteredCollections.length == 0" class="table table-striped table-hover collections">
       <thead>
       <tr>
         <th>Name</th>
@@ -22,7 +22,7 @@
       </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="collection in collections | filter:filterValue">
+        <tr ng-repeat="collection in filteredCollections">
           <td>
             <a href="/databases/<%= params[:db_name] %>/collections/{{collection.name}}">
               {{collection.name}}
@@ -38,6 +38,10 @@
         </tr>
       </tbody>
     </table>
+
+    <div ng-show="filteredCollections.length == 0" class="filter alert">
+      Nothing has been found.
+    </div>
   </div>
 
   <div class="tab-pane" id="stats">

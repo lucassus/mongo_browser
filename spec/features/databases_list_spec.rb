@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Databases list", type: :request do
+describe "Databases list", type: :request, js: true do
   before { visit "/" }
 
   it "hides the breadcrumb" do
@@ -14,14 +14,13 @@ describe "Databases list", type: :request do
   end
 
   it "displays list with available databases" do
-
     within "table" do
       expect(page).to have_link("first_database")
       expect(page).to have_link("second_database")
     end
   end
 
-  describe "filtering", js: true do
+  describe "filtering" do
     it "filters databases by name" do
       fill_in_filter("first")
 
@@ -37,7 +36,7 @@ describe "Databases list", type: :request do
     end
   end
 
-  describe "click on delete database button", js: true do
+  describe "click on delete database button" do
     it "deletes a database" do
       click_delete_button_for("second_database")
       confirm_dialog

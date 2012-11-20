@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Server info", type: :request do
+describe "Server info", type: :request, js: true do
   before do
     visit "/"
 

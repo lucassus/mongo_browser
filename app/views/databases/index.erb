@@ -5,7 +5,7 @@
 <div ng-controller="DatabasesCtrl" data-databases='<%= @databases.to_json %>'>
   <filter placeholder="Enter database name"></filter>
 
-  <table class="table table-striped table-hover databases">
+  <table ng-hide="filteredDatabases.length == 0" class="table table-striped table-hover databases">
     <thead>
     <tr>
       <th>Name</th>
@@ -14,7 +14,7 @@
     </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="database in databases | filter:filterValue">
+      <tr ng-repeat="database in filteredDatabases">
         <td><a href="/databases/{{database.name}}">{{database.name}}</a></td>
         <td>{{database.size}}</td>
         <td>
@@ -26,4 +26,8 @@
       </tr>
     </tbody>
   </table>
+
+  <div ng-show="filteredDatabases.length == 0" class="filter alert">
+    Nothing has been found.
+  </div>
 </div>

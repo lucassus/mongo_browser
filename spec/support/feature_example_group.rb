@@ -1,9 +1,8 @@
 module FeatureExampleGroup
 
   def fill_in_filter(value)
-    page.execute_script <<-JS
-        $("form.filter input[type='text']").val("#{value}").keyup();
-    JS
+    filter_input = find(%Q{form.filter input[type="text"]})
+    filter_input.set(value)
   end
 
   def confirm_dialog(message = 'Are you sure?')
