@@ -2,28 +2,30 @@
   <h2>localhost databases</h2>
 </div>
 
-<filter placeholder="Enter database name"></filter>
+<div ng-controller="DatabasesCtrl">
+  <filter placeholder="Enter database name"></filter>
 
-<table class="table table-striped table-hover databases">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Size</th>
-    <th class="actions">&nbsp;</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @databases.each do |db_name, db_size| %>
+  <table class="table table-striped table-hover databases">
+    <thead>
     <tr>
-      <td><a href="/databases/<%= db_name %>"><%= db_name %></a></td>
-      <td><%= db_size %></td>
-      <td>
-        <a href="/databases/<%= db_name %>" class="btn btn-danger" data-method="delete" data-confirm="Are you sure?">
-          <i class="icon-remove-circle"></i>
-          Delete
-        </a>
-      </td>
+      <th>Name</th>
+      <th>Size</th>
+      <th class="actions">&nbsp;</th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @databases.each do |db_name, db_size| %>
+        <tr>
+          <td><a href="/databases/<%= db_name %>"><%= db_name %></a></td>
+          <td><%= db_size %></td>
+          <td>
+            <a href="/databases/<%= db_name %>" class="btn btn-danger" data-method="delete" data-confirm="Are you sure?">
+              <i class="icon-remove-circle"></i>
+              Delete
+            </a>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

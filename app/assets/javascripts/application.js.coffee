@@ -3,6 +3,10 @@ FilterCtrl = ($scope) ->
   $scope.clear = ->
     @value = ""
 
+window.DatabasesCtrl = ($scope) ->
+  $scope.$watch 'filterValue', ->
+    console.log $scope.value
+
 angular.module('MongoBrowser', [])
   # Handles ESC key
   .directive 'onEsc', ->
@@ -14,17 +18,19 @@ angular.module('MongoBrowser', [])
 
   # Filter for databases and collections
   .directive 'filter', ->
+    template: $("#filter-template").text()
     restrict: 'E'
     replace: true
     transclude: true
+    controller: FilterCtrl
     scope:
       placeholder: "@placeholder"
-    controller: FilterCtrl
-    template: $("#filter-template").text()
+
     link: (scope, element, attrs) ->
       scope.$watch 'value', ->
-        $clearButton = element.find("button")
+        scope.$parent.filterValue = scope.value
 
+        $clearButton = element.find("button")
         if scope.value is ""
           $clearButton.addClass("disabled")
         else
