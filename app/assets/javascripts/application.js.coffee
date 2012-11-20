@@ -3,9 +3,8 @@ FilterCtrl = ($scope) ->
   $scope.clear = ->
     @value = ""
 
-window.DatabasesCtrl = ($scope) ->
-  $scope.$watch 'filterValue', ->
-    console.log $scope.value
+window.DatabasesCtrl = ($scope, $element) ->
+  $scope.databases = $element.data('databases')
 
 angular.module('MongoBrowser', [])
   # Handles ESC key

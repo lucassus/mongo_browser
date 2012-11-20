@@ -15,7 +15,10 @@ module MongoBrowser
 
     # Databases list
     get "/" do
-      @databases = connection.database_info
+      @databases = connection.database_info.map do |name, size|
+        { name: name, size: size }
+      end
+
       erb :"databases/index"
     end
 
