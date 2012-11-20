@@ -3,13 +3,13 @@ FilterCtrl = ($scope) ->
   $scope.clear = ->
     @value = ""
 
-window.DatabasesCtrl = ($scope, $element, $filter) ->
+@DatabasesCtrl = ($scope, $element, $filter) ->
   $scope.databases = $element.data('databases')
 
   $scope.$watch 'filterValue', ->
     $scope.filteredDatabases = $filter('filter')($scope.databases, $scope.filterValue)
 
-window.CollectionsCtrl = ($scope, $element, $filter) ->
+@CollectionsCtrl = ($scope, $element, $filter) ->
   $scope.collections = $element.data('collections')
 
   $scope.$watch 'filterValue', ->
