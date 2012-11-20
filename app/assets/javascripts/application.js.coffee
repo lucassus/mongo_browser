@@ -6,6 +6,9 @@ FilterCtrl = ($scope) ->
 window.DatabasesCtrl = ($scope, $element) ->
   $scope.databases = $element.data('databases')
 
+window.CollectionsCtrl = ($scope, $element) ->
+  $scope.collections = $element.data('collections')
+
 angular.module('MongoBrowser', [])
   # Handles ESC key
   .directive 'onEsc', ->

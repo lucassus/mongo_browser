@@ -25,7 +25,9 @@ module MongoBrowser
     # Collections list
     get "/databases/:db_name" do |db_name|
       database = connection.db(db_name)
-      @collections = database.collections
+      @collections = database.collections.map do |collection|
+        { name: collection.name, size: collection.size }
+      end
       @stats = database.stats
 
       erb :"collections/index"
