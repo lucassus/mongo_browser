@@ -1,8 +1,3 @@
-FilterCtrl = ($scope) ->
-  $scope.value = ""
-  $scope.clear = ->
-    @value = ""
-
 angular.module('MongoBrowser', [])
   # Handles ESC key
   .directive 'onEsc', ->
@@ -18,7 +13,10 @@ angular.module('MongoBrowser', [])
     restrict: 'E'
     replace: true
     transclude: true
-    controller: FilterCtrl
+    controller: ($scope) ->
+      $scope.clear = -> $scope.value = ""
+      # Initially clear the filter
+      $scope.clear()
     scope:
       placeholder: "@placeholder"
 
