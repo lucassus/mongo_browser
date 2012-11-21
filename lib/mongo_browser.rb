@@ -1,14 +1,5 @@
 require "mongo_browser/version"
 
-require "sinatra"
-require "sinatra/reloader"
-require "sinatra/flash"
-
-require "sprockets"
-require "sass"
-require "coffee_script"
-
-require "will_paginate-bootstrap"
 require "mongo"
 require "json"
 require "ap"
@@ -31,5 +22,4 @@ module MongoBrowser
   end
 end
 
-require "mongo_browser/middleware/sprockets_sinatra"
 require "mongo_browser/application"

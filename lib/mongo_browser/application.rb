@@ -1,3 +1,14 @@
+require "sinatra"
+require "sinatra/reloader"
+require "sinatra/flash"
+require "will_paginate-bootstrap"
+
+require "sprockets"
+require "sass"
+require "coffee_script"
+
+require "mongo_browser/middleware/sprockets_sinatra"
+
 module MongoBrowser
   class Application < Sinatra::Base
     configure :development do
