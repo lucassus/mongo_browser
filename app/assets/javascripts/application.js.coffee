@@ -1,7 +1,3 @@
-#= require vendor/jquery
-#= require vendor/bootstrap
-#= require vendor/bootbox
-#
 #= require app/table_filter
 
 $(document).ready ->

@@ -7,11 +7,16 @@ module MongoBrowser
         path =  options[:path] || "assets"
         @matcher = /^\/#{path}\/*/
         @environment = ::Sprockets::Environment.new(@root)
-        @environment.append_path "assets/javascripts"
-        @environment.append_path "assets/javascripts/vendor"
-        @environment.append_path "assets/stylesheets"
-        @environment.append_path "assets/stylesheets/vendor"
-        @environment.append_path "assets/images"
+
+        # Application assets
+        @environment.append_path "app/assets/javascripts"
+        @environment.append_path "app/assets/stylesheets"
+        @environment.append_path "app/assets/images"
+
+        # Vendor assets
+        @environment.append_path "vendor/assets/javascripts"
+        @environment.append_path "vendor/assets/stylesheets"
+        @environment.append_path "vendor/assets/images"
       end
 
       def call(env)
