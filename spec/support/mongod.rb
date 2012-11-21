@@ -32,7 +32,7 @@ class Mongod
 
   # Returns true is mongodb server is ready to use
   def responsive?
-    Mongo::Connection.new(MongoBrowser.mongodb_host, port)
+    Mongo::Connection.new(MongoBrowser::DEFAULT_HOST, port)
     true
   rescue Mongo::ConnectionFailure
     false
@@ -45,7 +45,7 @@ class Mongod
   private
 
   def find_available_port
-    server = TCPServer.new("127.0.0.1", 0)
+    server = TCPServer.new(MongoBrowser::DEFAULT_HOST, 0)
     server.addr[1]
   ensure
     server.close if server
