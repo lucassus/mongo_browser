@@ -1,5 +1,5 @@
 $(document).ready ->
-
+  # Handles PUT, DELETE, POST methods inside links
   $("a[data-method]").click (event) ->
     event.preventDefault()
 
