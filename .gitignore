@@ -6,6 +6,8 @@ log/*.log
 tmp
 reports
 
+Gemfile.lock
+
 .idea
 *.iml
 *.gem
