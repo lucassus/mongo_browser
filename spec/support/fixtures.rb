@@ -28,7 +28,7 @@ class Fixtures
 
   def connection
     @connection ||= begin
-      Mongo::Connection.new(MongoBrowser.mongodb_host, MongoBrowser.mongodb_port)
+      Mongo::Connection.new(MongoBrowser::DEFAULT_HOST, MongoBrowser.mongodb_port)
     end
   end
 end

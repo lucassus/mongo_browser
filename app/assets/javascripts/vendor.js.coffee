@@ -1,4 +1,4 @@
-#= require vendor/jquery
-#= require vendor/bootstrap
-#= require vendor/bootbox
-#= require vendor/angular
+#= require jquery
+#= require bootstrap
+#= require bootbox
+#= require angular

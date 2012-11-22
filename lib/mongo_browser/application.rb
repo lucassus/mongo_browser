@@ -1,3 +1,14 @@
+require "sinatra"
+require "sinatra/reloader"
+require "sinatra/flash"
+require "will_paginate-bootstrap"
+
+require "sprockets"
+require "sass"
+require "coffee_script"
+
+require "mongo_browser/middleware/sprockets_sinatra"
+
 module MongoBrowser
   class Application < Sinatra::Base
     configure :development do
@@ -10,7 +21,7 @@ module MongoBrowser
     set :root, File.join(File.dirname(__FILE__), "../../app")
     set :method_override, true
 
-    use MongoBrowser::Middleware::SprocketsSinatra, :root => settings.root, :path => "assets"
+    use Middleware::SprocketsSinatra, :root => File.join(settings.root, "..")
     register WillPaginate::Sinatra
 
     # Databases list
