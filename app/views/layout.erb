@@ -9,11 +9,15 @@
       <%= erb :"layout/_navbar" %>
     </div>
 
-    <div class="container-fluid">
+    <section class="container fluid">
       <%= erb :"layout/_flash_messages" %>
-      <%= yield %>
-    </div>
 
+      <section>
+        <%= yield %>
+      </section>
+    </section>
+
+    <link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Rokkitt:400,700|Source+Code+Pro">
     <script src="/assets/vendor.js"></script>
     <script src="/assets/application.js"></script>
   </body>
