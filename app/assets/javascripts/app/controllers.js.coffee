@@ -1,21 +1,13 @@
-# TODO dry it...
-
-@DatabasesCtrl = ($scope, $element, $filter) ->
+@DatabasesCtrl = ($scope, $element, tableFilterFactory) ->
   $scope.databases = $element.data("databases")
+  $scope.tableFilter = tableFilterFactory($scope, "databases")
 
-  $scope.filteredDatabases = $scope.databases
   $scope.$on "FilterChange", (event, value) ->
-    $scope.filteredDatabases = $filter("filter")($scope.databases, value)
+    $scope.tableFilter.filter(value)
 
-  $scope.noMatches = ->
-    $scope.filteredDatabases.length is 0
-
-@CollectionsCtrl = ($scope, $element, $filter) ->
+@CollectionsCtrl = ($scope, $element, tableFilterFactory) ->
   $scope.collections = $element.data("collections")
+  $scope.tableFilter = tableFilterFactory($scope, "collections")
 
-  $scope.filteredCollections = $scope.collections
   $scope.$on "FilterChange", (event, value) ->
-    $scope.filteredCollections = $filter("filter")($scope.collections, value)
-
-  $scope.noMatches = ->
-    $scope.filteredCollections.length is 0
+    $scope.tableFilter.filter(value)
