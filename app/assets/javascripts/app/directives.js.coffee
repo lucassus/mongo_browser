@@ -21,12 +21,12 @@ module.directive "filter", ->
   scope:
     placeholder: "@placeholder"
 
-  link: (scope, element, attrs) ->
-    scope.$watch "value", ->
-      scope.$parent.filterValue = scope.value
+  link: ($scope, $element, attrs) ->
+    $scope.$watch "value", (value) ->
+      $scope.$emit("FilterChange", value)
 
-      $clearButton = element.find("button")
-      if scope.value is ""
+      $clearButton = $element.find("button")
+      if value is ""
         $clearButton.addClass("disabled")
       else
         $clearButton.removeClass("disabled")
