@@ -48,7 +48,7 @@ describe "Documents list", type: :request do
       click_link "Stats"
 
       within "table" do
-        %w(ns count size avgObjSize storageSize numExtents nindexes lastExtentSize paddingFactor systemFlags userFlags totalIndexSize indexSizes ok).each do |field|
+        %w(ns count size avgObjSize storageSize numExtents nindexes lastExtentSize paddingFactor totalIndexSize indexSizes ok).each do |field|
           expect(page).to have_content(field)
         end
       end
