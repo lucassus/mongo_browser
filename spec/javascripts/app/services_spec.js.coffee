@@ -5,12 +5,15 @@ describe "services", ->
     it "returns the current version", inject (version) ->
       expect(version).toEqual("0.1")
 
-  describe "tableFilterFactory", ->
-    it "filters the given collection", inject (tableFilterFactory) ->
-      expect(tableFilterFactory).toBeDefined()
+  describe "tableFilter", ->
+    scope = null
+    tableFilter = null
+
+    beforeEach inject ($injector) ->
+      factory = $injector.get('tableFilterFactory')
 
       scope =
-        collection: [
+        dummyCollection: [
             name: "first_item"
           ,
             name: "second_item"
@@ -18,23 +21,46 @@ describe "services", ->
             name: "third"
         ]
 
-      tableFilter = tableFilterFactory(scope, "collection")
-      expect(tableFilter).toBeDefined()
+      tableFilter = factory(scope, "dummyCollection")
 
-      tableFilter.filter("first")
-      expect(scope.collection.length).toEqual(1)
-      expect(tableFilter.collectionCopy.length).toEqual(3)
-      expect(scope.collection).toContain(name: "first_item")
-      expect(tableFilter.noMatches()).toBeFalsy()
+    describe "#filter", ->
+      it "filters the given collection", ->
+        expect(tableFilter).toBeDefined()
 
-      tableFilter.filter("item")
-      expect(scope.collection.length).toEqual(2)
-      expect(tableFilter.collectionCopy.length).toEqual(3)
-      expect(scope.collection).toContain(name: "first_item")
-      expect(scope.collection).toContain(name: "second_item")
-      expect(tableFilter.noMatches()).toBeFalsy()
+        tableFilter.filter("first")
+        expect(scope.dummyCollection.length).toEqual(1)
+        expect(tableFilter.collectionCopy.length).toEqual(3)
+        expect(scope.dummyCollection).toContain(name: "first_item")
 
-      tableFilter.filter("fourth")
-      expect(scope.collection.length).toEqual(0)
-      expect(tableFilter.collectionCopy.length).toEqual(3)
-      expect(tableFilter.noMatches()).toBeTruthy()
+        tableFilter.filter("item")
+        expect(scope.dummyCollection.length).toEqual(2)
+        expect(tableFilter.collectionCopy.length).toEqual(3)
+        expect(scope.dummyCollection).toContain(name: "first_item")
+        expect(scope.dummyCollection).toContain(name: "second_item")
+
+        tableFilter.filter("fourth")
+        expect(scope.dummyCollection.length).toEqual(0)
+        expect(tableFilter.collectionCopy.length).toEqual(3)
+
+    describe "#matchesCount", ->
+      it "returns a number of matches elements", ->
+        tableFilter.filter("")
+        expect(tableFilter.matchesCount()).toEqual(3)
+
+        tableFilter.filter("item")
+        expect(tableFilter.matchesCount()).toEqual(2)
+
+        tableFilter.filter("third")
+        expect(tableFilter.matchesCount()).toEqual(1)
+
+        tableFilter.filter("fourth")
+        expect(tableFilter.matchesCount()).toEqual(0)
+
+    describe "#noMatches", ->
+      it "returs true if filtered collection is empty", ->
+        tableFilter.filter("fourth")
+        expect(tableFilter.noMatches()).toBeTruthy()
+
+      it "return false if filtered collection is not empty", ->
+        tableFilter.filter("item")
+        expect(tableFilter.noMatches()).toBeFalsy()
