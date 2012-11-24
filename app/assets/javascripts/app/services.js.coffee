@@ -1,4 +1,5 @@
-module = angular.module("mongoBrowserServices", [])
+module = angular.module("mb.services", []).
+  value("version", "0.1")
 
 module.factory "tableFilterFactory", ($filter) ->
   (scope, collectionName) ->

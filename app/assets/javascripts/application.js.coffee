@@ -5,4 +5,4 @@
 #= require app/controllers
 
 # App Module
-angular.module("mongoBrowser", ["mongoBrowserServices", "mongoBrowserDirectives"])
+angular.module("mb", ["mb.services", "mb.directives"])
