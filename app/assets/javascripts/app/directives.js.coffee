@@ -1,4 +1,4 @@
-module = angular.module("MongoBrowser", [])
+module = angular.module("mongoBrowserDirectives", [])
 
 # Handles ESC key
 module.directive "onEsc", ->
