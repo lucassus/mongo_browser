@@ -20,11 +20,12 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency("rake", "~> 10.0.2")
 
   gem.add_development_dependency("thin", "~> 1.5.0")
-  # TODO update to 1.2.1
+  # TODO upgrade to 1.2.1 (for some reason it does not work with rack-assets-compiler)
   gem.add_development_dependency("jasmine", "1.2.0")
   gem.add_development_dependency("rack-asset-compiler", "~> 0.2.1")
 
-  gem.add_development_dependency("rspec", "~> 2.12.0")
+  # TODO upgrade to `2.12.0` (for some reason it does not work with `rake jasmine:ci`)
+  gem.add_development_dependency("rspec", "2.10.0")
   gem.add_development_dependency("capybara", "~> 1.1.3")
   gem.add_development_dependency("capybara-webkit", "~> 0.13.0")
   gem.add_development_dependency("launchy", "~> 2.1.2")
