@@ -18,14 +18,16 @@ module Jasmine
 
       config = self
       app = Rack::Builder.new do
+
         use Rack::CoffeeCompiler,
             source_extension: 'js.coffee',
             source_dir: File.join(root_path, 'spec/javascripts'),
             url: config.spec_path
+
         use Rack::CoffeeCompiler,
             source_extension: 'js.coffee',
             source_dir: File.join(root_path, 'app/assets/javascripts'),
-            url: '/assets/javascripts/app'
+            url: '/app/assets/javascripts'
 
         map '/' do
           run Jasmine.app(config)

@@ -14,10 +14,10 @@ src_files:
   # vendor files
   - vendor/assets/javascripts/jquery.js
   - vendor/assets/javascripts/angular.js
-  - spec/javascripts/support/vendor/**/*.js
+  - spec/javascripts/support/vendor/angular-mocks.js
   # app files
-#  - app/assets/javascripts/app/**/*.js
-#  - app/assets/javascripts/app/**/*.coffee
+  - app/assets/javascripts/app/**/*.js.coffee
+  - app/assets/javascripts/application.js.coffee
 
 # stylesheets
 #
