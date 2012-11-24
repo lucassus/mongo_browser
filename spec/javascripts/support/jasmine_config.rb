@@ -12,30 +12,6 @@ module Jasmine
         filename.sub(/\.js\.coffee/, '.js')
       end
     end
-
-    def start_server(port = 8888)
-      root_path = File.expand_path(File.join(File.dirname(__FILE__), "../../.."))
-
-      config = self
-      app = Rack::Builder.new do
-
-        use Rack::CoffeeCompiler,
-            source_extension: 'js.coffee',
-            source_dir: File.join(root_path, 'spec/javascripts'),
-            url: config.spec_path
-
-        use Rack::CoffeeCompiler,
-            source_extension: 'js.coffee',
-            source_dir: File.join(root_path, 'app/assets/javascripts'),
-            url: '/app/assets/javascripts'
-
-        map '/' do
-          run Jasmine.app(config)
-        end
-      end
-
-      Rack::Server.start(app: app, Port: port)
-    end
   end
 end
 
