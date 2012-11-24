@@ -1,5 +1,4 @@
-module = angular.module("mb.services", []).
-  value("version", "0.1")
+module = angular.module("mb.services", [])
 
 module.factory "tableFilterFactory", ($filter) ->
   (scope, collectionName) ->

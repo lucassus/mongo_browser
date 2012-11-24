@@ -1,10 +1,6 @@
 describe "services", ->
   beforeEach module("mb.services")
 
-  describe "version", ->
-    it "returns the current version", inject (version) ->
-      expect(version).toEqual("0.1")
-
   describe "tableFilter", ->
     scope = null
     tableFilter = null
