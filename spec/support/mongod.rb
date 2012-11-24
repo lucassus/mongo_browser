@@ -66,7 +66,7 @@ class Mongod
     timeout = 10
 
     until responsive?
-      raise "Could not start mongod" if Time.now - start_time >= timeout
+      raise "Could not start mongod after #{timeout} seconds" if Time.now - start_time >= timeout
 
       sleep wait_time
       wait_time *= 2
