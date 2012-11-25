@@ -2,11 +2,12 @@ module = angular.module("mb.directives", [])
 
 # Handles ESC key
 module.directive "onEsc", ->
-  (scope, element, attrs) ->
-    element.bind "keyup", (event) ->
-      EscapeCode = 27
+  EscapeCode = 27
+
+  ($scope, $element, attrs) ->
+    $element.bind "keyup", (event) ->
       return unless event.keyCode is EscapeCode
-      scope.$apply(attrs.onEsc)
+      $scope.$apply(attrs.onEsc)
 
 # Filter for databases and collections
 module.directive "filter", ->
@@ -21,7 +22,7 @@ module.directive "filter", ->
   scope:
     placeholder: "@placeholder"
 
-  link: ($scope, $element, attrs) ->
+  link: ($scope, $element) ->
     $scope.$watch "value", (value) ->
       $scope.$emit("FilterChange", value)
 
