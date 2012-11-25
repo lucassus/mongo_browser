@@ -10,7 +10,7 @@ module.directive "onEsc", ->
       $scope.$apply(attrs.onEsc)
 
 # Filter for databases and collections
-module.directive "filter", ->
+module.directive "filter", ($log) ->
   templateUrl: "/ng/templates/filter.html"
   restrict: "E"
   replace: true
@@ -25,6 +25,7 @@ module.directive "filter", ->
 
   link: ($scope, $element) ->
     $scope.$watch "value", (value) ->
+      $log.info("Filter change", value)
       $scope.$emit("FilterChange", value)
 
       $clearButton = $element.find("button")

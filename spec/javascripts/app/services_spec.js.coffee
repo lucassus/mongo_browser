@@ -60,3 +60,26 @@ describe "services", ->
       it "return false if filtered collection is not empty", ->
         tableFilter.filter("item")
         expect(tableFilter.noMatches()).toBeFalsy()
+
+  describe "dialogsHandler", ->
+    beforeEach inject ($window) ->
+      $window.bootbox = 'dummy bootbox'
+
+    it "by default is set to bootbox", inject (dialogsHandler) ->
+      expect(dialogsHandler).toEqual('dummy bootbox')
+
+  describe "confirmationDialog", ->
+    # Create mock for dialogsHandler
+    beforeEach ->
+      angular.module("mock", []).config ($provide) ->
+        $provide.factory "dialogsHandler", ->
+          confirm: jasmine.createSpy("confirm")
+
+    beforeEach module("mock")
+
+    it "is defined", inject (confirmationDialog) ->
+      expect(confirmationDialog).toBeDefined()
+
+    it "calls the handler", inject (confirmationDialog, dialogsHandler) ->
+      confirmationDialog(message: "This is a test message")
+      expect(dialogsHandler.confirm).toHaveBeenCalledWith("This is a test message", jasmine.any(Function))

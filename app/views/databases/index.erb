@@ -20,7 +20,7 @@
         <td>{{database.count}}</td>
         <td>{{database.size | humanSize}}</td>
         <td>
-          <a href="/databases/{{database.name}}" class="btn btn-danger" data-method="delete" data-confirm="Are you sure?">
+          <a class="btn btn-danger" ng-click="delete(database)">
             <i class="icon-remove-circle"></i>
             Delete
           </a>

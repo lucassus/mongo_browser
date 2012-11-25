@@ -1,14 +1,35 @@
-module = angular.module("mb.services", [])
+angular.module "mb.services", [], ($provide) ->
 
-module.factory "tableFilterFactory", ($filter) ->
-  (scope, collectionName) ->
-    collectionCopy: angular.copy(scope[collectionName])
+  $provide.factory "tableFilterFactory", ($filter) ->
+    (scope, collectionName) ->
+      collectionCopy: angular.copy(scope[collectionName])
 
-    filter: (value) ->
-      scope[collectionName] = $filter("filter")(@collectionCopy, value)
+      filter: (value) ->
+        scope[collectionName] = $filter("filter")(@collectionCopy, value)
 
-    matchesCount: ->
-      scope[collectionName].length
+      matchesCount: ->
+        scope[collectionName].length
 
-    noMatches: ->
-      @matchesCount() is 0
+      noMatches: ->
+        @matchesCount() is 0
+
+  $provide.factory "dialogsHandler", -> bootbox
+
+  $provide.factory "confirmationDialog", ["$log", "dialogsHandler", ($log, handler) ->
+    # Options:
+    #  message  - a message to display inside the dialog
+    #             default: "Are you sure?"
+    #  onOk     - a handler for Ok button
+    #  onCancel - a handler for Cancel button
+    (options = {}) ->
+      options.message ||= "Are you sure?"
+      $log.info("Displaying confirmation dialog:", options.message)
+
+      handler.confirm options.message, (confirmed) ->
+        if confirmed
+          $log.info("Confirmation dialog was confirmed")
+          (options.onOk || ->)()
+        else
+          $log.info("Confirmation dialog was disposed")
+          (options.onCancel || ->)()
+  ]
