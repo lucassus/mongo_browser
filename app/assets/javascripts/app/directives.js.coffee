@@ -11,10 +11,11 @@ module.directive "onEsc", ->
 
 # Filter for databases and collections
 module.directive "filter", ->
-  template: $("#filter-template").text()
+  templateUrl: "/ng/templates/filter.html"
   restrict: "E"
   replace: true
   transclude: true
+
   controller: ($scope) ->
     $scope.clear = -> $scope.value = ""
     # Initially clear the filter

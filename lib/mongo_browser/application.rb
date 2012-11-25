@@ -24,6 +24,11 @@ module MongoBrowser
     use Middleware::SprocketsSinatra, :root => File.join(settings.root, "..")
     register WillPaginate::Sinatra
 
+    # Loads given template from assets/templates directory
+    get "/ng/templates/:name.html" do |template_name|
+      send_file File.join(settings.root, "assets/templates/#{template_name}.html")
+    end
+
     # Databases list
     get "/" do
       databases = connection.database_info
