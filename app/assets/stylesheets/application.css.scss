@@ -38,6 +38,13 @@ section.container {
   }
 }
 
+#alerts {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  max-width: 980px;
+}
+
 table.table {
   tr {
     &.document pre {

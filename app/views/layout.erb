@@ -9,9 +9,11 @@
       <%= erb :"layout/_navbar" %>
     </div>
 
-    <section class="container fluid">
+    <aside id="alerts">
       <%= erb :"layout/_flash_messages" %>
+    </aside>
 
+    <section class="container fluid">
       <section>
         <%= yield %>
       </section>
