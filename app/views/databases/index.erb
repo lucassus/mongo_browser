@@ -8,17 +8,19 @@
   <thead>
   <tr>
     <th>Name</th>
+    <th>Collections</th>
     <th>Size</th>
     <th class="actions">&nbsp;</th>
   </tr>
   </thead>
   <tbody>
-  <% @databases.each do |db_name, db_size| %>
+  <% @databases.each do |database| %>
     <tr>
-      <td><a href="/databases/<%= db_name %>"><%= db_name %></a></td>
-      <td><%= db_size %></td>
+      <td><a href="/databases/<%= database[:name] %>"><%= database[:name] %></a></td>
+      <td><%= database[:count] %></td>
+      <td><%= "%.2f" % database[:size] %> MB</td>
       <td>
-        <a href="/databases/<%= db_name %>" class="btn btn-danger" data-method="delete" data-confirm="Are you sure?">
+        <a href="/databases/<%= database[:name] %>" class="btn btn-danger" data-method="delete" data-confirm="Are you sure?">
           <i class="icon-remove-circle"></i>
           Delete
         </a>
