@@ -9,6 +9,7 @@
     <thead>
     <tr>
       <th>Name</th>
+      <th>Collections</th>
       <th>Size</th>
       <th class="actions">&nbsp;</th>
     </tr>
@@ -16,6 +17,7 @@
     <tbody>
       <tr ng-repeat="database in databases">
         <td><a href="/databases/{{database.name}}">{{database.name}}</a></td>
+        <td>{{database.count}}</td>
         <td>{{database.size}}</td>
         <td>
           <a href="/databases/{{database.name}}" class="btn btn-danger" data-method="delete" data-confirm="Are you sure?">
