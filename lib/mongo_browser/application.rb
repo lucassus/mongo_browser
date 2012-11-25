@@ -30,7 +30,7 @@ module MongoBrowser
       @databases = databases.map do |name, size|
         {
             name: name,
-            size: size.to_f / (1024 * 1024),
+            size: size.to_i,
             count: connection.db(name).collections.count
         }
       end
