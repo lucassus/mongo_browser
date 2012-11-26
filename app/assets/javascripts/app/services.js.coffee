@@ -56,5 +56,5 @@ angular.module "mb.services", [], ($provide) ->
           .attr("name", "_method")
           .val(method)
 
-      form.hide().append(metadataInput).appendTo("body");
+      form.hide().append(metadataInput).appendTo("body")
       form.submit()
