@@ -9,7 +9,11 @@ require "capybara/rspec"
 require "socket"
 
 require "capybara/webkit"
-Capybara.javascript_driver = :webkit
+Capybara.register_driver :webkit_silent do |app|
+  Capybara::Webkit::Driver.new(app, stdout: nil)
+end
+
+Capybara.javascript_driver = :webkit_silent
 
 Capybara.ignore_hidden_elements = true
 Capybara.app = MongoBrowser::Application
