@@ -13,9 +13,7 @@ describe "controllers", ->
   beforeEach module("mock")
 
   describe "DocumentsCtrl", ->
-    ctrl = null
     $scope = null
-    confirmationDialog = null
     doAction = null
 
     beforeEach inject ($injector, $rootScope, $controller) ->
@@ -27,14 +25,11 @@ describe "controllers", ->
           .data("db-name", "test_database")
           .data("collection-name", "test_collection")
 
-      ctrl = $controller window.DocumentsCtrl,
-        $scope: $scope
-        $element: $element
-        confirmationDialog: confirmationDialog
-        doAction: doAction
-
-    it "is defined", ->
-      expect(ctrl).toBeDefined()
+      $controller window.DocumentsCtrl,
+          $scope: $scope
+          $element: $element
+          confirmationDialog: confirmationDialog
+          doAction: doAction
 
     describe "#delete", ->
       it "shows confirmation dialog", inject (dialogsHandler) ->
