@@ -33,3 +33,18 @@ angular.module "mb.services", [], ($provide) ->
           $log.info("Confirmation dialog was disposed")
           (options.onCancel || ->)()
   ]
+
+  $provide.factory "doDelete", ->
+    (action) ->
+      form = $("<form />")
+          .attr("method", "post")
+          .attr("action", action)
+
+      method = "delete"
+      metadataInput = $("<input />")
+          .attr("type", "hidden")
+          .attr("name", "_method")
+          .val(method)
+
+      form.hide().append(metadataInput).appendTo("body");
+      form.submit()
