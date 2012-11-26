@@ -34,13 +34,12 @@ angular.module "mb.services", [], ($provide) ->
           (options.onCancel || ->)()
   ]
 
-  $provide.factory "doDelete", ->
-    (action) ->
+  $provide.factory "doAction", ->
+    (url, method = "get") ->
       form = $("<form />")
           .attr("method", "post")
-          .attr("action", action)
+          .attr("action", url)
 
-      method = "delete"
       metadataInput = $("<input />")
           .attr("type", "hidden")
           .attr("name", "_method")
