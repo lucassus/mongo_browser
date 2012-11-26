@@ -73,7 +73,10 @@ describe "services", ->
     beforeEach ->
       angular.module("mock", []).config ($provide) ->
         $provide.factory "dialogsHandler", ->
-          confirm: jasmine.createSpy("confirm")
+          confirm: (message, callback) ->
+            @callback = callback
+          confirmed: -> @callback(true)
+          disposed: -> @callback(false)
 
     beforeEach module("mock")
 
@@ -81,5 +84,30 @@ describe "services", ->
       expect(confirmationDialog).toBeDefined()
 
     it "calls the handler", inject (confirmationDialog, dialogsHandler) ->
+      spyOn(dialogsHandler, "confirm")
       confirmationDialog(message: "This is a test message")
       expect(dialogsHandler.confirm).toHaveBeenCalledWith("This is a test message", jasmine.any(Function))
+
+    describe "when the dialog was confirmed", ->
+      it "calls the given #onOk callback", inject (confirmationDialog, dialogsHandler) ->
+        # Given
+        onOk = jasmine.createSpy("#onOk callback")
+        confirmationDialog(onOk: onOk)
+
+        # When
+        dialogsHandler.confirmed()
+
+        # Then
+        expect(onOk).toHaveBeenCalled()
+
+    describe "when the dialog was disposed", ->
+      it "calls the given #onOk callback", inject (confirmationDialog, dialogsHandler) ->
+        # Given
+        onCancel= jasmine.createSpy("#onCancel callback")
+        confirmationDialog(onCancel: onCancel)
+
+        # When
+        dialogsHandler.disposed()
+
+        # Then
+        expect(onCancel).toHaveBeenCalled()
