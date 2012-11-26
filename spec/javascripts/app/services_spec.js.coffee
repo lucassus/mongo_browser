@@ -61,18 +61,19 @@ describe "services", ->
         tableFilter.filter("item")
         expect(tableFilter.noMatches()).toBeFalsy()
 
-  describe "dialogsHandler", ->
+  # TODO add spec for defaultDialogsHandler
+  describe "bootboxDialogsHandler", ->
     beforeEach inject ($window) ->
       $window.bootbox = 'dummy bootbox'
 
-    it "by default is set to bootbox", inject (dialogsHandler) ->
-      expect(dialogsHandler).toEqual('dummy bootbox')
+    it "by default is set to bootbox", inject (bootboxDialogsHandler) ->
+      expect(bootboxDialogsHandler).toEqual('dummy bootbox')
 
   describe "confirmationDialog", ->
-    # Create mock for dialogsHandler
+    # Create mock for bootboxDialogsHandler
     beforeEach ->
       angular.module("mock", []).config ($provide) ->
-        $provide.factory "dialogsHandler", ->
+        $provide.factory "bootboxDialogsHandler", ->
           confirm: (message, callback) ->
             @callback = callback
           confirmed: -> @callback(true)
@@ -83,38 +84,38 @@ describe "services", ->
     it "is defined", inject (confirmationDialog) ->
       expect(confirmationDialog).toBeDefined()
 
-    it "calls the handler", inject (confirmationDialog, dialogsHandler) ->
+    it "calls the handler", inject (confirmationDialog, bootboxDialogsHandler) ->
       # Given
-      spyOn(dialogsHandler, "confirm")
+      spyOn(bootboxDialogsHandler, "confirm")
 
       # When
       confirmationDialog(message: "This is a test message")
 
       # Then
-      expect(dialogsHandler.confirm).toHaveBeenCalledWith \
+      expect(bootboxDialogsHandler.confirm).toHaveBeenCalledWith \
           "This is a test message",
           jasmine.any(Function)
 
     describe "when the dialog was confirmed", ->
-      it "calls the given #onOk callback", inject (confirmationDialog, dialogsHandler) ->
+      it "calls the given #onOk callback", inject (confirmationDialog, bootboxDialogsHandler) ->
         # Given
         onOk = jasmine.createSpy("#onOk callback")
         confirmationDialog(onOk: onOk)
 
         # When
-        dialogsHandler.confirmed()
+        bootboxDialogsHandler.confirmed()
 
         # Then
         expect(onOk).toHaveBeenCalled()
 
     describe "when the dialog was disposed", ->
-      it "calls the given #onOk callback", inject (confirmationDialog, dialogsHandler) ->
+      it "calls the given #onOk callback", inject (confirmationDialog, bootboxDialogsHandler) ->
         # Given
         onCancel= jasmine.createSpy("#onCancel callback")
         confirmationDialog(onCancel: onCancel)
 
         # When
-        dialogsHandler.disposed()
+        bootboxDialogsHandler.disposed()
 
         # Then
         expect(onCancel).toHaveBeenCalled()

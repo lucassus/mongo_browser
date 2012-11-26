@@ -1,10 +1,10 @@
 describe "controllers", ->
   beforeEach module("mb.services")
 
-  # Create mock for dialogsHandler
+  # Create mock for bootboxDialogsHandler
   beforeEach ->
     angular.module("mock", []).config ($provide) ->
-      $provide.factory "dialogsHandler", ->
+      $provide.factory "bootboxDialogsHandler", ->
         confirm: (message, callback) ->
           @callback = callback
         confirmed: -> @callback(true)
@@ -32,18 +32,18 @@ describe "controllers", ->
           doAction: doAction
 
     describe "#delete", ->
-      it "shows confirmation dialog", inject (dialogsHandler) ->
-        spyOn(dialogsHandler, "confirm")
+      it "shows confirmation dialog", inject (bootboxDialogsHandler) ->
+        spyOn(bootboxDialogsHandler, "confirm")
         $scope.delete("dummy-document-id")
-        expect(dialogsHandler.confirm).toHaveBeenCalledWith \
+        expect(bootboxDialogsHandler.confirm).toHaveBeenCalledWith \
             "Are you sure?",
             jasmine.any(Function)
 
       describe "when the dialog was confirmed", ->
-        it "sends a delete request", inject (dialogsHandler) ->
+        it "sends a delete request", inject (bootboxDialogsHandler) ->
           # When
           $scope.delete("dummy-document-id")
-          dialogsHandler.confirmed()
+          bootboxDialogsHandler.confirmed()
 
           # Then
           expect(doAction).toHaveBeenCalledWith \
@@ -51,10 +51,10 @@ describe "controllers", ->
               "delete"
 
       describe "when the dialog was disposed", ->
-        it "does nothing", inject (dialogsHandler) ->
+        it "does nothing", inject (bootboxDialogsHandler) ->
           # When
           $scope.delete("dummy-document-id")
-          dialogsHandler.disposed()
+          bootboxDialogsHandler.disposed()
 
           # Then
           expect(doAction).not.toHaveBeenCalled()
