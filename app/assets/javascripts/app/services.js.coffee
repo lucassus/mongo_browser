@@ -39,7 +39,8 @@ angular.module "mb.services", [], ($provide) ->
           (options.onCancel || ->)()
   ]
 
-  # TODO this will be removed in the future, since all request will be handled by ajax
+  # TODO this will be removed in the future
+  #       since all request will be handled by ajax
   $provide.factory "doAction", ->
     (url, method = "get") ->
       form = $("<form />")
