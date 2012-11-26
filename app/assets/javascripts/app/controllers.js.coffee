@@ -22,3 +22,12 @@
     confirmationDialog
       message: "Deleting #{collection.name}. Are you sure?"
       onOk: -> doDelete("/databases/#{$scope.dbName}/collections/#{collection.name}")
+
+@DocumentsCtrl = ($scope, $element, confirmationDialog, doDelete) ->
+  $scope.dbName = $element.data("db-name")
+  $scope.collectionName = $element.data("collection-name")
+
+  $scope.delete = (id) ->
+    confirmationDialog
+      message: "Are you sure?"
+      onOk: -> doDelete("/databases/#{$scope.dbName}/collections/#{$scope.collectionName}/#{id}")
