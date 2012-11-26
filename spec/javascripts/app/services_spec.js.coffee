@@ -84,9 +84,16 @@ describe "services", ->
       expect(confirmationDialog).toBeDefined()
 
     it "calls the handler", inject (confirmationDialog, dialogsHandler) ->
+      # Given
       spyOn(dialogsHandler, "confirm")
+
+      # When
       confirmationDialog(message: "This is a test message")
-      expect(dialogsHandler.confirm).toHaveBeenCalledWith("This is a test message", jasmine.any(Function))
+
+      # Then
+      expect(dialogsHandler.confirm).toHaveBeenCalledWith \
+          "This is a test message",
+          jasmine.any(Function)
 
     describe "when the dialog was confirmed", ->
       it "calls the given #onOk callback", inject (confirmationDialog, dialogsHandler) ->
