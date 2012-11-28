@@ -2,17 +2,7 @@
 
 describe "controllers", ->
   beforeEach module("mb.services")
-
-  # Create mock for bootboxDialogsHandler
-  beforeEach ->
-    angular.module("mock", []).config ($provide) ->
-      $provide.factory "bootboxDialogsHandler", ->
-        confirm: (message, callback) ->
-          @callback = callback
-        confirmed: -> @callback(true)
-        disposed: -> @callback(false)
-
-  beforeEach module("mock")
+  beforeEach module("mocks")
 
   describe "DatabasesCtrl", ->
     $scope = null
@@ -23,12 +13,8 @@ describe "controllers", ->
       confirmationDialog = $injector.get("confirmationDialog")
       doAction = jasmine.createSpy("do action")
 
-      $element = $("<div/>")
-          .data("databases", [])
-
       $controller window.DatabasesCtrl,
         $scope: $scope
-        $element: $element
         confirmationDialog: confirmationDialog
         doAction: doAction
 

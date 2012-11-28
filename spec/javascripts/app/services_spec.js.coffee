@@ -70,16 +70,7 @@ describe "services", ->
       expect(bootboxDialogsHandler).toEqual('dummy bootbox')
 
   describe "confirmationDialog", ->
-    # Create mock for bootboxDialogsHandler
-    beforeEach ->
-      angular.module("mock", []).config ($provide) ->
-        $provide.factory "bootboxDialogsHandler", ->
-          confirm: (message, callback) ->
-            @callback = callback
-          confirmed: -> @callback(true)
-          disposed: -> @callback(false)
-
-    beforeEach module("mock")
+    beforeEach module("mocks")
 
     it "is defined", inject (confirmationDialog) ->
       expect(confirmationDialog).toBeDefined()
