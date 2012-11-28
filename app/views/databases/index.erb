@@ -2,7 +2,7 @@
   <h2>localhost databases</h2>
 </header>
 
-<div ng-controller="DatabasesCtrl" data-databases='<%= @databases.to_json %>'>
+<div ng-controller="DatabasesCtrl" ng-hide="isLoading()">
   <filter placeholder="Enter database name"></filter>
 
   <table ng-hide="tableFilter.noMatches()" class="table table-striped table-hover databases">

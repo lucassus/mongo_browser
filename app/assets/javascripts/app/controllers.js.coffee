@@ -1,9 +1,16 @@
-@DatabasesCtrl = ($scope, $element, tableFilterFactory, confirmationDialog, doAction) ->
-  $scope.databases = $element.data("databases")
-  $scope.tableFilter = tableFilterFactory($scope, "databases")
+@DatabasesCtrl = ($scope, $http, tableFilterFactory, confirmationDialog, doAction) ->
 
-  $scope.$on "FilterChange", (event, value) ->
-    $scope.tableFilter.filter(value)
+  $scope.loading = true
+  $http.get("/databases.json").success (data) ->
+    $scope.databases = data
+    $scope.tableFilter = tableFilterFactory($scope, "databases")
+
+    $scope.$on "FilterChange", (event, value) ->
+      $scope.tableFilter.filter(value)
+
+    $scope.loading = false
+
+  $scope.isLoading = -> $scope.loading
 
   $scope.delete = (database) ->
     confirmationDialog
@@ -12,13 +19,20 @@
         url = "/databases/#{database.name}"
         doAction(url, "delete")
 
-@CollectionsCtrl = ($scope, $element, tableFilterFactory, confirmationDialog, doAction) ->
+@CollectionsCtrl = ($scope, $element, $http, tableFilterFactory, confirmationDialog, doAction) ->
   dbName = $element.data("db-name")
-  $scope.collections = $element.data("collections")
-  $scope.tableFilter = tableFilterFactory($scope, "collections")
 
-  $scope.$on "FilterChange", (event, value) ->
-    $scope.tableFilter.filter(value)
+  $scope.loading = true
+  $http.get("/databases/#{dbName}.json").success (data) ->
+    $scope.collections = data
+    $scope.tableFilter = tableFilterFactory($scope, "collections")
+
+    $scope.$on "FilterChange", (event, value) ->
+      $scope.tableFilter.filter(value)
+
+    $scope.loading = false
+
+  $scope.isLoading = -> $scope.loading
 
   $scope.delete = (collection) ->
     confirmationDialog

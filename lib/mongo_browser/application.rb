@@ -1,6 +1,7 @@
 require "sinatra"
 require "sinatra/reloader"
 require "sinatra/flash"
+require "sinatra/respond_with"
 require "will_paginate-bootstrap"
 
 require "sprockets"
@@ -23,16 +24,22 @@ module MongoBrowser
 
     use Middleware::SprocketsSinatra, :root => File.join(settings.root, "..")
     register WillPaginate::Sinatra
+    register Sinatra::RespondWith
 
     # Loads given template from assets/templates directory
     get "/ng/templates/:name.html" do |template_name|
       send_file File.join(settings.root, "assets/templates/#{template_name}.html")
     end
 
-    # Databases list
+    # Welcome page
     get "/" do
+      erb :"databases/index"
+    end
+
+    # Databases list
+    get "/databases.json" do
       databases = connection.database_info
-      @databases = databases.map do |name, size|
+      databases = databases.map do |name, size|
         {
             name: name,
             size: size.to_i,
@@ -40,15 +47,25 @@ module MongoBrowser
         }
       end
 
-      erb :"databases/index"
+      respond_to do |format|
+        format.json { databases.to_json }
+      end
     end
 
     # Collections list
-    get "/databases/:db_name" do |db_name|
+    get "/databases/:db_name.json" do |db_name|
       database = connection.db(db_name)
-      @collections = database.collections.map do |collection|
+      collections = database.collections.map do |collection|
         { name: collection.name, size: collection.size }
       end
+
+      respond_to do |format|
+        format.json { collections.to_json }
+      end
+    end
+
+    get "/databases/:db_name" do |db_name|
+      database = connection.db(db_name)
       @stats = database.stats
 
       erb :"collections/index"

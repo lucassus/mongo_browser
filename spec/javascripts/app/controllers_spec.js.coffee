@@ -4,6 +4,15 @@ describe "controllers", ->
   beforeEach module("mb.services")
   beforeEach module("mocks")
 
+  $httpBackend = null
+
+  beforeEach inject ($injector) ->
+    $httpBackend = $injector.get('$httpBackend')
+
+  afterEach ->
+    $httpBackend.verifyNoOutstandingExpectation()
+    $httpBackend.verifyNoOutstandingRequest()
+
   describe "DatabasesCtrl", ->
     $scope = null
     doAction = null
@@ -13,10 +22,13 @@ describe "controllers", ->
       confirmationDialog = $injector.get("confirmationDialog")
       doAction = jasmine.createSpy("do action")
 
+      $httpBackend.when("GET", "/databases.json").respond([])
       $controller window.DatabasesCtrl,
         $scope: $scope
         confirmationDialog: confirmationDialog
         doAction: doAction
+
+      $httpBackend.flush()
 
     describe "#delete", ->
       it "shows a confirmation dialog", inject (bootboxDialogsHandler) ->
@@ -59,11 +71,14 @@ describe "controllers", ->
         .data("db-name", "test_database")
         .data("collections", [])
 
+      $httpBackend.when("GET", "/databases/test_database.json").respond([])
       $controller window.CollectionsCtrl,
           $scope: $scope
           $element: $element
           confirmationDialog: confirmationDialog
           doAction: doAction
+
+      $httpBackend.flush()
 
     describe "#delete", ->
       it "shows a confirmation dialog", inject (bootboxDialogsHandler) ->
