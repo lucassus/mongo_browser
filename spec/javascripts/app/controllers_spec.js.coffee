@@ -19,13 +19,11 @@ describe "controllers", ->
 
     beforeEach inject ($injector, $rootScope, $controller) ->
       $scope = $rootScope.$new()
-      confirmationDialog = $injector.get("confirmationDialog")
       doAction = jasmine.createSpy("do action")
 
       $httpBackend.when("GET", "/databases.json").respond([])
       $controller window.DatabasesCtrl,
         $scope: $scope
-        confirmationDialog: confirmationDialog
         doAction: doAction
 
       $httpBackend.flush()
@@ -64,7 +62,6 @@ describe "controllers", ->
 
     beforeEach inject ($injector, $rootScope, $controller) ->
       $scope = $rootScope.$new()
-      confirmationDialog = $injector.get("confirmationDialog")
       doAction = jasmine.createSpy("do action")
 
       $element = $("<div/>")
@@ -75,7 +72,6 @@ describe "controllers", ->
       $controller window.CollectionsCtrl,
           $scope: $scope
           $element: $element
-          confirmationDialog: confirmationDialog
           doAction: doAction
 
       $httpBackend.flush()
