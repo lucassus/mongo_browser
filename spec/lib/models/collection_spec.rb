@@ -20,4 +20,13 @@ describe MongoBrowser::Models::Collection do
   its(:db_name) { should == mongo_db_name }
   its(:name) { should == mongo_collection_name }
   its(:size) { should == 2 }
+
+  describe "#stats" do
+    it "returns stats for the collection" do
+      stats = collection.stats
+
+      expect(stats).not_to be_nil
+      expect(stats).to be_an_instance_of(BSON::OrderedHash)
+    end
+  end
 end

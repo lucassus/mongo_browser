@@ -63,4 +63,13 @@ describe MongoBrowser::Models::Database do
       expect(connection.database_names).not_to include(database.name)
     end
   end
+
+  describe "#collection" do
+    it "returns a collection with the given name" do
+      collection = database.collection("first_collection")
+
+      expect(collection).to be_an_instance_of(MongoBrowser::Models::Collection)
+      expect(collection.name).to eq("first_collection")
+    end
+  end
 end

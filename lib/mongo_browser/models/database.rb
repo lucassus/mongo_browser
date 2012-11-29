@@ -24,10 +24,12 @@ module MongoBrowser
         mongo_db.collection_names
       end
 
+      def collection(name)
+        Collection.new(mongo_db.collection(name))
+      end
+
       def collections
-        collection_names.map do |collection_name|
-          Collection.new(mongo_db.collection(collection_name))
-        end
+        collection_names.map { |name| collection(name) }
       end
 
       def stats

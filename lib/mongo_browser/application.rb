@@ -61,11 +61,11 @@ module MongoBrowser
 
     # Documents list
     get "/databases/:db_name/collections/:collection_name" do |db_name, collection_name|
-      database = connection.db(db_name)
+      database = server.database(db_name)
       collection = database.collection(collection_name)
 
       @stats = collection.stats
-      @documents, @pagination = paginate_documents_for(collection, params[:page])
+      @documents, @pagination = collection.documents_with_pagination(params[:page])
 
       erb :"documents/index"
     end
@@ -103,26 +103,6 @@ module MongoBrowser
     end
 
     private
-
-    def paginate_documents_for(collection, page = 1)
-      per_page = 25
-
-      count = collection.count
-      total_pages = (count.to_f / per_page).ceil
-
-      page = if page.to_i <= 0 then 1
-             else
-               [page.to_i, total_pages].min
-             end
-
-      offset = (page - 1) * per_page
-      documents = collection.find.skip(offset).limit(per_page)
-      pagination = OpenStruct.new \
-        total_pages: total_pages,
-        current_page: page
-
-      return documents, pagination
-    end
 
     # TODO remove this method
     def connection

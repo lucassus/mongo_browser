@@ -24,7 +24,7 @@ module MongoBrowser
       end
 
       def databases
-        database_names.map { |db_name| database(db_name) }
+        database_names.map { |name| database(name) }
       end
 
       def connection
