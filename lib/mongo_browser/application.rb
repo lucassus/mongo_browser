@@ -61,8 +61,7 @@ module MongoBrowser
 
     # Documents list
     get "/databases/:db_name/collections/:collection_name" do |db_name, collection_name|
-      database = server.database(db_name)
-      collection = database.collection(collection_name)
+      collection = server.database(db_name).collection(collection_name)
 
       @stats = collection.stats
       @documents, @pagination = collection.documents_with_pagination(params[:page])
@@ -73,8 +72,8 @@ module MongoBrowser
     # Delete a collection
     delete "/databases/:db_name/collections/:collection_name" do |db_name, collection_name|
       begin
-        database = connection.db(db_name)
-        database.drop_collection(collection_name)
+        collection = server.database(db_name).collection(collection_name)
+        collection.drop!
 
         flash[:info] = "Collection #{collection_name} has been deleted."
       rescue Mongo::OperationFailure => e

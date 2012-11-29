@@ -46,6 +46,10 @@ module MongoBrowser
 
         return documents, pagination
       end
+
+      def drop!
+        mongo_collection.drop
+      end
     end
   end
 end

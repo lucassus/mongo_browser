@@ -4,9 +4,10 @@ describe MongoBrowser::Models::Collection do
   let(:mongo_db_name) { "first_database" }
   let(:mongo_collection_name) { "first_collection" }
 
+  let(:server) { MongoBrowser::Models::Server.current }
+
   let(:mongo_collection) do
-    MongoBrowser::Models::Server.current
-        .connection[mongo_db_name]
+    server.connection[mongo_db_name]
         .collection(mongo_collection_name)
   end
 
@@ -27,6 +28,15 @@ describe MongoBrowser::Models::Collection do
 
       expect(stats).not_to be_nil
       expect(stats).to be_an_instance_of(BSON::OrderedHash)
+    end
+  end
+
+  describe "#drop!" do
+    let(:database) { server.database(mongo_db_name) }
+
+    it "drops the collection" do
+      collection.drop!
+      expect(database.collection_names).not_to include(database.name)
     end
   end
 end
