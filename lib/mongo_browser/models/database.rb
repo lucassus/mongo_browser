@@ -25,10 +25,13 @@ module MongoBrowser
       end
 
       def collections
-        # TODO initialize collections
         collection_names.map do |collection_name|
-          Collection.new
+          Collection.new(mongo_db.collection(collection_name))
         end
+      end
+
+      def stats
+        mongo_db.stats
       end
 
       private

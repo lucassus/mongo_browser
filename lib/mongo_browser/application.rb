@@ -42,7 +42,8 @@ module MongoBrowser
 
     # Collections list
     get "/databases/:db_name" do |db_name|
-      database = connection.db(db_name)
+      database = server.database(db_name)
+
       @collections = database.collections
       @stats = database.stats
 

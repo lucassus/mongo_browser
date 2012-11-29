@@ -56,6 +56,15 @@ describe MongoBrowser::Models::Server do
       it { should be_an_instance_of(MongoBrowser::Models::Database) }
       its(:name) { should == "second_database" }
     end
+
+    describe "#database" do
+      it "returns a database with the given name" do
+        database = server.database("first_database")
+
+        expect(database).to be_an_instance_of(MongoBrowser::Models::Database)
+        expect(database.name).to eq("first_database")
+      end
+    end
   end
 
 end

@@ -7,6 +7,10 @@ describe MongoBrowser::Models::Database do
   let(:database) { described_class.new(mongo_db) }
   subject { database }
 
+  it "is initialized with Mongo::DB" do
+    database.mongo_db.should == mongo_db
+  end
+
   its(:id) { should == mongo_db_name }
   its(:name) { should == mongo_db_name }
 
@@ -40,6 +44,13 @@ describe MongoBrowser::Models::Database do
   describe "#count" do
     it "returns a number of collections" do
       expect(database.count).to eq(database.collections.count)
+    end
+  end
+
+  describe "#stats" do
+    it "returns stats for the database" do
+      stats = database.stats
+      expect(stats).not_to be_nil
     end
   end
 end
