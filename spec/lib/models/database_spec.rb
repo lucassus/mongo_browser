@@ -9,4 +9,6 @@ describe MongoBrowser::Models::Database do
 
   its(:id) { should == mongo_db_name }
   its(:name) { should == mongo_db_name }
+
+  its(:size) { should == 218103808 }
 end
