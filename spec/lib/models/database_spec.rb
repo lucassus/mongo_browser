@@ -1,8 +1,9 @@
 require "spec_helper"
 
 describe MongoBrowser::Models::Database do
+  let(:connection) { MongoBrowser::Models::Server.current.connection }
   let(:mongo_db_name) { "first_database" }
-  let(:mongo_db) { MongoBrowser::Models::Server.current.connection[mongo_db_name] }
+  let(:mongo_db) { connection[mongo_db_name] }
 
   let(:database) { described_class.new(mongo_db) }
   subject { database }
@@ -50,7 +51,16 @@ describe MongoBrowser::Models::Database do
   describe "#stats" do
     it "returns stats for the database" do
       stats = database.stats
+
       expect(stats).not_to be_nil
+      expect(stats).to be_an_instance_of(BSON::OrderedHash)
+    end
+  end
+
+  describe "#drop!" do
+    it "drops the database" do
+      database.drop!
+      expect(connection.database_names).not_to include(database.name)
     end
   end
 end

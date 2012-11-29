@@ -34,11 +34,15 @@ module MongoBrowser
         mongo_db.stats
       end
 
+      def drop!
+        mongo_db.connection.drop_database(self.name)
+      end
+
       private
 
       def info
         @info ||= mongo_db.connection["admin"].command(listDatabases: true)["databases"].find do |db|
-          db["name"] == name
+          db["name"] == self.name
         end
       end
     end

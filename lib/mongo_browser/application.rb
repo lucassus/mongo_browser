@@ -52,7 +52,8 @@ module MongoBrowser
 
     # Delete a database
     delete "/databases/:db_name" do |db_name|
-      connection.drop_database(db_name)
+      database = server.database(db_name)
+      database.drop!
 
       flash[:info] = "Database #{db_name} has been deleted."
       redirect "/"
