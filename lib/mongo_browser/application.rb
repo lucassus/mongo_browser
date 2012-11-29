@@ -11,6 +11,8 @@ require "mongo_browser/middleware/sprockets_sinatra"
 
 module MongoBrowser
   class Application < Sinatra::Base
+    include Models
+
     configure :development do
       register Sinatra::Reloader
     end
@@ -121,7 +123,11 @@ module MongoBrowser
     end
 
     def connection
-      @connection ||= Mongo::Connection.new(MongoBrowser.mongodb_host, MongoBrowser.mongodb_port)
+      server.connection
+    end
+
+    def server
+      @server ||= Server.current
     end
   end
 end

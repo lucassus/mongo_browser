@@ -15,6 +15,9 @@ module MongoBrowser
         @host, @port = host, port
       end
 
+      def connection
+        @connection ||= Mongo::Connection.new(host, port)
+      end
     end
   end
 end
