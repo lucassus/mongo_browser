@@ -24,10 +24,10 @@
       <tbody>
       <% @collections.each do |collection| %>
         <tr class="collection">
-          <td><a href="/databases/<%= params[:db_name] %>/collections/<%= collection.name %>"><%= collection.name %></a></td>
+          <td><a href="/databases/<%= collection.db_name %>/collections/<%= collection.name %>"><%= collection.name %></a></td>
           <td><%= collection.size %></td>
           <td>
-            <a href="/databases/<%= params[:db_name] %>/collections/<%= collection.name %>" class="btn btn-danger" data-method="delete" data-confirm="Are you sure?">
+            <a href="/databases/<%= collection.db_name %>/collections/<%= collection.name %>" class="btn btn-danger" data-method="delete" data-confirm="Are you sure?">
               <i class="icon-remove-circle"></i>
               Delete
             </a>
