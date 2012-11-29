@@ -12,8 +12,23 @@ module MongoBrowser
       end
       alias :id :name
 
+      def count
+        collections.count
+      end
+
       def size
         info["sizeOnDisk"].to_i
+      end
+
+      def collection_names
+        mongo_db.collection_names
+      end
+
+      def collections
+        # TODO initialize collections
+        collection_names.map do |collection_name|
+          Collection.new
+        end
       end
 
       private

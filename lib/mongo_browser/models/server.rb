@@ -19,8 +19,12 @@ module MongoBrowser
         @connection ||= Mongo::Connection.new(host, port)
       end
 
+      def database_names
+        connection.database_names
+      end
+
       def databases
-        connection.database_names.map do |db_name|
+        database_names.map do |db_name|
           Database.new(connection[db_name])
         end
       end

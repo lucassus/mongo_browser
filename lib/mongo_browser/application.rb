@@ -28,12 +28,12 @@ module MongoBrowser
 
     # Databases list
     get "/" do
-      databases = connection.database_info
-      @databases = databases.map do |name, size|
+      @databases = server.databases.map do |db|
         {
-            name: name,
-            size: size.to_f / (1024 * 1024),
-            count: connection.db(name).collections.count
+            id:    db.id,
+            name:  db.name,
+            size:  db.size.to_f / (1024 * 1024),
+            count: db.count
         }
       end
 
@@ -122,6 +122,7 @@ module MongoBrowser
       return documents, pagination
     end
 
+    # TODO remove this method
     def connection
       server.connection
     end

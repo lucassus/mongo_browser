@@ -21,12 +21,27 @@ describe MongoBrowser::Models::Server do
     end
   end
 
+  describe "#database_names" do
+    subject { server.database_names }
+
+    it { should be_an_instance_of(Array) }
+    it { should have(2).items }
+    it { should include("first_database") }
+    it { should include("second_database") }
+  end
+
   describe "#databases" do
     let(:databases) { server.databases }
     subject { databases }
 
     it { should be_an_instance_of(Array) }
     it { should have(2).items }
+
+    it "contains Databases" do
+      databases.each do |db|
+        expect(db).to be_an_instance_of(MongoBrowser::Models::Database)
+      end
+    end
 
     describe "first database" do
       subject { databases.find { |db| db.name == "first_database" }  }
