@@ -22,4 +22,9 @@ module MongoBrowser
   end
 end
 
+require "mongo_browser/models/server"
+require "mongo_browser/models/database"
+require "mongo_browser/models/collection"
+require "mongo_browser/models/document"
+
 require "mongo_browser/application"
