@@ -22,7 +22,25 @@ describe MongoBrowser::Models::Server do
   end
 
   describe "#databases" do
-    it "returns a collection of all available databases"
+    let(:databases) { server.databases }
+    subject { databases }
+
+    it { should be_an_instance_of(Array) }
+    it { should have(2).items }
+
+    describe "first database" do
+      subject { databases.find { |db| db.name == "first_database" }  }
+
+      it { should be_an_instance_of(MongoBrowser::Models::Database) }
+      its(:name) { should == "first_database" }
+    end
+
+    describe "second database" do
+      subject { databases.find { |db| db.name == "second_database" }  }
+
+      it { should be_an_instance_of(MongoBrowser::Models::Database) }
+      its(:name) { should == "second_database" }
+    end
   end
 
 end
