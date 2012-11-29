@@ -10,6 +10,7 @@ module MongoBrowser
       def name
         mongo_db.name
       end
+      alias :id :name
     end
   end
 end
