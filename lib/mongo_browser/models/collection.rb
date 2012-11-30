@@ -26,29 +26,24 @@ module MongoBrowser
         mongo_collection.stats
       end
 
-      # TODO write specs
-      # TODO refactor it
-      def documents_with_pagination(page = 1)
-        per_page = 25
+      def documents_with_pagination(page_number = 1)
+        pager = pager_for(page_number)
 
-        total_pages = (size.to_f / per_page).ceil
+        documents = mongo_collection.find
+            .skip(pager.offset)
+            .limit(pager.per_page)
 
-        page = if page.to_i <= 0 then 1
-               else
-                 [page.to_i, total_pages].min
-               end
-
-        offset = (page - 1) * per_page
-        documents = mongo_collection.find.skip(offset).limit(per_page)
-        pagination = OpenStruct.new \
-            total_pages: total_pages,
-            current_page: page
-
-        return documents, pagination
+        return documents, pager
       end
 
       def drop!
         mongo_collection.drop
+      end
+
+      private
+
+      def pager_for(page)
+        Pager.new(page, size)
       end
     end
   end

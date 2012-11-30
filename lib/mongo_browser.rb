@@ -22,6 +22,7 @@ module MongoBrowser
   end
 end
 
+require "mongo_browser/models/pager"
 require "mongo_browser/models/server"
 require "mongo_browser/models/database"
 require "mongo_browser/models/collection"

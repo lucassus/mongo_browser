@@ -39,4 +39,10 @@ describe MongoBrowser::Models::Collection do
       expect(database.collection_names).not_to include(database.name)
     end
   end
+
+  describe "#documents_with_pagination" do
+    it "returns a collection of documents"
+
+    it "returns a pager"
+  end
 end
