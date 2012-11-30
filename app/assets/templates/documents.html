@@ -1,5 +1,5 @@
 <header>
-  <h2><%= params[:collection_name] %> documents</h2>
+  <h2>{{collectionName}} documents</h2>
 </header>
 
 <ul class="nav nav-tabs">
@@ -10,9 +10,7 @@
 </ul>
 
 <div class="tab-content">
-  <div ng-controller="DocumentsCtrl" data-db-name="<%= params[:db_name] %>" data-collection-name="<%= params[:collection_name] %>" class="tab-pane active" id="documents">
-    <%= will_paginate(@pagination, renderer: BootstrapPagination::Sinatra) %>
-
+  <div class="tab-pane active" id="documents">
     <table class="table table-striped table-hover documents">
       <thead>
       <tr>
@@ -22,22 +20,18 @@
       </tr>
       </thead>
       <tbody>
-      <% @documents.each do |document| %>
-        <tr class="document">
-          <td><%= document.id %></td>
-          <td><%= document.data.ai(html: true).gsub("BSON::", "") %></td>
-          <td>
-            <a ng-click="delete('<%= document.id %>')" class="btn btn-danger" data-method="delete">
-              <i class="icon-remove-circle"></i>
-              Delete
-            </a>
-          </td>
-        </tr>
-      <% end %>
+      <tr ng-repeat="document in documents" class="document">
+        <td>{{document.id}}</td>
+        <td>{{document.data}}</td>
+        <td>
+          <a ng-click="delete('<%= document.id %>')" class="btn btn-danger" data-method="delete">
+            <i class="icon-remove-circle"></i>
+            Delete
+          </a>
+        </td>
+      </tr>
       </tbody>
     </table>
-
-    <%= will_paginate(@pagination, renderer: BootstrapPagination::Sinatra) %>
   </div>
 
   <div class="tab-pane" id="stats">

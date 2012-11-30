@@ -1,5 +1,5 @@
 <header>
-  <h2><%= params[:db_name] %> collections</h2>
+  <h2>{{dbName}} collections</h2>
 </header>
 
 <ul class="nav nav-tabs">
@@ -10,7 +10,7 @@
 </ul>
 
 <div class="tab-content">
-  <div ng-controller="CollectionsCtrl" ng-hide="isLoading()" data-db-name="<%= params[:db_name] %>" class="tab-pane active" id="collections">
+  <div ng-hide="isLoading()" class="tab-pane active" id="collections">
     <filter placeholder="Enter collection name"></filter>
 
     <table ng-hide="tableFilter.noMatches()" class="table table-striped table-hover collections">
@@ -22,20 +22,20 @@
       </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="collection in collections">
-          <td>
-            <a href="/databases/{{collection.db_name}}/collections/{{collection.name}}">
-              {{collection.name}}
-            </a>
-          </td>
-          <td>{{collection.size}}</td>
-          <td>
-            <a class="btn btn-danger" ng-click="delete(collection)">
-              <i class="icon-remove-circle"></i>
-              Delete
-            </a>
-          </td>
-        </tr>
+      <tr ng-repeat="collection in collections">
+        <td>
+          <a href="/databases/{{collection.db_name}}/collections/{{collection.name}}">
+            {{collection.name}}
+          </a>
+        </td>
+        <td>{{collection.size}}</td>
+        <td>
+          <a class="btn btn-danger" ng-click="delete(collection)">
+            <i class="icon-remove-circle"></i>
+            Delete
+          </a>
+        </td>
+      </tr>
       </tbody>
     </table>
 
@@ -54,10 +54,10 @@
       </thead>
       <tbody>
       <% @stats.each do |property, value| %>
-        <tr>
-          <td><%= property %></td>
-          <td><%= value %></td>
-        </tr>
+      <tr>
+        <td><%= property %></td>
+        <td><%= value %></td>
+      </tr>
       <% end %>
       </tbody>
     </table>

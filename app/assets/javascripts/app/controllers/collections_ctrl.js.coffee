@@ -1,5 +1,5 @@
-@CollectionsCtrl = ($scope, $element, $http, tableFilterFactory, confirmationDialog, doAction) ->
-  dbName = $element.data("db-name")
+@CollectionsCtrl = ($scope, $routeParams, $http, tableFilterFactory, confirmationDialog, doAction) ->
+  $scope.dbName = $routeParams.dbName
 
   _onLoadComplete = (data) ->
     $scope.collections = data
@@ -11,7 +11,7 @@
     $scope.loading = false
 
   $scope.loading = true
-  $http.get("/databases/#{dbName}.json").success(_onLoadComplete)
+  $http.get("/api/databases/#{$scope.dbName}.json").success(_onLoadComplete)
 
   $scope.isLoading = -> $scope.loading
 
@@ -19,5 +19,5 @@
     confirmationDialog
       message: "Deleting #{collection.name}. Are you sure?"
       onOk: ->
-        url = "/databases/#{dbName}/collections/#{collection.name}"
+        url = "/databases/#{$scope.dbName}/collections/#{collection.name}"
         doAction(url, "delete")

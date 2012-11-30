@@ -2,7 +2,7 @@
   <h2>localhost databases</h2>
 </header>
 
-<div ng-controller="DatabasesCtrl" ng-hide="isLoading()">
+<div ng-hide="isLoading()">
   <filter placeholder="Enter database name"></filter>
 
   <table ng-hide="tableFilter.noMatches()" class="table table-striped table-hover databases">
@@ -15,17 +15,17 @@
     </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="database in databases">
-        <td><a href="/databases/{{database.name}}">{{database.name}}</a></td>
-        <td>{{database.count}}</td>
-        <td>{{database.size | humanSize}}</td>
-        <td>
-          <a class="btn btn-danger" ng-click="delete(database)">
-            <i class="icon-remove-circle"></i>
-            Delete
-          </a>
-        </td>
-      </tr>
+    <tr ng-repeat="database in databases">
+      <td><a href="/databases/{{database.name}}">{{database.name}}</a></td>
+      <td>{{database.count}}</td>
+      <td>{{database.size | humanSize}}</td>
+      <td>
+        <a class="btn btn-danger" ng-click="delete(database)">
+          <i class="icon-remove-circle"></i>
+          Delete
+        </a>
+      </td>
+    </tr>
     </tbody>
   </table>
 

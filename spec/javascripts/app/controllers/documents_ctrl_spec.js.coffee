@@ -4,21 +4,32 @@ describe "DocumentsCtrl", ->
 
   $scope = null
   doAction = null
+  $httpBackend = null
 
   beforeEach inject ($injector, $rootScope, $controller) ->
     $scope = $rootScope.$new()
     confirmationDialog = $injector.get("confirmationDialog")
+
+    $routeParams = $injector.get("$routeParams")
+    $routeParams.dbName = "test_database"
+    $routeParams.collectionName = "test_collection"
+
     doAction = jasmine.createSpy("do action")
 
-    $element = $("<div/>")
-        .data("db-name", "test_database")
-        .data("collection-name", "test_collection")
+    $httpBackend = $injector.get('$httpBackend')
+    $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection.json")
+        .respond([])
 
     $controller window.DocumentsCtrl,
       $scope: $scope
-      $element: $element
       confirmationDialog: confirmationDialog
       doAction: doAction
+
+    $httpBackend.flush()
+
+  afterEach ->
+    $httpBackend.verifyNoOutstandingExpectation()
+    $httpBackend.verifyNoOutstandingRequest()
 
   describe "#delete", ->
     it "shows a confirmation dialog", inject (bootboxDialogsHandler) ->

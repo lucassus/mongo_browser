@@ -12,7 +12,7 @@ describe "DatabasesCtrl", ->
     $scope = $rootScope.$new()
     doAction = jasmine.createSpy("do action")
 
-    $httpBackend.when("GET", "/databases.json").respond([])
+    $httpBackend.when("GET", "/api/databases.json").respond([])
     $controller window.DatabasesCtrl,
         $scope: $scope
         doAction: doAction

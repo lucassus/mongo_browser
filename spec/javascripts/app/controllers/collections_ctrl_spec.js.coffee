@@ -8,17 +8,16 @@ describe "CollectionsCtrl", ->
 
   beforeEach inject ($injector, $rootScope, $controller) ->
     $scope = $rootScope.$new()
-    $httpBackend = $injector.get('$httpBackend')
+    $httpBackend = $injector.get("$httpBackend")
+
+    $routeParams = $injector.get("$routeParams")
+    $routeParams.dbName = "test_database"
+
     doAction = jasmine.createSpy("do action")
 
-    $element = $("<div/>")
-        .data("db-name", "test_database")
-        .data("collections", [])
-
-    $httpBackend.when("GET", "/databases/test_database.json").respond([])
+    $httpBackend.when("GET", "/api/databases/test_database.json").respond([])
     $controller window.CollectionsCtrl,
       $scope: $scope
-      $element: $element
       doAction: doAction
 
     $httpBackend.flush()
@@ -26,7 +25,6 @@ describe "CollectionsCtrl", ->
   afterEach ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()
-
 
   describe "#delete", ->
     it "shows a confirmation dialog", inject (bootboxDialogsHandler) ->

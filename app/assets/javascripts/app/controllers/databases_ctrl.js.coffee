@@ -9,7 +9,7 @@
     $scope.loading = false
 
   $scope.loading = true
-  $http.get("/databases.json").success(_onLoadComplete)
+  $http.get("/api/databases.json").success(_onLoadComplete)
 
   $scope.isLoading = -> $scope.loading
 
