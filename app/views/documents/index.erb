@@ -24,10 +24,10 @@
       <tbody>
       <% @documents.each do |document| %>
         <tr class="document">
-          <td><%= document['_id'] %></td>
-          <td><%= document.ai(html: true).gsub("BSON::", "") %></td>
+          <td><%= document.id %></td>
+          <td><%= document.data.ai(html: true).gsub("BSON::", "") %></td>
           <td>
-            <a href="/databases/<%= params[:db_name] %>/collections/<%= params[:collection_name] %>/<%= document['_id'] %>" class="btn btn-danger" data-method="delete" data-confirm="Are you sure?">
+            <a href="/databases/<%= params[:db_name] %>/collections/<%= params[:collection_name] %>/<%= document.id %>" class="btn btn-danger" data-method="delete" data-confirm="Are you sure?">
               <i class="icon-remove-circle"></i>
               Delete
             </a>
