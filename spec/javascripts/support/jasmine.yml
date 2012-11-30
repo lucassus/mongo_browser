@@ -14,6 +14,7 @@ src_files:
   # vendor files
   - vendor/assets/javascripts/jquery.js
   - vendor/assets/javascripts/angular.js
+  - vendor/assets/javascripts/angular-resource.js
   - spec/javascripts/support/vendor/angular-mocks.js
   # app files
   - app/assets/javascripts/app/**/*.js.coffee

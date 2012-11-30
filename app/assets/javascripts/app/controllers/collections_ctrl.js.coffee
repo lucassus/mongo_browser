@@ -1,8 +1,7 @@
-@CollectionsCtrl = ($scope, $routeParams, $http, tableFilterFactory, confirmationDialog, doAction) ->
+@CollectionsCtrl = ($scope, $routeParams, Collection, tableFilterFactory, confirmationDialog, doAction) ->
   $scope.dbName = $routeParams.dbName
 
   _onLoadComplete = (data) ->
-    $scope.collections = data
     $scope.tableFilter = tableFilterFactory($scope, "collections")
 
     $scope.$on "FilterChange", (event, value) ->
@@ -11,7 +10,7 @@
     $scope.loading = false
 
   $scope.loading = true
-  $http.get("/api/databases/#{$scope.dbName}.json").success(_onLoadComplete)
+  $scope.collections = Collection.query({ dbName: $scope.dbName }, _onLoadComplete)
 
   $scope.isLoading = -> $scope.loading
 

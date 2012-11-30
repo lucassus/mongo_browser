@@ -1,5 +1,6 @@
 describe "DocumentsCtrl", ->
   beforeEach module("mb.services")
+  beforeEach module("mb.resources")
   beforeEach module("mocks")
 
   $scope = null
