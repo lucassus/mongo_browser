@@ -58,13 +58,21 @@ describe MongoBrowser::Models::Server do
     end
 
     describe "#database" do
-      it "returns a database with the given name" do
-        database = server.database("first_database")
+      let(:database) { server.database("first_database") }
 
+      it "returns a database with the given name" do
         expect(database).to be_an_instance_of(MongoBrowser::Models::Database)
         expect(database.name).to eq("first_database")
       end
     end
-  end
 
+    describe "#info" do
+      let(:info) { server.info }
+
+      it "returns an information about the current connection" do
+        expect(info).not_to be_nil
+        expect(info).to be_an_instance_of(BSON::OrderedHash)
+      end
+    end
+  end
 end

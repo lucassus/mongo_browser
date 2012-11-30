@@ -23,9 +23,9 @@ describe MongoBrowser::Models::Collection do
   its(:size) { should == 2 }
 
   describe "#stats" do
-    it "returns stats for the collection" do
-      stats = collection.stats
+    let(:stats) { collection.stats }
 
+    it "returns stats for the collection" do
       expect(stats).not_to be_nil
       expect(stats).to be_an_instance_of(BSON::OrderedHash)
     end

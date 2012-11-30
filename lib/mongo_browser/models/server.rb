@@ -27,6 +27,13 @@ module MongoBrowser
         database_names.map { |name| database(name) }
       end
 
+      # Get the build information for the current connection.
+      #
+      # @return [Hash]
+      def info
+        connection.server_info
+      end
+
       def connection
         @connection ||= Mongo::Connection.new(host, port)
       end

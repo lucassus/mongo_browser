@@ -61,5 +61,4 @@ describe MongoBrowser::Models::Pager do
       end
     end
   end
-
 end

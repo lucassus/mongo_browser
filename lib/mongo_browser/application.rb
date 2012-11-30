@@ -97,7 +97,7 @@ module MongoBrowser
 
     # Server info
     get "/server_info" do
-      @server_info = connection.server_info
+      @server_info = server.info
       erb :"server_info"
     end
 
