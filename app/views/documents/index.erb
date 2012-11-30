@@ -24,10 +24,10 @@
       <tbody>
       <% @documents.each do |document| %>
         <tr class="document">
-          <td><%= document["_id"] %></td>
-          <td><%= document.ai(html: true).gsub("BSON::", "") %></td>
+          <td><%= document.id %></td>
+          <td><%= document.data.ai(html: true).gsub("BSON::", "") %></td>
           <td>
-            <a ng-click="delete('<%= document["_id"] %>')" class="btn btn-danger" data-method="delete">
+            <a ng-click="delete('<%= document.id %>')" class="btn btn-danger" data-method="delete">
               <i class="icon-remove-circle"></i>
               Delete
             </a>

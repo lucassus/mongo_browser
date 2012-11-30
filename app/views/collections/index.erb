@@ -24,7 +24,7 @@
       <tbody>
         <tr ng-repeat="collection in collections">
           <td>
-            <a href="/databases/<%= params[:db_name] %>/collections/{{collection.name}}">
+            <a href="/databases/{{collection.db_name}}/collections/{{collection.name}}">
               {{collection.name}}
             </a>
           </td>
