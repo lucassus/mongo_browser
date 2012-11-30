@@ -1,4 +1,4 @@
-@CollectionsCtrl = ($scope, $routeParams, Collection, tableFilterFactory, confirmationDialog, doAction) ->
+@CollectionsCtrl = ($scope, $routeParams, Collection, tableFilterFactory, confirmationDialog) ->
   $scope.dbName = $routeParams.dbName
 
   _onLoadComplete = (data) ->
@@ -9,8 +9,11 @@
 
     $scope.loading = false
 
-  $scope.loading = true
-  $scope.collections = Collection.query({ dbName: $scope.dbName }, _onLoadComplete)
+  $scope.fetchCollections = ->
+    $scope.loading = true
+    $scope.collections = Collection.query({ dbName: $scope.dbName }, _onLoadComplete)
+
+  $scope.fetchCollections()
 
   $scope.isLoading = -> $scope.loading
 
@@ -18,5 +21,8 @@
     confirmationDialog
       message: "Deleting #{collection.name}. Are you sure?"
       onOk: ->
-        url = "/databases/#{$scope.dbName}/collections/#{collection.name}"
-        doAction(url, "delete")
+        resource = new Collection()
+        params = dbName: $scope.dbName, collectionName: collection.name
+
+        resource.$delete params, ->
+          $scope.fetchCollections()

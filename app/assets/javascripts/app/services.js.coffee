@@ -42,19 +42,3 @@ angular.module "mb.services", [], ($provide) ->
             $log.info("Confirmation dialog was disposed")
             (options.onCancel || ->)()
   ]
-
-  # TODO this will be removed in the future
-  #       since all request will be handled by ajax
-  $provide.factory "doAction", ->
-    (url, method = "get") ->
-      form = $("<form />")
-          .attr("method", "post")
-          .attr("action", url)
-
-      metadataInput = $("<input />")
-          .attr("type", "hidden")
-          .attr("name", "_method")
-          .val(method)
-
-      form.hide().append(metadataInput).appendTo("body")
-      form.submit()

@@ -1,4 +1,4 @@
-@DatabasesCtrl = ($scope, Database, tableFilterFactory, confirmationDialog, doAction) ->
+@DatabasesCtrl = ($scope, Database, tableFilterFactory, confirmationDialog) ->
   _onLoadComplete = (data) ->
     $scope.tableFilter = tableFilterFactory($scope, "databases")
 
@@ -7,8 +7,11 @@
 
     $scope.loading = false
 
-  $scope.loading = true
-  $scope.databases = Database.query(_onLoadComplete)
+  $scope.fetchDatabases = ->
+    $scope.loading = true
+    $scope.databases = Database.query(_onLoadComplete)
+
+  $scope.fetchDatabases()
 
   $scope.isLoading = -> $scope.loading
 
@@ -16,5 +19,8 @@
     confirmationDialog
       message: "Deleting #{database.name}. Are you sure?"
       onOk: ->
-        url = "/databases/#{database.name}"
-        doAction(url, "delete")
+        resource = new Database()
+        params = dbName: database.name
+
+        resource.$delete params, ->
+          $scope.fetchDatabases()

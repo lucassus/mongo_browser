@@ -4,7 +4,6 @@ describe "DocumentsCtrl", ->
   beforeEach module("mocks")
 
   $scope = null
-  doAction = null
   $httpBackend = null
 
   beforeEach inject ($injector, $rootScope, $controller) ->
@@ -16,7 +15,7 @@ describe "DocumentsCtrl", ->
     $routeParams.collectionName = "test_collection"
 
     $httpBackend = $injector.get('$httpBackend')
-    $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection.json")
+    $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/documents.json")
         .respond([])
 
     $controller window.DocumentsCtrl,
@@ -33,7 +32,7 @@ describe "DocumentsCtrl", ->
   describe "#delete", ->
     it "shows a confirmation dialog", inject (bootboxDialogsHandler) ->
       spyOn(bootboxDialogsHandler, "confirm")
-      $scope.delete("dummy-document-id")
+      $scope.delete(id: "dummy-document-id")
       expect(bootboxDialogsHandler.confirm).toHaveBeenCalledWith \
           "Are you sure?",
           jasmine.any(Function)
@@ -41,16 +40,16 @@ describe "DocumentsCtrl", ->
     describe "when the dialog was confirmed", ->
       it "sends a delete request", inject (bootboxDialogsHandler) ->
         # Given
-        $httpBackend.when("DELETE", "/api/databases/test_database/collections/test_collection/dummy-document-id.json")
+        $httpBackend.when("DELETE", "/api/databases/test_database/collections/test_collection/documents/dummy-document-id.json")
           .respond([])
 
         # When
-        $scope.delete("dummy-document-id")
+        $scope.delete(id: "dummy-document-id")
         bootboxDialogsHandler.confirmed()
         $httpBackend.flush()
 
     describe "when the dialog was disposed", ->
       it "does nothing", inject (bootboxDialogsHandler) ->
         # When
-        $scope.delete("dummy-document-id")
+        $scope.delete(id: "dummy-document-id")
         bootboxDialogsHandler.disposed()

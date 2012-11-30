@@ -5,18 +5,15 @@ describe "DatabasesCtrl", ->
 
   $scope = null
   $httpBackend = null
-  doAction = null
 
   beforeEach inject ($injector, $rootScope, $controller) ->
     $httpBackend = $injector.get('$httpBackend')
 
     $scope = $rootScope.$new()
-    doAction = jasmine.createSpy("do action")
 
     $httpBackend.when("GET", "/api/databases.json").respond([])
     $controller window.DatabasesCtrl,
         $scope: $scope
-        doAction: doAction
 
     $httpBackend.flush()
 
@@ -24,6 +21,7 @@ describe "DatabasesCtrl", ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()
 
+  # TODO rewrite this spec
   describe "#delete", ->
     it "shows a confirmation dialog", inject (bootboxDialogsHandler) ->
       spyOn(bootboxDialogsHandler, "confirm")
@@ -34,20 +32,17 @@ describe "DatabasesCtrl", ->
 
     describe "when the dialog was confirmed", ->
       it "sends a delete request", inject (bootboxDialogsHandler) ->
+        # Given
+        $httpBackend.when("DELETE", "/api/databases/test_database_name.json")
+            .respond([])
+
         # When
         $scope.delete(name: "test_database_name")
         bootboxDialogsHandler.confirmed()
-
-        # Then
-        expect(doAction).toHaveBeenCalledWith \
-            "/databases/test_database_name",
-            "delete"
+        $httpBackend.flush()
 
     describe "when the dialog was disposed", ->
       it "does nothing", inject (bootboxDialogsHandler) ->
         # When
         $scope.delete(name: "test_database_name")
         bootboxDialogsHandler.disposed()
-
-        # Then
-        expect(doAction).not.toHaveBeenCalled()

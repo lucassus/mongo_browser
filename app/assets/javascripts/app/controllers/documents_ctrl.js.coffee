@@ -13,10 +13,12 @@
 
   $scope.fetchDocuments()
 
-  $scope.delete = (id) ->
+  $scope.delete = (document) ->
     confirmationDialog
       message: "Are you sure?"
       onOk: ->
-        document = new Document()
-        params = dbName: $scope.dbName, collectionName: $scope.collectionName, id: id
-        document.$delete params, -> $scope.fetchDocuments()
+        resource = new Document()
+        params = dbName: $scope.dbName, collectionName: $scope.collectionName, id: document.id
+
+        resource.$delete params, ->
+          $scope.fetchDocuments()

@@ -55,8 +55,18 @@ module MongoBrowser
       end
     end
 
+    # Delete a database
+    delete "/api/databases/:db_name.json" do |db_name|
+      database = server.database(db_name)
+      database.drop!
+
+      respond_to do |format|
+        format.json { true }
+      end
+    end
+
     # Collections list
-    get "/api/databases/:db_name.json" do |db_name|
+    get "/api/databases/:db_name/collections.json" do |db_name|
       database = server.database(db_name)
       collections = database.collections.map do |collection|
         {
@@ -71,8 +81,23 @@ module MongoBrowser
       end
     end
 
+    # Delete a collection
+    delete "/api/databases/:db_name/collections/:collection_name.json" do |db_name, collection_name|
+      success = begin
+        collection = server.database(db_name).collection(collection_name)
+        collection.drop!
+        true
+      rescue Mongo::OperationFailure => e
+        false
+      end
+
+      respond_to do |format|
+        format.json { success }
+      end
+    end
+
     # Documents list
-    get "/api/databases/:db_name/collections/:collection_name.json" do |db_name, collection_name|
+    get "/api/databases/:db_name/collections/:collection_name/documents.json" do |db_name, collection_name|
       collection = server.database(db_name).collection(collection_name)
       documents, pagination = collection.documents_with_pagination(params[:page])
 
@@ -88,16 +113,8 @@ module MongoBrowser
       end
     end
 
-    get "/api/server_info.json" do
-      server_info = server.info
-
-      respond_to do |format|
-        format.json { server_info.to_json }
-      end
-    end
-
     # Delete a document
-    delete "/api/databases/:db_name/collections/:collection_name/:id.json" do |db_name, collection_name, id|
+    delete "/api/databases/:db_name/collections/:collection_name/documents/:id.json" do |db_name, collection_name, id|
       collection = server.database(db_name).collection(collection_name)
       document = collection.find(id)
       collection.remove!(document)
@@ -107,34 +124,13 @@ module MongoBrowser
       end
     end
 
-    # Delete a database
-    #delete "/databases/:db_name" do |db_name|
-    #  database = server.database(db_name)
-    #  database.drop!
-    #
-    #  flash[:info] = "Database #{db_name} has been deleted."
-    #  redirect "/"
-    #end
+    get "/api/server_info.json" do
+      server_info = server.info
 
-    # Delete a collection
-    #delete "/databases/:db_name/collections/:collection_name" do |db_name, collection_name|
-    #  begin
-    #    collection = server.database(db_name).collection(collection_name)
-    #    collection.drop!
-    #
-    #    flash[:info] = "Collection #{collection_name} has been deleted."
-    #  rescue Mongo::OperationFailure => e
-    #    flash[:error] = e.message
-    #  end
-    #
-    #  redirect "/databases/#{db_name}"
-    #end
-
-    # Server info
-    #get "/server_info" do
-    #  @server_info = server.info
-    #  erb :"server_info"
-    #end
+      respond_to do |format|
+        format.json { server_info.to_json }
+      end
+    end
 
     private
 
