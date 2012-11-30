@@ -1,8 +1,7 @@
 @CollectionsCtrl = ($scope, $element, $http, tableFilterFactory, confirmationDialog, doAction) ->
   dbName = $element.data("db-name")
 
-  $scope.loading = true
-  $http.get("/databases/#{dbName}.json").success (data) ->
+  _onLoadComplete = (data) ->
     $scope.collections = data
     $scope.tableFilter = tableFilterFactory($scope, "collections")
 
@@ -10,6 +9,9 @@
       $scope.tableFilter.filter(value)
 
     $scope.loading = false
+
+  $scope.loading = true
+  $http.get("/databases/#{dbName}.json").success(_onLoadComplete)
 
   $scope.isLoading = -> $scope.loading
 
