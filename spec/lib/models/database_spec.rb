@@ -15,7 +15,7 @@ describe MongoBrowser::Models::Database do
   its(:id) { should == mongo_db_name }
   its(:name) { should == mongo_db_name }
 
-  its(:size) { should == 218103808 }
+  its(:size) { should be_an_instance_of(Fixnum) }
 
   describe "#collection_names" do
     subject { database.collection_names }
