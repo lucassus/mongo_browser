@@ -11,6 +11,8 @@ require "mongo_browser/middleware/sprockets_sinatra"
 
 module MongoBrowser
   class Application < Sinatra::Base
+    include Models
+
     configure :development do
       register Sinatra::Reloader
     end
@@ -26,12 +28,12 @@ module MongoBrowser
 
     # Databases list
     get "/" do
-      databases = connection.database_info
-      @databases = databases.map do |name, size|
+      @databases = server.databases.map do |db|
         {
-            name: name,
-            size: size.to_f / (1024 * 1024),
-            count: connection.db(name).collections.count
+            id:    db.id,
+            name:  db.name,
+            size:  db.size.to_f / (1024 * 1024),
+            count: db.count
         }
       end
 
@@ -40,7 +42,8 @@ module MongoBrowser
 
     # Collections list
     get "/databases/:db_name" do |db_name|
-      database = connection.db(db_name)
+      database = server.database(db_name)
+
       @collections = database.collections
       @stats = database.stats
 
@@ -49,7 +52,8 @@ module MongoBrowser
 
     # Delete a database
     delete "/databases/:db_name" do |db_name|
-      connection.drop_database(db_name)
+      database = server.database(db_name)
+      database.drop!
 
       flash[:info] = "Database #{db_name} has been deleted."
       redirect "/"
@@ -57,11 +61,10 @@ module MongoBrowser
 
     # Documents list
     get "/databases/:db_name/collections/:collection_name" do |db_name, collection_name|
-      database = connection.db(db_name)
-      collection = database.collection(collection_name)
+      collection = server.database(db_name).collection(collection_name)
 
       @stats = collection.stats
-      @documents, @pagination = paginate_documents_for(collection, params[:page])
+      @documents, @pagination = collection.documents_with_pagination(params[:page])
 
       erb :"documents/index"
     end
@@ -69,8 +72,8 @@ module MongoBrowser
     # Delete a collection
     delete "/databases/:db_name/collections/:collection_name" do |db_name, collection_name|
       begin
-        database = connection.db(db_name)
-        database.drop_collection(collection_name)
+        collection = server.database(db_name).collection(collection_name)
+        collection.drop!
 
         flash[:info] = "Collection #{collection_name} has been deleted."
       rescue Mongo::OperationFailure => e
@@ -82,11 +85,9 @@ module MongoBrowser
 
     # Delete a document
     delete "/databases/:db_name/collections/:collection_name/:id" do |db_name, collection_name, id|
-      database = connection.db(db_name)
-      collection = database.collection(collection_name)
-
-      id = BSON::ObjectId(id)
-      collection.remove(_id: id)
+      collection = server.database(db_name).collection(collection_name)
+      document = collection.find(id)
+      collection.remove!(document)
 
       flash[:info] = "Document #{id} has been deleted."
       redirect "/databases/#{db_name}/collections/#{collection_name}"
@@ -94,34 +95,14 @@ module MongoBrowser
 
     # Server info
     get "/server_info" do
-      @server_info = connection.server_info
+      @server_info = server.info
       erb :"server_info"
     end
 
     private
 
-    def paginate_documents_for(collection, page = 1)
-      per_page = 25
-
-      count = collection.count
-      total_pages = (count.to_f / per_page).ceil
-
-      page = if page.to_i <= 0 then 1
-             else
-               [page.to_i, total_pages].min
-             end
-
-      offset = (page - 1) * per_page
-      documents = collection.find.skip(offset).limit(per_page)
-      pagination = OpenStruct.new \
-        total_pages: total_pages,
-        current_page: page
-
-      return documents, pagination
-    end
-
-    def connection
-      @connection ||= Mongo::Connection.new(MongoBrowser.mongodb_host, MongoBrowser.mongodb_port)
+    def server
+      @server ||= Server.current
     end
   end
 end
