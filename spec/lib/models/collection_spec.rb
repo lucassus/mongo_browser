@@ -45,4 +45,36 @@ describe MongoBrowser::Models::Collection do
 
     it "returns a pager"
   end
+
+  describe "#find" do
+    let(:document) { collection.find(id) }
+
+    context "when a document exists in the collection" do
+      let(:mongo_document) { mongo_collection.find.first }
+      let(:id) { mongo_document["_id"].to_s }
+
+      it "returns a documents with the given id" do
+        expect(document).not_to be_nil
+        expect(document).to be_an_instance_of(MongoBrowser::Models::Document)
+        expect(document.id.to_s).to eq(id)
+      end
+    end
+
+    context "when the document does not exist" do
+      let(:id) { "50b908f9dac5d53509000010" }
+
+      it "returns nil" do
+        expect(document).to be_nil
+      end
+    end
+  end
+
+  describe "#remove!" do
+    let(:document) { MongoBrowser::Models::Document.new(mongo_collection.find.first) }
+
+    it "removes a document from the collection" do
+      expect(collection.remove!(document)).to be_true
+      expect(collection.find(document.id)).to be_nil
+    end
+  end
 end

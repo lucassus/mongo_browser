@@ -85,11 +85,9 @@ module MongoBrowser
 
     # Delete a document
     delete "/databases/:db_name/collections/:collection_name/:id" do |db_name, collection_name, id|
-      database = connection.db(db_name)
-      collection = database.collection(collection_name)
-
-      id = BSON::ObjectId(id)
-      collection.remove(_id: id)
+      collection = server.database(db_name).collection(collection_name)
+      document = collection.find(id)
+      collection.remove!(document)
 
       flash[:info] = "Document #{id} has been deleted."
       redirect "/databases/#{db_name}/collections/#{collection_name}"
@@ -102,11 +100,6 @@ module MongoBrowser
     end
 
     private
-
-    # TODO remove this method
-    def connection
-      server.connection
-    end
 
     def server
       @server ||= Server.current
