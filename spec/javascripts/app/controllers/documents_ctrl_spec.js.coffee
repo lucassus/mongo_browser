@@ -15,8 +15,6 @@ describe "DocumentsCtrl", ->
     $routeParams.dbName = "test_database"
     $routeParams.collectionName = "test_collection"
 
-    doAction = jasmine.createSpy("do action")
-
     $httpBackend = $injector.get('$httpBackend')
     $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection.json")
         .respond([])
@@ -24,7 +22,6 @@ describe "DocumentsCtrl", ->
     $controller window.DocumentsCtrl,
       $scope: $scope
       confirmationDialog: confirmationDialog
-      doAction: doAction
 
     $httpBackend.flush()
 
@@ -32,6 +29,7 @@ describe "DocumentsCtrl", ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()
 
+  # TODO rewrite this spec
   describe "#delete", ->
     it "shows a confirmation dialog", inject (bootboxDialogsHandler) ->
       spyOn(bootboxDialogsHandler, "confirm")
@@ -42,20 +40,17 @@ describe "DocumentsCtrl", ->
 
     describe "when the dialog was confirmed", ->
       it "sends a delete request", inject (bootboxDialogsHandler) ->
+        # Given
+        $httpBackend.when("DELETE", "/api/databases/test_database/collections/test_collection/dummy-document-id.json")
+          .respond([])
+
         # When
         $scope.delete("dummy-document-id")
         bootboxDialogsHandler.confirmed()
-
-        # Then
-        expect(doAction).toHaveBeenCalledWith \
-            "/databases/test_database/collections/test_collection/dummy-document-id",
-            "delete"
+        $httpBackend.flush()
 
     describe "when the dialog was disposed", ->
       it "does nothing", inject (bootboxDialogsHandler) ->
         # When
         $scope.delete("dummy-document-id")
         bootboxDialogsHandler.disposed()
-
-        # Then
-        expect(doAction).not.toHaveBeenCalled()

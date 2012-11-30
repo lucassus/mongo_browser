@@ -96,6 +96,17 @@ module MongoBrowser
       end
     end
 
+    # Delete a document
+    delete "/api/databases/:db_name/collections/:collection_name/:id.json" do |db_name, collection_name, id|
+      collection = server.database(db_name).collection(collection_name)
+      document = collection.find(id)
+      collection.remove!(document)
+
+      respond_to do |format|
+        format.json { true }
+      end
+    end
+
     # Delete a database
     #delete "/databases/:db_name" do |db_name|
     #  database = server.database(db_name)
@@ -103,16 +114,6 @@ module MongoBrowser
     #
     #  flash[:info] = "Database #{db_name} has been deleted."
     #  redirect "/"
-    #end
-
-    # Documents list
-    #get "/databases/:db_name/collections/:collection_name" do |db_name, collection_name|
-    #  collection = server.database(db_name).collection(collection_name)
-    #
-    #  @stats = collection.stats
-    #  @documents, @pagination = collection.documents_with_pagination(params[:page])
-    #
-    #  erb :"documents/index"
     #end
 
     # Delete a collection
@@ -127,16 +128,6 @@ module MongoBrowser
     #  end
     #
     #  redirect "/databases/#{db_name}"
-    #end
-
-    # Delete a document
-    #delete "/databases/:db_name/collections/:collection_name/:id" do |db_name, collection_name, id|
-    #  collection = server.database(db_name).collection(collection_name)
-    #  document = collection.find(id)
-    #  collection.remove!(document)
-    #
-    #  flash[:info] = "Document #{id} has been deleted."
-    #  redirect "/databases/#{db_name}/collections/#{collection_name}"
     #end
 
     # Server info
