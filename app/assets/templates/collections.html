@@ -1,0 +1,65 @@
+<header>
+  <h2>{{dbName}} collections</h2>
+</header>
+
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#collections" data-toggle="tab">Collections</a>
+  </li>
+  <li><a href="#stats" data-toggle="tab">Stats</a></li>
+</ul>
+
+<div class="tab-content">
+  <div ng-hide="isLoading()" class="tab-pane active" id="collections">
+    <filter placeholder="Enter collection name"></filter>
+
+    <table ng-hide="tableFilter.noMatches()" class="table table-striped table-hover collections">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Documents</th>
+        <th class="actions">&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="collection in collections">
+        <td>
+          <a href="/databases/{{collection.db_name}}/collections/{{collection.name}}">
+            {{collection.name}}
+          </a>
+        </td>
+        <td>{{collection.size}}</td>
+        <td>
+          <a class="btn btn-danger" ng-click="delete(collection)">
+            <i class="icon-remove-circle"></i>
+            Delete
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div ng-show="tableFilter.noMatches()" class="filter alert">
+      Nothing has been found.
+    </div>
+  </div>
+
+  <div class="tab-pane" id="stats">
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th>Property</th>
+        <th>Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @stats.each do |property, value| %>
+      <tr>
+        <td><%= property %></td>
+        <td><%= value %></td>
+      </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

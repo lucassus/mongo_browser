@@ -8,5 +8,6 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 
 script:
+  - "rake jasmine:ci"
   - "rspec spec"
   - "cucumber features"

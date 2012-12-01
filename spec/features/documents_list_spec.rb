@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Documents list", type: :request do
+describe "Documents list", type: :request, js: true do
   let(:connection) { Fixtures.instance.connection }
 
   before do
@@ -44,7 +44,7 @@ describe "Documents list", type: :request do
       end
     end
 
-    it "displays information about the collection", js: true do
+    it "displays information about the collection" do
       click_link "Stats"
 
       within "table" do
@@ -54,7 +54,7 @@ describe "Documents list", type: :request do
       end
     end
 
-    describe "click on delete document button", js: true do
+    describe "click on delete document button" do
       let(:document) do
         database = connection.db("first_database")
         collection = database.collection(current_collection_name)

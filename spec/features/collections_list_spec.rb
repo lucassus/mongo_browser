@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Collections list", type: :request do
+describe "Collections list", type: :request, js: true do
   before do
     visit "/"
 
@@ -29,7 +29,7 @@ describe "Collections list", type: :request do
     end
   end
 
-  it "displays information about the database", js: true do
+  it "displays information about the database" do
     click_link "Stats"
 
     within "table" do
@@ -39,7 +39,7 @@ describe "Collections list", type: :request do
     end
   end
 
-  describe "filtering", js: true do
+  describe "filtering" do
     it "filters collections by name" do
       fill_in_filter("second")
 
@@ -58,7 +58,7 @@ describe "Collections list", type: :request do
     end
   end
 
-  describe "click on delete collection button", js: true do
+  describe "click on delete collection button" do
     it "deletes a collection" do
       click_delete_button_for("second_collection")
       confirm_dialog

@@ -1,6 +1,7 @@
 require "sinatra"
 require "sinatra/reloader"
 require "sinatra/flash"
+require "sinatra/respond_with"
 require "will_paginate-bootstrap"
 
 require "sprockets"
@@ -25,78 +26,110 @@ module MongoBrowser
 
     use Middleware::SprocketsSinatra, :root => File.join(settings.root, "..")
     register WillPaginate::Sinatra
+    register Sinatra::RespondWith
+
+    # Loads given template from assets/templates directory
+    get "/ng/templates/:name.html" do |template_name|
+      send_file File.join(settings.root, "assets/templates/#{template_name}.html")
+    end
+
+    # Welcome page
+    # All routes without `/api` prefix
+    get /^(?!\/api).+/ do
+      erb :"index"
+    end
 
     # Databases list
-    get "/" do
-      @databases = server.databases.map do |db|
+    get "/api/databases.json" do
+      databases = server.databases.map do |db|
         {
             id:    db.id,
             name:  db.name,
-            size:  db.size.to_f / (1024 * 1024),
+            size:  db.size,
             count: db.count
         }
       end
 
-      erb :"databases/index"
-    end
-
-    # Collections list
-    get "/databases/:db_name" do |db_name|
-      database = server.database(db_name)
-
-      @collections = database.collections
-      @stats = database.stats
-
-      erb :"collections/index"
+      respond_to do |format|
+        format.json { databases.to_json }
+      end
     end
 
     # Delete a database
-    delete "/databases/:db_name" do |db_name|
+    delete "/api/databases/:db_name.json" do |db_name|
       database = server.database(db_name)
       database.drop!
 
-      flash[:info] = "Database #{db_name} has been deleted."
-      redirect "/"
+      respond_to do |format|
+        format.json { true }
+      end
     end
 
-    # Documents list
-    get "/databases/:db_name/collections/:collection_name" do |db_name, collection_name|
-      collection = server.database(db_name).collection(collection_name)
+    # Collections list
+    get "/api/databases/:db_name/collections.json" do |db_name|
+      database = server.database(db_name)
+      collections = database.collections.map do |collection|
+        {
+            db_name: collection.db_name,
+            name: collection.name,
+            size: collection.size
+        }
+      end
 
-      @stats = collection.stats
-      @documents, @pagination = collection.documents_with_pagination(params[:page])
-
-      erb :"documents/index"
+      respond_to do |format|
+        format.json { collections.to_json }
+      end
     end
 
     # Delete a collection
-    delete "/databases/:db_name/collections/:collection_name" do |db_name, collection_name|
-      begin
+    delete "/api/databases/:db_name/collections/:collection_name.json" do |db_name, collection_name|
+      success = begin
         collection = server.database(db_name).collection(collection_name)
         collection.drop!
-
-        flash[:info] = "Collection #{collection_name} has been deleted."
+        true
       rescue Mongo::OperationFailure => e
-        flash[:error] = e.message
+        false
       end
 
-      redirect "/databases/#{db_name}"
+      respond_to do |format|
+        format.json { success }
+      end
+    end
+
+    # Documents list
+    get "/api/databases/:db_name/collections/:collection_name/documents.json" do |db_name, collection_name|
+      collection = server.database(db_name).collection(collection_name)
+      documents, pagination = collection.documents_with_pagination(params[:page])
+
+      documents.map! do |doc|
+        {
+            id: doc.id.to_s,
+            data: doc.data.to_json
+        }
+      end
+
+      respond_to do |format|
+        format.json { documents.to_json }
+      end
     end
 
     # Delete a document
-    delete "/databases/:db_name/collections/:collection_name/:id" do |db_name, collection_name, id|
+    delete "/api/databases/:db_name/collections/:collection_name/documents/:id.json" do |db_name, collection_name, id|
       collection = server.database(db_name).collection(collection_name)
       document = collection.find(id)
       collection.remove!(document)
 
-      flash[:info] = "Document #{id} has been deleted."
-      redirect "/databases/#{db_name}/collections/#{collection_name}"
+      respond_to do |format|
+        format.json { true }
+      end
     end
 
-    # Server info
-    get "/server_info" do
-      @server_info = server.info
-      erb :"server_info"
+    get "/api/server_info.json" do
+      server_info = server.info
+
+      respond_to do |format|
+        format.json { server_info.to_json }
+      end
     end
 
     private

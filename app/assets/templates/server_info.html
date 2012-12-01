@@ -10,11 +10,9 @@
   </tr>
   </thead>
   <tbody>
-  <% @server_info.each do |property, value| %>
-    <tr>
-      <td><%= property %></td>
-      <td><%= value %></td>
+    <tr ng-repeat="(property, value) in serverInfo">
+      <td>{{property}}</td>
+      <td>{{value}}</td>
     </tr>
-  <% end %>
   </tbody>
 </table>
