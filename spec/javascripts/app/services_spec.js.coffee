@@ -110,3 +110,47 @@ describe "services", ->
 
         # Then
         expect(onCancel).toHaveBeenCalled()
+
+  describe "alerts", ->
+    it "is defined", inject (alerts) ->
+      expect(alerts).toBeDefined()
+
+    describe "#info", ->
+      it "pushesh the given message", inject (alerts) ->
+        # Given
+        testMessage = "This is a test message!"
+        otherTestMessage = "This is a second test message!"
+
+        # When
+        alerts.info(testMessage)
+        alerts.info(otherTestMessage)
+
+        # Then
+        expect(alerts.messages).toEqual(info: [testMessage, otherTestMessage])
+
+    describe "#error", ->
+      it "pushesh the given message", inject (alerts) ->
+        # Given
+        testMessage = "This is a test message!"
+
+        # When
+        alerts.error(testMessage)
+
+        # Then
+        expect(alerts.messages).toEqual(error: [testMessage])
+
+    describe "#dispose", ->
+      it "removes a message with the given type at the specified index", inject (alerts) ->
+        # Given
+        alerts.info("First message")
+        alerts.info("Second message")
+        alerts.info("Third message")
+        alerts.error("Error message")
+
+        # When
+        alerts.dispose("info", 1)
+        alerts.dispose("error", 0)
+
+        # Then
+        expect(alerts.messages["info"]).toEqual(["First message", "Third message"])
+        expect(alerts.messages["error"]).toEqual([])

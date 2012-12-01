@@ -42,3 +42,21 @@ angular.module "mb.services", [], ($provide) ->
             $log.info("Confirmation dialog was disposed")
             (options.onCancel || ->)()
   ]
+
+  $provide.factory "alerts", [
+    "$log", ($log) ->
+      messages: {}
+
+      push: (type, message) ->
+        $log.info("Alert [#{type}]", message)
+
+        @messages[type] ||= []
+        @messages[type].push(message)
+
+      info: (message) -> @push("info", message)
+      error: (message) -> @push("error", message)
+
+      # Remove a message with the given type at the given index
+      dispose: (type, at) ->
+        @messages[type].splice(at, 1)
+  ]
