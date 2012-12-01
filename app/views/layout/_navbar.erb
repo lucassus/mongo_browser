@@ -2,16 +2,10 @@
   <div class="container">
     <a class="brand" href="/">MongoBrowser</a>
     <div class="nav-collapse collapse">
-      <% if params[:db_name] %>
-        <ul class="nav breadcrumbs">
-          <% unless params[:collection_name] %>
-            <li><a href="#"><%= params[:db_name] %></a></li>
-          <% else %>
-            <li><a href="/databases/<%= params[:db_name] %>"><%= params[:db_name] %></a></li>
-            <li><a href="#"><%= params[:collection_name] %></a></li>
-          <% end %>
-        </ul>
-      <% end %>
+      <ul ng-controller="BreadcrumbsCtrl" class="nav breadcrumbs">
+        <li ng-show="dbName"><a href="/databases/{{dbName}}/collections">{{dbName}}</a></li>
+        <li ng-show="collectionName"><a href="/databases/{{dbName}}/collections/{{collectionName}}">{{collectionName}}</a></li>
+      </ul>
 
       <ul class="nav pull-right">
         <li><a href="/server_info">Server Info</a></li>

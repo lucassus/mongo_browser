@@ -18,7 +18,8 @@ describe "Documents list", type: :request, js: true do
         end
 
         within "li:nth-child(2)" do
-          expect(page).to have_link(current_collection_name, href: "#")
+          href = "/databases/first_database/collections/#{current_collection_name}"
+          expect(page).to have_link(current_collection_name, href: href)
         end
       end
     end

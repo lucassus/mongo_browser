@@ -10,7 +10,7 @@ describe "Collections list", type: :request, js: true do
   it "displays the breadcrumb" do
     within ".breadcrumbs" do
       within "li:nth-child(1)" do
-        expect(page).to have_link("first_database", href: "#")
+        expect(page).to have_link("first_database", href: "/databases/first_database/collections")
       end
     end
   end

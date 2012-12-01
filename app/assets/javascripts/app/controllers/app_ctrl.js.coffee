@@ -1,0 +1,1 @@
+@AppCtrl = ($scope) ->
