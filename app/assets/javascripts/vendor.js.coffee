@@ -1,5 +1,5 @@
 #= require jquery
 #= require bootstrap
 #= require bootbox
-#= require angular
-#= require angular-resource
+#= require angular/angular
+#= require angular/angular-resource

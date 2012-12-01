@@ -58,5 +58,3 @@ Rake::RDocTask.new do |rd|
 end
 
 task :default => [:test,:features]
-
-import 'lib/tasks/jasmine.rake'
