@@ -6,11 +6,35 @@
   </head>
   <body ng-controller="AppCtrl">
     <div class="navbar navbar navbar-fixed-top">
-      <%= erb :"layout/_navbar" %>
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">MongoBrowser</a>
+          <div class="nav-collapse collapse">
+            <ul ng-controller="BreadcrumbsCtrl" class="nav breadcrumbs">
+              <li ng-show="dbName"><a href="/databases/{{dbName}}/collections">{{dbName}}</a></li>
+              <li ng-show="collectionName"><a href="/databases/{{dbName}}/collections/{{collectionName}}">{{collectionName}}</a></li>
+            </ul>
+
+            <ul class="nav pull-right">
+              <li><a href="/server_info">Server Info</a></li>
+              <li><a>v. <%= MongoBrowser::VERSION %></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
 
     <aside id="alerts">
-      <%= erb :"layout/_flash_messages" %>
+      <% unless flash(:flash).empty? %>
+        <div id="flash-messages">
+          <% flash(:flash).each do |message| %>
+            <div class="alert alert-<%= message[0] %>">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              <strong><%= message[0].capitalize %>!</strong> <%= message[1] %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     </aside>
 
     <section class="container fluid">
