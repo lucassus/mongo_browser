@@ -53,12 +53,10 @@
       </tr>
       </thead>
       <tbody>
-      <% @stats.each do |property, value| %>
-      <tr>
-        <td><%= property %></td>
-        <td><%= value %></td>
+      <tr ng-repeat="(property, value) in dbStats">
+        <td>{{property}}</td>
+        <td>{{value}}</td>
       </tr>
-      <% end %>
       </tbody>
     </table>
   </div>

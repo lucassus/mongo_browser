@@ -1,4 +1,4 @@
-@CollectionsCtrl = ($scope, $routeParams, Collection, tableFilterFactory, confirmationDialog) ->
+@CollectionsCtrl = ($scope, $routeParams, Collection, $http, tableFilterFactory, confirmationDialog) ->
   $scope.dbName = $routeParams.dbName
 
   _onLoadComplete = (data) ->
@@ -14,6 +14,10 @@
     $scope.collections = Collection.query({ dbName: $scope.dbName }, _onLoadComplete)
 
   $scope.fetchCollections()
+
+  # TODO create resource for this call
+  $http.get("/api/databases/#{$scope.dbName}/stats.json").success (data) ->
+    $scope.dbStats = data
 
   $scope.isLoading = -> $scope.loading
 

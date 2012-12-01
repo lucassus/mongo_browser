@@ -15,6 +15,8 @@ describe "CollectionsCtrl", ->
 
     $httpBackend.when("GET", "/api/databases/test_database/collections.json")
         .respond([])
+    $httpBackend.when("GET", "/api/databases/test_database/stats.json")
+        .respond({})
 
     $controller window.CollectionsCtrl,
       $scope: $scope

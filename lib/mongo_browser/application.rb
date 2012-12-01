@@ -65,6 +65,15 @@ module MongoBrowser
       end
     end
 
+    # Database stats
+    get "/api/databases/:db_name/stats.json" do |db_name|
+      database = server.database(db_name)
+
+      respond_to do |format|
+        format.json { database.stats.to_json }
+      end
+    end
+
     # Collections list
     get "/api/databases/:db_name/collections.json" do |db_name|
       database = server.database(db_name)
@@ -93,6 +102,15 @@ module MongoBrowser
 
       respond_to do |format|
         format.json { success }
+      end
+    end
+
+    # Collection stats
+    get "/api/databases/:db_name/collections/:collection_name/stats.json" do |db_name, collection_name|
+      collection = server.database(db_name).collection(collection_name)
+
+      respond_to do |format|
+        format.json { collection.stats.to_json }
       end
     end
 

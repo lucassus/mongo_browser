@@ -17,6 +17,8 @@ describe "DocumentsCtrl", ->
     $httpBackend = $injector.get('$httpBackend')
     $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/documents.json")
         .respond([])
+    $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/stats.json")
+        .respond({})
 
     $controller window.DocumentsCtrl,
       $scope: $scope

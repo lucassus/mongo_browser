@@ -1,4 +1,4 @@
-@DocumentsCtrl = ($scope, $routeParams, Document, confirmationDialog) ->
+@DocumentsCtrl = ($scope, $routeParams, $http, Document, confirmationDialog) ->
   $scope.dbName = $routeParams.dbName
   $scope.collectionName = $routeParams.collectionName
 
@@ -12,6 +12,10 @@
     $scope.documents = Document.query(params, _onLoadComplete())
 
   $scope.fetchDocuments()
+
+  # TODO create resource for this call
+  $http.get("/api/databases/#{$scope.dbName}/collections/#{$scope.collectionName}/stats.json").success (data) ->
+    $scope.collectionStats = data
 
   $scope.delete = (document) ->
     confirmationDialog
