@@ -44,7 +44,7 @@ angular.module "mb.services", [], ($provide) ->
   ]
 
   $provide.factory "alerts", [
-    "$log", ($log) ->
+    "$log", "$timeout", ($log, $timeout) ->
       lastId: 0
       messages: []
 
@@ -57,6 +57,9 @@ angular.module "mb.services", [], ($provide) ->
         $log.info("Alert [#{id}, #{type}]", text)
 
         @messages.push(id: id, type: type, text: text)
+        @delayedDispose(id)
+
+        id
 
       # Helper methods for various alerts types
       info: (text) -> @push("info", text)
@@ -64,7 +67,13 @@ angular.module "mb.services", [], ($provide) ->
 
       # Removes a message with the given id
       dispose: (id) ->
-        ids = @messages.map (message) -> message.id
-        at = ids.indexOf(id)
+        at = @messages.map((message) -> message.id).indexOf(id)
         @messages.splice(at, 1)
+
+      # Dispose the message after the given time in milliseconds
+      delayedDispose: (id, timeout = 3000) ->
+        disposeTheAlert = =>
+          $log.info("Disposing alert", id, "after", timeout, "milliseconds")
+          @dispose(id)
+        $timeout(disposeTheAlert, timeout)
   ]
