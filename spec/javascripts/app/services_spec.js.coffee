@@ -126,7 +126,8 @@ describe "services", ->
         alerts.info(otherTestMessage)
 
         # Then
-        expect(alerts.messages).toEqual(info: [testMessage, otherTestMessage])
+        expect(alerts.messages).toContain(type: "info", text: testMessage)
+        expect(alerts.messages).toContain(type: "info", text: otherTestMessage)
 
     describe "#error", ->
       it "pushesh the given message", inject (alerts) ->
@@ -137,7 +138,7 @@ describe "services", ->
         alerts.error(testMessage)
 
         # Then
-        expect(alerts.messages).toEqual(error: [testMessage])
+        expect(alerts.messages).toContain(type: "error", text: testMessage)
 
     describe "#dispose", ->
       it "removes a message with the given type at the specified index", inject (alerts) ->
@@ -148,9 +149,10 @@ describe "services", ->
         alerts.error("Error message")
 
         # When
-        alerts.dispose("info", 1)
-        alerts.dispose("error", 0)
+        alerts.dispose(1)
 
         # Then
-        expect(alerts.messages["info"]).toEqual(["First message", "Third message"])
-        expect(alerts.messages["error"]).toEqual([])
+        expect(alerts.messages).toContain(type: "info", text: "First message")
+        expect(alerts.messages).not.toContain(type: "info", text: "Second message")
+        expect(alerts.messages).toContain(type: "info", text: "Third message")
+        expect(alerts.messages).toContain(type: "error", text: "Error message")

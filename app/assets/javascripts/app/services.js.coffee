@@ -45,18 +45,17 @@ angular.module "mb.services", [], ($provide) ->
 
   $provide.factory "alerts", [
     "$log", ($log) ->
-      messages: {}
+      messages: []
 
-      push: (type, message) ->
-        $log.info("Alert [#{type}]", message)
+      push: (type, text) ->
+        $log.info("Alert [#{type}]", text)
 
-        @messages[type] ||= []
-        @messages[type].push(message)
+        @messages.push(type: type, text: text)
 
-      info: (message) -> @push("info", message)
-      error: (message) -> @push("error", message)
+      info: (text) -> @push("info", text)
+      error: (text) -> @push("error", text)
 
       # Remove a message with the given type at the given index
-      dispose: (type, at) ->
-        @messages[type].splice(at, 1)
+      dispose: (at) ->
+        @messages.splice(at, 1)
   ]
