@@ -21,6 +21,8 @@ autoWatch = true;
 
 browsers = ["Chrome"];
 
+reporters = ["dots"];
+
 junitReporter = {
   outputFile: "test_out/unit.xml",
   suite: "unit"

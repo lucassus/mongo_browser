@@ -25,11 +25,9 @@
     </div>
 
     <aside ng-controller="AlertsCtrl" id="alerts">
-      <div id="flash-messages">
-        <div ng-repeat="message in alertMessages" class="alert alert-{{message.type}}">
-          <button ng-click="disposeAlert($index)" type="button" class="close">×</button>
-          <strong>{{message.type}}</strong> {{message.text}}
-        </div>
+      <div ng-repeat="message in alertMessages" class="alert alert-{{message.type}}">
+        <button ng-click="disposeAlert($index)" type="button" class="close">×</button>
+        <strong>{{message.type}}</strong> {{message.text}}
       </div>
     </aside>
 

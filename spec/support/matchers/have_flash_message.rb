@@ -5,7 +5,7 @@
 # end
 RSpec::Matchers.define :have_flash_message do |message|
   match do
-    within "div#flash-messages" do
+    within "aside#alerts" do
       page.should have_content(message)
     end
   end

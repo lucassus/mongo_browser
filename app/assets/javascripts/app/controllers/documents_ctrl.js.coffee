@@ -1,4 +1,4 @@
-@DocumentsCtrl = ($scope, $routeParams, $http, Document, confirmationDialog) ->
+@DocumentsCtrl = ($scope, $routeParams, $http, Document, confirmationDialog, alerts) ->
   $scope.dbName = $routeParams.dbName
   $scope.collectionName = $routeParams.collectionName
 
@@ -25,4 +25,5 @@
         params = dbName: $scope.dbName, collectionName: $scope.collectionName, id: document.id
 
         resource.$delete params, ->
+          alerts.info("Document #{document.id} has been deleted.")
           $scope.fetchDocuments()

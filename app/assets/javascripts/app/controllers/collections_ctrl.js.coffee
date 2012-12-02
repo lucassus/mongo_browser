@@ -1,4 +1,4 @@
-@CollectionsCtrl = ($scope, $routeParams, Collection, $http, tableFilterFactory, confirmationDialog) ->
+@CollectionsCtrl = ($scope, $routeParams, Collection, $http, tableFilterFactory, confirmationDialog, alerts) ->
   $scope.dbName = $routeParams.dbName
 
   _onLoadComplete = (data) ->
@@ -29,4 +29,5 @@
         params = dbName: $scope.dbName, collectionName: collection.name
 
         resource.$delete params, ->
+          alerts.info("Collection #{collection.name} has been deleted.")
           $scope.fetchCollections()

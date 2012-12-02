@@ -1,4 +1,4 @@
-@DatabasesCtrl = ($scope, Database, tableFilterFactory, confirmationDialog) ->
+@DatabasesCtrl = ($scope, Database, tableFilterFactory, confirmationDialog, alerts) ->
   _onLoadComplete = (data) ->
     $scope.tableFilter = tableFilterFactory($scope, "databases")
 
@@ -23,4 +23,5 @@
         params = dbName: database.name
 
         resource.$delete params, ->
+          alerts.info("Database #{database.name} has been deleted.")
           $scope.fetchDatabases()

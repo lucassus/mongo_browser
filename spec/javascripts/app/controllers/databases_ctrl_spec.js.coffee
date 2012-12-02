@@ -5,13 +5,15 @@ describe "DatabasesCtrl", ->
 
   $scope = null
   $httpBackend = null
+  alerts = null
 
   beforeEach inject ($injector, $rootScope, $controller) ->
-    $httpBackend = $injector.get('$httpBackend')
+    alerts = $injector.get("alerts")
+
+    $httpBackend = $injector.get("$httpBackend")
+    $httpBackend.when("GET", "/api/databases.json").respond([])
 
     $scope = $rootScope.$new()
-
-    $httpBackend.when("GET", "/api/databases.json").respond([])
     $controller window.DatabasesCtrl,
         $scope: $scope
 
@@ -31,15 +33,20 @@ describe "DatabasesCtrl", ->
           jasmine.any(Function)
 
     describe "when the dialog was confirmed", ->
-      it "sends a delete request", inject (bootboxDialogsHandler) ->
-        # Given
+      beforeEach inject (bootboxDialogsHandler) ->
         $httpBackend.when("DELETE", "/api/databases/test_database_name.json")
             .respond([])
 
-        # When
+        spyOn(alerts, "info")
         $scope.delete(name: "test_database_name")
         bootboxDialogsHandler.confirmed()
+
+      it "sends a delete request", ->
         $httpBackend.flush()
+
+      it "displays a flash message", ->
+        $httpBackend.flush()
+        expect(alerts.info).toHaveBeenCalledWith("Database test_database_name has been deleted.")
 
     describe "when the dialog was disposed", ->
       it "does nothing", inject (bootboxDialogsHandler) ->

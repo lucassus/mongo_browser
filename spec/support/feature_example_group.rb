@@ -16,6 +16,12 @@ module FeatureExampleGroup
       page.should have_content(message)
       click_link "OK"
     end
+
+    begin
+      wait_until { page.has_no_css?("div.bootbox.modal") }
+    rescue Capybara::TimeoutError
+      raise "Expected confirmation modal to be disposed."
+    end
   end
 
   def should_hide_the_table_and_display_a_notification

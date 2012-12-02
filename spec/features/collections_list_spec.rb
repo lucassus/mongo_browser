@@ -88,7 +88,7 @@ describe "Collections list", type: :request, js: true do
       should_hide_the_table_and_display_a_notification
     end
 
-    it "displays error message when the collection cannot be deleted" do
+    xit "displays error message when the collection cannot be deleted" do
       click_delete_button_for("system.indexes")
       confirm_dialog
 

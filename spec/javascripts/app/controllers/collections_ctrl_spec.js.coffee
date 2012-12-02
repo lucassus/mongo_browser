@@ -5,19 +5,21 @@ describe "CollectionsCtrl", ->
 
   $scope = null
   $httpBackend = null
+  alerts = null
 
   beforeEach inject ($injector, $rootScope, $controller) ->
-    $scope = $rootScope.$new()
-    $httpBackend = $injector.get("$httpBackend")
+    alerts = $injector.get("alerts")
 
     $routeParams = $injector.get("$routeParams")
     $routeParams.dbName = "test_database"
 
+    $httpBackend = $injector.get("$httpBackend")
     $httpBackend.when("GET", "/api/databases/test_database/collections.json")
         .respond([])
     $httpBackend.when("GET", "/api/databases/test_database/stats.json")
         .respond({})
 
+    $scope = $rootScope.$new()
     $controller window.CollectionsCtrl,
       $scope: $scope
 
@@ -37,15 +39,20 @@ describe "CollectionsCtrl", ->
           jasmine.any(Function)
 
     describe "when the dialog was confirmed", ->
-      it "sends a delete request", inject (bootboxDialogsHandler) ->
-        # Given
+      beforeEach inject (bootboxDialogsHandler) ->
         $httpBackend.when("DELETE", "/api/databases/test_database/collections/dummy-collection-id.json")
             .respond([])
 
-        # When
+        spyOn(alerts, "info")
         $scope.delete(name: "dummy-collection-id")
         bootboxDialogsHandler.confirmed()
+
+      it "sends a delete request", ->
         $httpBackend.flush()
+
+      it "displays a flash message", ->
+        $httpBackend.flush()
+        expect(alerts.info).toHaveBeenCalledWith("Collection dummy-collection-id has been deleted.")
 
     describe "when the dialog was disposed", ->
       it "does nothing", inject (bootboxDialogsHandler) ->
