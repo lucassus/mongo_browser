@@ -1,1 +1,42 @@
-<section ng-view></section>
+<!DOCTYPE html>
+<html ng-app="mb">
+  <head>
+    <title>Mongo Browser</title>
+    <link href="/assets/application.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <div class="navbar navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">MongoBrowser</a>
+          <div class="nav-collapse collapse">
+            <ul ng-controller="breadcrumbs" class="nav breadcrumbs">
+              <li ng-show="dbName"><a href="/databases/{{dbName}}/collections">{{dbName}}</a></li>
+              <li ng-show="collectionName"><a href="/databases/{{dbName}}/collections/{{collectionName}}">{{collectionName}}</a></li>
+            </ul>
+
+            <ul class="nav pull-right">
+              <li><a href="/server_info">Server Info</a></li>
+              <li><a>v. <%= MongoBrowser::VERSION %></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside ng-controller="alerts" id="alerts">
+      <div ng-repeat="message in alertMessages" class="alert alert-{{message.type}}">
+        <button ng-click="disposeAlert(message.id)" type="button" class="close">×</button>
+        <strong>{{message.type}}</strong> {{message.text}}
+      </div>
+    </aside>
+
+    <section class="container fluid">
+      <section ng-view></section>
+    </section>
+
+    <!--<link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Rokkitt:400,700|Source+Code+Pro">-->
+    <script src="/assets/vendor.js"></script>
+    <script src="/assets/application.js"></script>
+  </body>
+</html>
