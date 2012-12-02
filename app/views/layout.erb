@@ -26,7 +26,7 @@
 
     <aside ng-controller="AlertsCtrl" id="alerts">
       <div ng-repeat="message in alertMessages" class="alert alert-{{message.type}}">
-        <button ng-click="disposeAlert($index)" type="button" class="close">×</button>
+        <button ng-click="disposeAlert(message.id)" type="button" class="close">×</button>
         <strong>{{message.type}}</strong> {{message.text}}
       </div>
     </aside>

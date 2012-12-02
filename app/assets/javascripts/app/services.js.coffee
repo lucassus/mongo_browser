@@ -45,17 +45,26 @@ angular.module "mb.services", [], ($provide) ->
 
   $provide.factory "alerts", [
     "$log", ($log) ->
+      lastId: 0
       messages: []
 
+      # Returns a next id for the new message
+      nextId: ->
+        @lastId += 1
+
       push: (type, text) ->
-        $log.info("Alert [#{type}]", text)
+        id = @nextId()
+        $log.info("Alert [#{id}, #{type}]", text)
 
-        @messages.push(type: type, text: text)
+        @messages.push(id: id, type: type, text: text)
 
+      # Helper methods for various alerts types
       info: (text) -> @push("info", text)
       error: (text) -> @push("error", text)
 
-      # Remove a message with the given type at the given index
-      dispose: (at) ->
+      # Removes a message with the given id
+      dispose: (id) ->
+        ids = @messages.map (message) -> message.id
+        at = ids.indexOf(id)
         @messages.splice(at, 1)
   ]

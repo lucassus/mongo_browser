@@ -115,6 +115,17 @@ describe "services", ->
     it "is defined", inject (alerts) ->
       expect(alerts).toBeDefined()
 
+    describe "#nextId", ->
+      it "return the next id for the new flash message", inject (alerts) ->
+        expect(alerts.nextId()).toEqual(1)
+        _(4).times -> alerts.nextId()
+        expect(alerts.nextId()).toEqual(6)
+
+    describe "#push", ->
+      it "returns an id for the new flash message", inject (alerts) ->
+        expect(alerts.push("info", "Test..")).toEqual(1)
+        expect(alerts.push("error", "Test error..")).toEqual(2)
+
     describe "#info", ->
       it "pushesh the given message", inject (alerts) ->
         # Given
@@ -126,8 +137,8 @@ describe "services", ->
         alerts.info(otherTestMessage)
 
         # Then
-        expect(alerts.messages).toContain(type: "info", text: testMessage)
-        expect(alerts.messages).toContain(type: "info", text: otherTestMessage)
+        expect(alerts.messages).toContain(id: 1, type: "info", text: testMessage)
+        expect(alerts.messages).toContain(id: 2, type: "info", text: otherTestMessage)
 
     describe "#error", ->
       it "pushesh the given message", inject (alerts) ->
@@ -138,10 +149,10 @@ describe "services", ->
         alerts.error(testMessage)
 
         # Then
-        expect(alerts.messages).toContain(type: "error", text: testMessage)
+        expect(alerts.messages).toContain(id: 1, type: "error", text: testMessage)
 
     describe "#dispose", ->
-      it "removes a message with the given type at the specified index", inject (alerts) ->
+      it "removes a message with the given id", inject (alerts) ->
         # Given
         alerts.info("First message")
         alerts.info("Second message")
@@ -149,10 +160,10 @@ describe "services", ->
         alerts.error("Error message")
 
         # When
-        alerts.dispose(1)
+        alerts.dispose(2)
 
         # Then
-        expect(alerts.messages).toContain(type: "info", text: "First message")
-        expect(alerts.messages).not.toContain(type: "info", text: "Second message")
-        expect(alerts.messages).toContain(type: "info", text: "Third message")
-        expect(alerts.messages).toContain(type: "error", text: "Error message")
+        expect(alerts.messages).toContain(id: 1, type: "info", text: "First message")
+        expect(alerts.messages).not.toContain(id: 2, type: "info", text: "Second message")
+        expect(alerts.messages).toContain(id: 3, type: "info", text: "Third message")
+        expect(alerts.messages).toContain(id: 4, type: "error", text: "Error message")

@@ -18,7 +18,7 @@ describe "AlertsCtrl", ->
     expect($scope.alertMessages).toEqual([])
 
     alerts.info("Test message.")
-    expect($scope.alertMessages).toContain(type: "info", text: "Test message.")
+    expect($scope.alertMessages).toContain(id: 1, type: "info", text: "Test message.")
 
   describe "#disposeAlert", ->
     it "disposes an alert at the given index", ->
@@ -28,9 +28,9 @@ describe "AlertsCtrl", ->
       spyOn(alerts, "dispose").andCallThrough()
 
       # When
-      $scope.disposeAlert(1)
+      $scope.disposeAlert(2)
 
       # Then
-      expect(alerts.dispose).toHaveBeenCalledWith(1)
-      expect($scope.alertMessages).toContain(type: "info", text: "Information..")
-      expect($scope.alertMessages).not.toContain(type: "error", text: "Error..")
+      expect(alerts.dispose).toHaveBeenCalledWith(2)
+      expect($scope.alertMessages).toContain(id: 1, type: "info", text: "Information..")
+      expect($scope.alertMessages).not.toContain(id: 2, type: "error", text: "Error..")
