@@ -24,17 +24,13 @@
       </div>
     </div>
 
-    <aside id="alerts">
-      <% unless flash(:flash).empty? %>
-        <div id="flash-messages">
-          <% flash(:flash).each do |message| %>
-            <div class="alert alert-<%= message[0] %>">
-              <button type="button" class="close" data-dismiss="alert">×</button>
-              <strong><%= message[0].capitalize %>!</strong> <%= message[1] %>
-            </div>
-          <% end %>
+    <aside ng-controller="AlertsCtrl" id="alerts">
+      <div id="flash-messages">
+        <div ng-repeat="message in alertMessages" class="alert alert-{{message.type}}">
+          <button ng-click="disposeAlert($index)" type="button" class="close">×</button>
+          <strong>{{message.type}}</strong> {{message.text}}
         </div>
-      <% end %>
+      </div>
     </aside>
 
     <section class="container fluid">
