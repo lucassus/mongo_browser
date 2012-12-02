@@ -1,6 +1,6 @@
-# Create a mock for bootboxDialogsHandler
+# Create a mock for dialogsHandler
 angular.module("mocks", []).config ($provide) ->
-  $provide.factory "bootboxDialogsHandler", ->
+  $provide.factory "dialogsHandler", ->
     confirm: (message, callback) ->
       @callback = callback
     confirmed: -> @callback(true)

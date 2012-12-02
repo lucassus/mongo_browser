@@ -13,17 +13,10 @@ angular.module "mb.services", [], ($provide) ->
       noMatches: ->
         @matchesCount() is 0
 
-  $provide.factory "bootboxDialogsHandler", -> bootbox
-
-  $provide.factory "defaultDialogsHandler", [
-    "$window", (window) ->
-
-      confirm: (message, callback) ->
-        callback(window.confirm(message))
-  ]
+  $provide.factory "dialogsHandler", -> bootbox
 
   $provide.factory "confirmationDialog", [
-    "$log", "bootboxDialogsHandler", ($log, handler) ->
+    "$log", "dialogsHandler", ($log, handler) ->
 
       # Options:
       #  message  - a message to display inside the dialog

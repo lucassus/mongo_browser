@@ -62,12 +62,12 @@ describe "services", ->
         expect(tableFilter.noMatches()).toBeFalsy()
 
   # TODO add spec for defaultDialogsHandler
-  describe "bootboxDialogsHandler", ->
+  describe "dialogsHandler", ->
     beforeEach inject ($window) ->
       $window.bootbox = 'dummy bootbox'
 
-    it "by default is set to bootbox", inject (bootboxDialogsHandler) ->
-      expect(bootboxDialogsHandler).toEqual('dummy bootbox')
+    it "by default is set to bootbox", inject (dialogsHandler) ->
+      expect(dialogsHandler).toEqual('dummy bootbox')
 
   describe "confirmationDialog", ->
     beforeEach module("mocks")
@@ -75,38 +75,38 @@ describe "services", ->
     it "is defined", inject (confirmationDialog) ->
       expect(confirmationDialog).toBeDefined()
 
-    it "calls the handler", inject (confirmationDialog, bootboxDialogsHandler) ->
+    it "calls the handler", inject (confirmationDialog, dialogsHandler) ->
       # Given
-      spyOn(bootboxDialogsHandler, "confirm")
+      spyOn(dialogsHandler, "confirm")
 
       # When
       confirmationDialog(message: "This is a test message")
 
       # Then
-      expect(bootboxDialogsHandler.confirm).toHaveBeenCalledWith \
+      expect(dialogsHandler.confirm).toHaveBeenCalledWith \
           "This is a test message",
           jasmine.any(Function)
 
     describe "when the dialog was confirmed", ->
-      it "calls the given #onOk callback", inject (confirmationDialog, bootboxDialogsHandler) ->
+      it "calls the given #onOk callback", inject (confirmationDialog, dialogsHandler) ->
         # Given
         onOk = jasmine.createSpy("#onOk callback")
         confirmationDialog(onOk: onOk)
 
         # When
-        bootboxDialogsHandler.confirmed()
+        dialogsHandler.confirmed()
 
         # Then
         expect(onOk).toHaveBeenCalled()
 
     describe "when the dialog was disposed", ->
-      it "calls the given #onOk callback", inject (confirmationDialog, bootboxDialogsHandler) ->
+      it "calls the given #onOk callback", inject (confirmationDialog, dialogsHandler) ->
         # Given
         onCancel= jasmine.createSpy("#onCancel callback")
         confirmationDialog(onCancel: onCancel)
 
         # When
-        bootboxDialogsHandler.disposed()
+        dialogsHandler.disposed()
 
         # Then
         expect(onCancel).toHaveBeenCalled()

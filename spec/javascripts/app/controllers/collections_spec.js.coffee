@@ -30,21 +30,21 @@ describe "collections", ->
 
   # TODO rewrite this spec
   describe "#delete", ->
-    it "shows a confirmation dialog", inject (bootboxDialogsHandler) ->
-      spyOn(bootboxDialogsHandler, "confirm")
+    it "shows a confirmation dialog", inject (dialogsHandler) ->
+      spyOn(dialogsHandler, "confirm")
       $scope.delete(name: "dummy-collection-id")
-      expect(bootboxDialogsHandler.confirm).toHaveBeenCalledWith \
+      expect(dialogsHandler.confirm).toHaveBeenCalledWith \
           "Deleting dummy-collection-id. Are you sure?",
           jasmine.any(Function)
 
     describe "when the dialog was confirmed", ->
-      beforeEach inject (bootboxDialogsHandler) ->
+      beforeEach inject (dialogsHandler) ->
         $httpBackend.when("DELETE", "/api/databases/test_database/collections/dummy-collection-id.json")
             .respond([])
 
         spyOn(alerts, "info")
         $scope.delete(name: "dummy-collection-id")
-        bootboxDialogsHandler.confirmed()
+        dialogsHandler.confirmed()
 
       it "sends a delete request", ->
         $httpBackend.flush()
@@ -54,7 +54,7 @@ describe "collections", ->
         expect(alerts.info).toHaveBeenCalledWith("Collection dummy-collection-id has been deleted.")
 
     describe "when the dialog was disposed", ->
-      it "does nothing", inject (bootboxDialogsHandler) ->
+      it "does nothing", inject (dialogsHandler) ->
         # When
         $scope.delete(name: "dummy-collection-id")
-        bootboxDialogsHandler.disposed()
+        dialogsHandler.disposed()
