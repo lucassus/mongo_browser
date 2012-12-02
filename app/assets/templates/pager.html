@@ -1,0 +1,13 @@
+<div class="pagination">
+  <ul>
+    <li ng-class="{disabled: !hasPrev()}"><a href="#" ng-click="prev()">Prev</a></li>
+    <li ng-class="{disabled: !hasNext()}"><a href="#" ng-click="next()">Next</a></li>
+
+    <li ng-repeat="number in windowedPageNumbers"
+        ng-class="{active: number == page}"
+        ng-class="{disabled: !number}">
+
+      <a ng-click="setPage(number)" href="#">{{number || "…"}}</a>
+    </li>
+  </ul>
+</div>

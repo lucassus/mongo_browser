@@ -15,6 +15,13 @@ module.controller "documents", ($scope, $routeParams, $http, Document, confirmat
 
   $scope.fetchDocuments()
 
+  $scope.page = 1
+  $scope.totalPages = 99
+
+  $scope.$watch "page", (page) ->
+    console.log("New page", page)
+    $scope.fetchDocuments()
+
   # TODO create resource for this call
   $http.get("/api/databases/#{$scope.dbName}/collections/#{$scope.collectionName}/stats.json").success (data) ->
     $scope.collectionStats = data
