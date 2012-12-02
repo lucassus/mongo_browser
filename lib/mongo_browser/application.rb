@@ -1,8 +1,6 @@
 require "sinatra"
 require "sinatra/reloader"
-require "sinatra/flash"
 require "sinatra/respond_with"
-require "will_paginate-bootstrap"
 
 require "sprockets"
 require "sass"
@@ -19,13 +17,11 @@ module MongoBrowser
     end
 
     enable :sessions
-    register Sinatra::Flash
 
     set :root, File.join(File.dirname(__FILE__), "../../app")
     set :method_override, true
 
     use Middleware::SprocketsSinatra, :root => File.join(settings.root, "..")
-    register WillPaginate::Sinatra
     register Sinatra::RespondWith
 
     # Loads given template from assets/templates directory
