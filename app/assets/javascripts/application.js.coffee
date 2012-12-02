@@ -5,7 +5,7 @@
 #= require_tree ./app/controllers
 
 # App Module
-angular.module("mb", ["mb.services", "mb.resources", "mb.directives", "mb.filters"])
+angular.module("mb", ["mb.services", "mb.resources", "mb.directives", "mb.filters", "mb.controllers"])
   .config [
     "$routeProvider", "$locationProvider", (route, location) ->
       route

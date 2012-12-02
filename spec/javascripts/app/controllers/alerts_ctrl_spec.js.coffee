@@ -1,5 +1,5 @@
-describe "AlertsCtrl", ->
-  beforeEach module("mb.services")
+describe "alerts", ->
+  beforeEach module("mb.controllers")
 
   $scope = null
   alerts = null
@@ -9,7 +9,7 @@ describe "AlertsCtrl", ->
 
     alerts = $injector.get("alerts")
 
-    $controller window.AlertsCtrl,
+    $controller "alerts",
       $scope: $scope,
       alerts: alerts
 
