@@ -1,4 +1,6 @@
-@CollectionsCtrl = ($scope, $routeParams, Collection, $http, tableFilterFactory, confirmationDialog, alerts) ->
+module = angular.module("mb.controllers")
+
+module.controller "collections", ($scope, $routeParams, Collection, $http, tableFilterFactory, confirmationDialog, alerts) ->
   $scope.dbName = $routeParams.dbName
 
   _onLoadComplete = (data) ->

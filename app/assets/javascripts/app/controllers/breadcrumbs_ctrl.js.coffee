@@ -1,4 +1,6 @@
-@BreadcrumbsCtrl = ($rootScope, $scope) ->
+module = angular.module("mb.controllers")
+
+module.controller "breadcrumbs", ($rootScope, $scope) ->
 
   $rootScope.$on "$routeChangeSuccess", (scope, newRoute) ->
     $scope.dbName = newRoute.params.dbName

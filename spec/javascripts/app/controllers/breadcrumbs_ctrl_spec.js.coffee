@@ -1,1 +1,2 @@
-describe "BreadcrumbsCtrl", ->
+describe "breadcrumbs", ->
+  beforeEach module("mb.controllers")

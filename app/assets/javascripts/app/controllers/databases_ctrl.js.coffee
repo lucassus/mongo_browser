@@ -1,4 +1,6 @@
-@DatabasesCtrl = ($scope, Database, tableFilterFactory, confirmationDialog, alerts) ->
+module = angular.module("mb.controllers")
+
+module.controller "databases",  ($scope, Database, tableFilterFactory, confirmationDialog, alerts) ->
   _onLoadComplete = (data) ->
     $scope.tableFilter = tableFilterFactory($scope, "databases")
 

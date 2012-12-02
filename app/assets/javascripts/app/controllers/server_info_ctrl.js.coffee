@@ -1,4 +1,6 @@
-window.ServerInfoCtrl = ($scope, $http) ->
+module = angular.module("mb.controllers")
+
+module.controller "serverInfo", ($scope, $http) ->
   _onLoadComplete = (data) ->
     $scope.serverInfo = data
     $scope.loading = false

@@ -1,4 +1,6 @@
-@DocumentsCtrl = ($scope, $routeParams, $http, Document, confirmationDialog, alerts) ->
+module = angular.module("mb.controllers")
+
+module.controller "documents", ($scope, $routeParams, $http, Document, confirmationDialog, alerts) ->
   $scope.dbName = $routeParams.dbName
   $scope.collectionName = $routeParams.collectionName
 

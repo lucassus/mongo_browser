@@ -1,6 +1,5 @@
-describe "DocumentsCtrl", ->
-  beforeEach module("mb.services")
-  beforeEach module("mb.resources")
+describe "documents", ->
+  beforeEach module("mb.controllers")
   beforeEach module("mocks")
 
   $scope = null
@@ -21,7 +20,7 @@ describe "DocumentsCtrl", ->
         .respond({})
 
     $scope = $rootScope.$new()
-    $controller window.DocumentsCtrl,
+    $controller "documents",
       $scope: $scope
 
     $httpBackend.flush()

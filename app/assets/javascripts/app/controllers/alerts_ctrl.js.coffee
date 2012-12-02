@@ -1,4 +1,4 @@
-module = angular.module("mb.controllers", ["mb.services"])
+module = angular.module("mb.controllers")
 
 module.controller "alerts", ($scope, alerts) ->
   $scope.alertMessages = alerts.messages

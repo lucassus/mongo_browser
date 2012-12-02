@@ -1,6 +1,5 @@
-describe "DatabasesCtrl", ->
-  beforeEach module("mb.services")
-  beforeEach module("mb.resources")
+describe "databases", ->
+  beforeEach module("mb.controllers")
   beforeEach module("mocks")
 
   $scope = null
@@ -14,7 +13,7 @@ describe "DatabasesCtrl", ->
     $httpBackend.when("GET", "/api/databases.json").respond([])
 
     $scope = $rootScope.$new()
-    $controller window.DatabasesCtrl,
+    $controller "databases",
         $scope: $scope
 
     $httpBackend.flush()

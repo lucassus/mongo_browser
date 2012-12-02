@@ -1,6 +1,5 @@
-describe "CollectionsCtrl", ->
-  beforeEach module("mb.services")
-  beforeEach module("mb.resources")
+describe "collections", ->
+  beforeEach module("mb.controllers")
   beforeEach module("mocks")
 
   $scope = null
@@ -20,7 +19,7 @@ describe "CollectionsCtrl", ->
         .respond({})
 
     $scope = $rootScope.$new()
-    $controller window.CollectionsCtrl,
+    $controller "collections",
       $scope: $scope
 
     $httpBackend.flush()

@@ -10,7 +10,7 @@
         <div class="container">
           <a class="brand" href="/">MongoBrowser</a>
           <div class="nav-collapse collapse">
-            <ul ng-controller="BreadcrumbsCtrl" class="nav breadcrumbs">
+            <ul ng-controller="breadcrumbs" class="nav breadcrumbs">
               <li ng-show="dbName"><a href="/databases/{{dbName}}/collections">{{dbName}}</a></li>
               <li ng-show="collectionName"><a href="/databases/{{dbName}}/collections/{{collectionName}}">{{collectionName}}</a></li>
             </ul>

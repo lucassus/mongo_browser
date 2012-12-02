@@ -8,6 +8,7 @@ files = [
   "vendor/assets/javascripts/angular/angular-*.js",
   "vendor/assets/javascripts/*.js",
 
+  "app/assets/javascripts/app/controllers.js.coffee",
   "app/assets/javascripts/app/**/*.js.coffee",
   "app/assets/javascripts/application.js.coffee",
 
