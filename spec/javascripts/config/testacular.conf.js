@@ -18,13 +18,7 @@ files = [
   "spec/javascripts/**/*_spec.js.coffee"
 ];
 
-autoWatch = true;
-
-browsers = ["Chrome"];
-
 reporters = ["dots"];
+browsers = ["PhantomJS"];
 
-junitReporter = {
-  outputFile: "test_out/unit.xml",
-  suite: "unit"
-};
+autoWatch = true;
