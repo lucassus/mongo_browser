@@ -5,7 +5,7 @@
 <div ng-hide="isLoading()">
   <filter value="filterValue" placeholder="Enter database name"></filter>
 
-  <table ng-hide="tableFilter.noMatches()" class="table table-striped table-hover databases">
+  <table ng-show="(databases|filter:filterValue).length" class="table table-striped table-hover databases">
     <thead>
     <tr>
       <th>Name</th>
@@ -15,7 +15,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="database in databases">
+    <tr ng-repeat="database in databases|filter:filterValue">
       <td><a href="/databases/{{database.name}}/collections">{{database.name}}</a></td>
       <td>{{database.count}}</td>
       <td>{{database.size | humanSize}}</td>
@@ -29,7 +29,7 @@
     </tbody>
   </table>
 
-  <div ng-show="tableFilter.noMatches()" class="filter alert">
+  <div ng-hide="(databases|filter:filterValue).length" class="filter alert">
     Nothing has been found.
   </div>
 </div>

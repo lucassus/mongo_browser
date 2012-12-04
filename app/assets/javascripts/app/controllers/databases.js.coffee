@@ -1,14 +1,10 @@
 module = angular.module("mb.controllers")
 
-module.controller "databases",  ($scope, Database, tableFilterFactory, confirmationDialog, alerts) ->
+module.controller "databases",  ($scope, Database, confirmationDialog, alerts) ->
   $scope.filterValue = ""
 
   _onLoadComplete = (data) ->
-    $scope.tableFilter = tableFilterFactory($scope, "databases")
-
-    $scope.$watch "filterValue", (value) ->
-      $scope.tableFilter.filter(value)
-
+    $scope.databases = data
     $scope.loading = false
 
   $scope.fetchDatabases = ->

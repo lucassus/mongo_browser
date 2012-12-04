@@ -1,15 +1,11 @@
 module = angular.module("mb.controllers")
 
-module.controller "collections", ($scope, $routeParams, Collection, $http, tableFilterFactory, confirmationDialog, alerts) ->
+module.controller "collections", ($scope, $routeParams, Collection, $http, confirmationDialog, alerts) ->
   $scope.dbName = $routeParams.dbName
   $scope.filterValue = ""
 
   _onLoadComplete = (data) ->
-    $scope.tableFilter = tableFilterFactory($scope, "collections")
-
-    $scope.$watch "filterValue", (value) ->
-      $scope.tableFilter.filter(value)
-
+    $scope.collections = data
     $scope.loading = false
 
   $scope.fetchCollections = ->
