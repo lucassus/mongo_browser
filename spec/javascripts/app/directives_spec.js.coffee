@@ -25,3 +25,20 @@ describe "directives", ->
       $element.trigger(event)
 
       expect($scope.bar).not.toHaveBeenCalled()
+
+  describe "filter", ->
+    $scope = null
+    element = null
+
+    beforeEach module("app/assets/templates/filter.html")
+
+    beforeEach inject ($rootScope, $compile) ->
+      element = angular.element('<filter placeholder="Enter database name"></filter>')
+
+      $scope = $rootScope
+      $compile(element)($scope)
+      $scope.$digest()
+
+    it "sets the valid placeholder", ->
+      input = element.find("input[type='text']")
+      expect(input.attr('placeholder')).toEqual("Enter database name")
