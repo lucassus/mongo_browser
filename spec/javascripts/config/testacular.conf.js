@@ -33,7 +33,7 @@ preprocessors = {
 
 // Test results reporter to use
 // possible values: dots || progress
-reporter = "dots";
+reporters = ["dots"];
 
 browsers = ["PhantomJS"];
 
