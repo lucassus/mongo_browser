@@ -57,10 +57,9 @@ describe "directives", ->
     beforeEach module("app/assets/templates/filter.html")
 
     beforeEach inject ($rootScope, $compile) ->
-      element = angular.element('<filter value="filterValue" placeholder="Enter database name"></filter>')
-
       $scope = $rootScope
-      $compile(element)($scope)
+
+      element = $compile('<filter value="filterValue" placeholder="Enter database name"></filter>')($scope)
       $scope.$digest()
 
     it "sets the valid placeholder", ->
