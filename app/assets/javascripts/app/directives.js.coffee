@@ -9,22 +9,12 @@ module.directive "onEsc", ->
       return unless event.keyCode is EscapeCode
       $scope.$apply(attrs.onEsc)
 
-module.controller "filter", ($scope, $element, $log) ->
-  # Clears the filter value
+module.controller "filter", ($scope, $log) ->
+        # Clears the filter value
   $scope.clear = -> $scope.value = ""
 
-  # Initially clear the filter
-  $scope.clear()
-
-  $scope.$watch "value", (value) ->
-    $log.info("Filter change", value)
-    $scope.$emit("FilterChange", value)
-
-    clearButton = $element.find("button")
-    if value is ""
-      clearButton.addClass("disabled")
-    else
-      clearButton.removeClass("disabled")
+  # Reruns true when the filter is empty
+  $scope.isEmpty = -> !$scope.value
 
 # Filter for databases and collections
 module.directive "filter", ($log) ->
@@ -36,9 +26,11 @@ module.directive "filter", ($log) ->
 
   scope:
     placeholder: "@placeholder"
+    value: "=value"
 
   controller: "filter"
 
+# TODO this is only a prototype
 module.directive "pager", ->
   templateUrl: "/ng/templates/pager.html"
   restrict: "E"

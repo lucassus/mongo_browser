@@ -2,7 +2,7 @@
   <div class="input-append">
     <input ng-model="value" on-esc="clear()" type="text" class="span3" placeholder="{{placeholder}}">
 
-    <button ng-click="clear()" type="button" class="btn">
+    <button ng-click="clear()" type="button" class="btn ng-class: {disabled: isEmpty()}">
       <i class="icon-remove-circle"></i>Clear
     </button>
   </div>

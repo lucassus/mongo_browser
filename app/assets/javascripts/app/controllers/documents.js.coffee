@@ -19,7 +19,6 @@ module.controller "documents", ($scope, $routeParams, $http, Document, confirmat
   $scope.totalPages = 99
 
   $scope.$watch "page", (page) ->
-    console.log("New page", page)
     $scope.fetchDocuments()
 
   # TODO create resource for this call
