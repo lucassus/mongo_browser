@@ -49,8 +49,11 @@ pager.controller "pager", ($scope, pager) ->
     prepare = pager(page: $scope.page, totalPages: $scope.totalPages)
     $scope.windowedPageNumbers = prepare.windowedPageNumbers()
 
-  $scope.$watch "page", ->
+  $scope.$watch "page", (page) ->
+    $scope.$emit "PageChanged", page
     paginate()
+
+  $scope.$watch "totalPages", -> paginate()
 
   $scope.setPage = (page) ->
     return if page < 1 or page > $scope.totalPages
@@ -68,11 +71,12 @@ pager.controller "pager", ($scope, pager) ->
   $scope.hasPrev = ->
     $scope.page > 1
 
+  $scope.display = -> $scope.totalPages > 1
+
 pager.directive "pager", ->
   templateUrl: "/ng/templates/pager.html"
   restrict: "E"
   replace: true
-  transclude: true
 
   scope:
     page: "=page"

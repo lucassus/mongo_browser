@@ -108,7 +108,7 @@ describe "Documents list", type: :request, js: true do
       end
     end
 
-    xit "paginates documents" do
+    it "paginates documents" do
       within "table.documents" do
         (0...25).each do |n|
           expect(page).to have_content("Document #{n}")

@@ -14,7 +14,7 @@ describe "documents", ->
     $routeParams.collectionName = "test_collection"
 
     $httpBackend = $injector.get('$httpBackend')
-    $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/documents.json")
+    $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/documents.json?page=1")
         .respond([])
     $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/stats.json")
         .respond({})

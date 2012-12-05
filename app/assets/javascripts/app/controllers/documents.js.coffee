@@ -4,22 +4,28 @@ module.controller "documents", ($scope, $routeParams, $http, Document, confirmat
   $scope.dbName = $routeParams.dbName
   $scope.collectionName = $routeParams.collectionName
 
+  $scope.isLoading = -> $scope.loading
+
   _onLoadComplete = (data) ->
     $scope.loading = false
 
-  $scope.fetchDocuments = ->
+    $scope.documents = data.documents
+    $scope.page = data.page
+    $scope.totalPages = data.total_pages
+    $scope.size = data.size
+
+  $scope.fetchDocuments = (page = 1) ->
+    return if $scope.isLoading()
     $scope.loading = true
 
-    params = dbName: $scope.dbName, collectionName: $scope.collectionName
-    $scope.documents = Document.query(params, _onLoadComplete())
-
-  $scope.fetchDocuments()
+    params = dbName: $scope.dbName, collectionName: $scope.collectionName, page: page
+    Document.query(params, _onLoadComplete)
 
   $scope.page = 1
-  $scope.totalPages = 99
+  $scope.fetchDocuments()
 
-  $scope.$watch "page", (page) ->
-    $scope.fetchDocuments()
+  $scope.$on "PageChanged", (event, page) ->
+    $scope.fetchDocuments(page) if $scope.page isnt page
 
   # TODO create resource for this call
   $http.get("/api/databases/#{$scope.dbName}/collections/#{$scope.collectionName}/stats.json").success (data) ->

@@ -18,5 +18,5 @@ angular.module "mb.resources", ["ngResource"], ($provide) ->
     "$resource", (resource) ->
 
       resource "/api/databases/:dbName/collections/:collectionName/documents.json", {},
-        query: method: "GET", isArray: true
+        query: method: "GET", isArray: false
   ]
