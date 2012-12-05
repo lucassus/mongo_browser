@@ -12,6 +12,8 @@ module MongoBrowser
   class Application < Sinatra::Base
     include Models
 
+    set :environments, %w{development test test_e2e production}
+
     configure :development do
       register Sinatra::Reloader
     end
@@ -76,8 +78,8 @@ module MongoBrowser
       collections = database.collections.map do |collection|
         {
             db_name: collection.db_name,
-            name: collection.name,
-            size: collection.size
+            name:    collection.name,
+            size:    collection.size
         }
       end
 

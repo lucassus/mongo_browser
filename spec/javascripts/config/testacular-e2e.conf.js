@@ -14,5 +14,6 @@ singleRun = true;
 
 urlRoot = '/__testacular/';
 proxies = {
-  "/": "http://localhost:3000/"
+  "/": "http://localhost:3001/",
+  "/api": "http://dummyhost/" // prevent from the real api requests
 };
