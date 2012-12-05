@@ -5,15 +5,15 @@ describe "my app", ->
 
   it "filters databases list", ->
     browser().navigateTo("/")
+    expect(repeater("table.databases tbody tr").count()).toBe(5)
+
+    input("value").enter("activecell")
     expect(repeater("table.databases tbody tr").count()).toBe(3)
 
-    input("value").enter("database")
-    expect(repeater("table.databases tbody tr").count()).toBe(2)
-
-    input("value").enter("other")
+    input("value").enter("second")
     expect(repeater("table.databases tbody tr").count()).toBe(1)
 
   it "shows the collections page", ->
-    input("value").enter("first_database")
+    input("value").enter("activecell_development")
     element("table.databases tbody tr td a").click()
-    expect(browser().location().url()).toBe("/databases/first_database/collections")
+    expect(browser().location().url()).toBe("/databases/activecell_development/collections")

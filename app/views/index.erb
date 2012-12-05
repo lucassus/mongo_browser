@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="<%= MongoBrowser::Application.environment != :test_e2e ? "mb" : "mbDev" %>">
+<html ng-app="mb">
   <head>
     <title>Mongo Browser</title>
     <link href="/assets/application.css" rel="stylesheet" media="screen">
@@ -18,9 +18,6 @@
             <ul class="nav pull-right">
               <li><a href="/server_info">Server Info</a></li>
               <li><a>v. <%= MongoBrowser::VERSION %></a></li>
-              <% unless MongoBrowser::Application.production? %>
-                <li><a>env. <%= MongoBrowser::Application.environment %></a></li>
-              <% end %>
             </ul>
           </div>
         </div>
@@ -41,8 +38,5 @@
     <!--<link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Rokkitt:400,700|Source+Code+Pro">-->
     <script src="/assets/vendor.js"></script>
     <script src="/assets/application.js"></script>
-    <% if MongoBrowser::Application.environment == :test_e2e %>
-      <script src="/assets/application-mocks.js"></script>
-    <% end %>
   </body>
 </html>
