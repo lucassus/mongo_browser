@@ -40,7 +40,7 @@ describe "documents", ->
 
     describe "when the dialog was confirmed", ->
       beforeEach inject (dialogsHandler) ->
-        $httpBackend.when("DELETE", "/api/databases/test_database/collections/test_collection/documents/dummy-document-id.json")
+        $httpBackend.when("DELETE", "/api/databases/test_database/collections/test_collection/documents.json?id=dummy-document-id")
             .respond([])
 
         spyOn(alerts, "info")

@@ -52,8 +52,8 @@ module MongoBrowser
     end
 
     # Delete a database
-    delete "/api/databases/:db_name.json" do |db_name|
-      database = server.database(db_name)
+    delete "/api/databases.json" do
+      database = server.database(params[:id])
       database.drop!
 
       respond_to do |format|
@@ -87,9 +87,9 @@ module MongoBrowser
     end
 
     # Delete a collection
-    delete "/api/databases/:db_name/collections/:collection_name.json" do |db_name, collection_name|
+    delete "/api/databases/:db_name/collections.json" do |db_name|
       success = begin
-        collection = server.database(db_name).collection(collection_name)
+        collection = server.database(db_name).collection(params[:id])
         collection.drop!
         true
       rescue Mongo::OperationFailure => e
@@ -128,9 +128,9 @@ module MongoBrowser
     end
 
     # Delete a document
-    delete "/api/databases/:db_name/collections/:collection_name/documents/:id.json" do |db_name, collection_name, id|
+    delete "/api/databases/:db_name/collections/:collection_name/documents.json" do |db_name, collection_name|
       collection = server.database(db_name).collection(collection_name)
-      document = collection.find(id)
+      document = collection.find(params[:id])
       collection.remove!(document)
 
       respond_to do |format|

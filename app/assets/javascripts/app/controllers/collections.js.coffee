@@ -25,7 +25,7 @@ module.controller "collections", ($scope, $routeParams, Collection, $http, confi
       message: "Deleting #{collection.name}. Are you sure?"
       onOk: ->
         resource = new Collection()
-        params = dbName: $scope.dbName, collectionName: collection.name
+        params = dbName: $scope.dbName, id: collection.name
 
         resource.$delete params, ->
           alerts.info("Collection #{collection.name} has been deleted.")

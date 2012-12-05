@@ -20,7 +20,7 @@ module.controller "databases",  ($scope, Database, confirmationDialog, alerts) -
       message: "Deleting #{database.name}. Are you sure?"
       onOk: ->
         resource = new Database()
-        params = dbName: database.name
+        params = id: database.name
 
         resource.$delete params, ->
           alerts.info("Database #{database.name} has been deleted.")
