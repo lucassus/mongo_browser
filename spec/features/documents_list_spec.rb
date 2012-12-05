@@ -46,7 +46,7 @@ describe "Documents list", type: :request, js: true do
     end
 
     it "displays information about the collection" do
-      click_link "Stats"
+      click_link "Collection stats"
 
       within "table" do
         %w(ns count size avgObjSize storageSize numExtents nindexes lastExtentSize paddingFactor totalIndexSize indexSizes ok).each do |field|

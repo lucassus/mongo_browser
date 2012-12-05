@@ -66,14 +66,3 @@ module.directive "pager", ->
       $scope.page > 1
 
   link: ($scope, $element) ->
-
-module.controller "tabs", ($scope) ->
-  $scope.panes = []
-
-  $scope.addPane = (pane) ->
-    $scope.select(pane) if $scope.panes.length is 0
-    $scope.panes.push(pane)
-
-  $scope.select = (pane) ->
-    otherPane.selected = false for otherPane in $scope.panes
-    pane.selected = true

@@ -30,7 +30,7 @@ describe "Collections list", type: :request, js: true do
   end
 
   it "displays information about the database" do
-    click_link "Stats"
+    click_link "Database stats"
 
     within "table" do
       %w(db collection objects avgObjSize dataSize storageSize numExtents indexes indexSize nsSizeMB ok).each do |field|

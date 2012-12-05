@@ -2,11 +2,12 @@
 #= require app/resources
 #= require app/directives
 #= require app/filters
+#= require app/tabs
 #= require app/controllers
 #= require_tree ./app/controllers
 
 # App Module
-angular.module("mb", ["mb.controllers", "mb.directives", "mb.filters"])
+angular.module("mb", ["mb.controllers", "mb.directives", "mb.filters", "mb.tabs"])
   .config [
     "$routeProvider", "$locationProvider", (route, location) ->
       route
