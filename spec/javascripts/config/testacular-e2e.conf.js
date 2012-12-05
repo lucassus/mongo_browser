@@ -14,5 +14,5 @@ singleRun = true;
 
 urlRoot = '/__testacular/';
 proxies = {
-  "/": "http://localhost:3000/"
+  "/": "http://localhost:3001/"
 };
