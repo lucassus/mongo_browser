@@ -3,6 +3,15 @@ language: ruby
 rvm:
   - 1.9.3
 
+before_script:
+  - "npm install -g grunt testacular@canary"
+  - "grunt html2js"
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - "thin start -e test_e2e -p 3001 -d"
+
 script:
-  - "rspec spec"
+  - "testacular start spec/javascripts/config/testacular.conf.js --single-run"
+  - "testacular start spec/javascripts/config/testacular-e2e.conf.js --single-run"
   - "cucumber features"
+  - "rspec spec"
