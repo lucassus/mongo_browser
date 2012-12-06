@@ -118,7 +118,7 @@ module MongoBrowser
       documents.map! do |doc|
         {
             id: doc.id.to_s,
-            data: doc.data.to_json
+            data: doc.data
         }
       end
 
