@@ -16,7 +16,9 @@ module.filter "jsonDocument", -> (document) ->
       cls = "number"
       if /^"/.test(match)
         if /:$/.test(match)
+          # Remove quotes from a key
           match = match.replace(/^"/, "").replace(/":$/, ":")
+
           cls = "key"
         else
           cls = "string"
