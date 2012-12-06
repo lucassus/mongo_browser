@@ -2,11 +2,11 @@
   <h2>{{collectionName}} documents</h2>
 </header>
 
-<tabs ng-hide="isLoading()">
-  <pane title="Documents">
+<div class="tabbable">
+  <div class="tab-pane" title="Documents">
     <pager page="page" total-pages="totalPages"></pager>
 
-    <table class="table table-striped table-hover documents">
+    <table class="table table-striped table-hover documents" ng-hide="isLoading()">
       <thead>
       <tr>
         <th>Id</th>
@@ -29,9 +29,9 @@
     </table>
 
     <pager page="page" total-pages="totalPages"></pager>
-  </pane>
+  </div>
 
-  <pane title="Collection stats">
+  <div class="tab-pane" title="Collection stats">
     <table class="table table-striped table-hover">
       <thead>
       <tr>
@@ -46,5 +46,5 @@
       </tr>
       </tbody>
     </table>
-  </pane>
-</tabs>
+  </div>
+</div>

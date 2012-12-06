@@ -49,10 +49,7 @@ pager.controller "pager", ($scope, pager) ->
     prepare = pager(page: $scope.page, totalPages: $scope.totalPages)
     $scope.windowedPageNumbers = prepare.windowedPageNumbers()
 
-  $scope.$watch "page", (page) ->
-    $scope.$emit "PageChanged", page
-    paginate()
-
+  $scope.$watch "page", -> paginate()
   $scope.$watch "totalPages", -> paginate()
 
   $scope.setPage = (page) ->

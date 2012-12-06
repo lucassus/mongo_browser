@@ -4,3 +4,4 @@
 #= require bootbox
 #= require angular/angular
 #= require angular/angular-resource
+#= require angular/angular-bootstrap

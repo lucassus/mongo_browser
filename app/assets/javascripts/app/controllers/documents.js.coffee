@@ -15,7 +15,7 @@ module.controller "documents", ($scope, $routeParams, $http, Document, confirmat
     $scope.size = data.size
 
   $scope.fetchDocuments = (page = 1) ->
-    return if $scope.isLoading()
+    return if $scope.isLoading() # TODO workaround for doule request
     $scope.loading = true
 
     params = dbName: $scope.dbName, collectionName: $scope.collectionName, page: page
@@ -24,8 +24,8 @@ module.controller "documents", ($scope, $routeParams, $http, Document, confirmat
   $scope.page = 1
   $scope.fetchDocuments()
 
-  $scope.$on "PageChanged", (event, page) ->
-    $scope.fetchDocuments(page) if $scope.page isnt page
+  $scope.$watch "page", (page) ->
+    $scope.fetchDocuments(page)
 
   # TODO create resource for this call
   $http.get("/api/databases/#{$scope.dbName}/collections/#{$scope.collectionName}/stats.json").success (data) ->
