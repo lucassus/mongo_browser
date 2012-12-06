@@ -3,7 +3,7 @@
 </header>
 
 <div ng-hide="isLoading()">
-  <filter value="filterValue.name" placeholder="Enter database name"></filter>
+  <table-filter value="filterValue.name" placeholder="Enter database name"></table-filter>
 
   <table ng-show="(databases | filter:filterValue).length" class="table table-striped table-hover databases">
     <thead>

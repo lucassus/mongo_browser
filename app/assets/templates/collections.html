@@ -4,7 +4,7 @@
 
 <div class="tabbable">
   <div class="tab-pane" title="Collections" ng-hide="isLoading()">
-    <filter value="filterValue.name" placeholder="Enter collection name"></filter>
+    <table-filter value="filterValue.name" placeholder="Enter collection name"></table-filter>
 
     <table ng-show="(collections | filter:filterValue).length" class="table table-striped table-hover collections">
       <thead>

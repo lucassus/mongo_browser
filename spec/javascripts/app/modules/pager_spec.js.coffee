@@ -1,4 +1,4 @@
-describe "pager module", ->
+describe "mb.pager", ->
   beforeEach module("mb.pager")
 
   describe "pager service", ->
