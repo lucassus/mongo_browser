@@ -77,8 +77,8 @@ describe "Documents list", type: :request, js: true do
       end
 
       def click_delete_button_for(document)
-        database_row = find(:xpath, %Q{//table//tr/td[1][contains(text(), "#{document["_id"]}")]/..})
-        within(database_row) { click_link "Delete" }
+        document_row = find("tr.id-#{document["_id"]}")
+        within(document_row) { click_link "Delete" }
       end
     end
   end

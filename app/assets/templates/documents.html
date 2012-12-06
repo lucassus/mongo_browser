@@ -14,7 +14,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="document in documents" class="document">
+      <tr ng-repeat="document in documents" class="document id-{{document.id}}">
         <td class="data" ng-bind-html="document.data | jsonDocument"></td>
         <td class="actions">
           <a ng-click="delete(document)" class="btn btn-danger">
