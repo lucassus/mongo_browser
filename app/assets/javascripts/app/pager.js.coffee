@@ -1,5 +1,6 @@
 pager = angular.module("mb.pager", [])
 
+# TODO create just a injectable function
 pager.factory "pager", ->
   (options = {}) ->
     page: options.page || 1
@@ -44,6 +45,7 @@ pager.factory "pager", ->
 
       left.concat(middle).concat(right)
 
+# TODO block button when the resource is loading
 pager.controller "pager", ($scope, pager) ->
   paginate = ->
     prepare = pager(page: $scope.page, totalPages: $scope.totalPages)

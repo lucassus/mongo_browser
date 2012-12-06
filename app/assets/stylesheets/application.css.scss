@@ -58,6 +58,19 @@ table.table {
       min-width: 90px;
     }
   }
+
+  // syntax higlight for json document
+  tr.document {
+    pre {
+      padding: 5px; margin: 5px;
+    }
+
+    .string { color: green; }
+    .number { color: darkorange; }
+    .boolean { color: blue; }
+    .null { color: magenta; }
+    .key { color: red; }
+  }
 }
 
 ul.nav.breadcrumbs {
