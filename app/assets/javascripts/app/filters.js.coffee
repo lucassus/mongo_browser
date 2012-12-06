@@ -9,6 +9,7 @@ module.filter "humanSize", -> (bytes) ->
 
 module.filter "jsonDocument", -> (document) ->
   str = JSON.stringify(document, undefined, 2)
+  str = str.replace(/_id": {\s+"\$oid":\s+"(\w+)"\s+}/gm, '_id": ObjectId("$1")')
 
   syntaxHighlight = (json) ->
     json = json.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")

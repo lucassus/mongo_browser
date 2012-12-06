@@ -48,3 +48,12 @@ describe "filters", ->
     it "can highlight nulls", ->
       o = { foo: null }
       expect(filter(o)).toContain('<span class="key">foo:</span> <span class="null">null</span>')
+
+    it "can format ObjectId", ->
+      o = {
+        _id: { $oid: "50bfc4b6dac5d5630800017a" },
+        comapany_id: { $oid: "50bfc4b6dac5d56308000119" }
+      }
+
+      expect(filter(o)).toContain('<span class="key">_id:</span> ObjectId(<span class="string">"50bfc4b6dac5d5630800017a"</span>)')
+      expect(filter(o)).toContain('<span class="key">comapany_id:</span> ObjectId(<span class="string">"50bfc4b6dac5d56308000119"</span>)')
