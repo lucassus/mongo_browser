@@ -1,27 +1,38 @@
 module = angular.module("mb.controllers")
 
-module.controller "databases",  ($scope, Database, confirmationDialog, alerts) ->
-  $scope.filterValue = ""
+class DatabasesController
+  constructor: ($scope, Database, confirmationDialog, alerts) ->
+    @scope = $scope
+    @Database = Database
 
-  _onLoadComplete = (data) ->
-    $scope.databases = data
-    $scope.loading = false
+    @initialize()
 
-  $scope.fetchDatabases = ->
-    $scope.loading = true
-    $scope.databases = Database.query(_onLoadComplete)
+    @scope.isLoading = -> @loading
 
-  $scope.fetchDatabases()
+    @scope.delete = (database) =>
+      confirmationDialog
+        message: "Deleting #{database.name}. Are you sure?"
+        onOk: =>
+          resource = new @Database()
+          params = id: database.name
 
-  $scope.isLoading = -> $scope.loading
+          resource.$delete params, =>
+            alerts.info("Database #{database.name} has been deleted.")
+            @fetchDatabases()
 
-  $scope.delete = (database) ->
-    confirmationDialog
-      message: "Deleting #{database.name}. Are you sure?"
-      onOk: ->
-        resource = new Database()
-        params = id: database.name
+  # Set initial value for the scope
+  initialize: ->
+    @scope.filterValue = ""
 
-        resource.$delete params, ->
-          alerts.info("Database #{database.name} has been deleted.")
-          $scope.fetchDatabases()
+    @loading = false
+    @fetchDatabases()
+
+  fetchDatabases: ->
+    @loading = true
+    @Database.query(@onLoadComplete)
+
+  onLoadComplete: (data) =>
+    @scope.databases = data
+    @loading = false
+
+module.controller "databases", DatabasesController
