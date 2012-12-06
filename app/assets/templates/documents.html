@@ -16,7 +16,7 @@
       <tbody>
       <tr ng-repeat="document in documents" class="document">
         <td class="data" ng-bind-html="document.data | jsonDocument"></td>
-        <td>
+        <td class="actions">
           <a ng-click="delete(document)" class="btn btn-danger" data-method="delete">
             <i class="icon-remove-circle"></i>
             Delete
