@@ -11,7 +11,7 @@ module.controller "documents", ($scope, $routeParams, $http, Document, confirmat
 
     $scope.documents = data.documents
     $scope.page = data.page
-    $scope.totalPages = data.total_pages
+    $scope.totalPages = data.totalPages
     $scope.size = data.size
 
   $scope.fetchDocuments = (page = 1) ->

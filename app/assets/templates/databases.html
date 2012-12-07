@@ -16,7 +16,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="database in databases | orderBy:'name' | filter:filterValue">
-      <td><a href="/databases/{{database.name}}/collections">{{database.name}}</a></td>
+      <td><a href="{{database | collectionsPath}}">{{database.name}}</a></td>
       <td>{{database.count}}</td>
       <td>{{database.size | humanSize}}</td>
       <td class="actions">

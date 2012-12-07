@@ -28,7 +28,7 @@ angular.module("mb", requires)
             controller: "collections"
 
         # list of documents for the given collection
-        .when "/databases/:dbName/collections/:collectionName",
+        .when "/databases/:dbName/collections/:collectionName/documents",
             templateUrl: "/ng/templates/documents.html",
             controller: "documents"
 

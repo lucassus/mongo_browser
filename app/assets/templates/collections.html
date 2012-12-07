@@ -17,7 +17,7 @@
       <tbody>
       <tr ng-repeat="collection in collections | orderBy:'name' | filter:filterValue">
         <td>
-          <a href="/databases/{{collection.db_name}}/collections/{{collection.name}}">
+          <a href="{{collection | documentsPath}}">
             {{collection.name}}
           </a>
         </td>

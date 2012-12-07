@@ -29,11 +29,19 @@ describe "collections", ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()
 
-  # TODO rewrite this spec
+  # TODO refactor this spec
   describe "#delete", ->
+    collection = null
+
+    beforeEach ->
+      collection = dbName: "test_database", name: "dummy-collection-id"
+
     it "shows a confirmation dialog", inject (dialogsHandler) ->
       spyOn(dialogsHandler, "confirm")
-      $scope.delete(name: "dummy-collection-id")
+
+
+      $scope.delete(collection)
+
       expect(dialogsHandler.confirm).toHaveBeenCalledWith \
           "Deleting dummy-collection-id. Are you sure?",
           jasmine.any(Function)
@@ -44,7 +52,7 @@ describe "collections", ->
             .respond([])
 
         spyOn(alerts, "info")
-        $scope.delete(name: "dummy-collection-id")
+        $scope.delete(collection)
         dialogsHandler.confirmed()
 
       it "sends a delete request", ->

@@ -1,4 +1,4 @@
-angular.module "mb.resources", ["ngResource"], ($provide) ->
+angular.module "mb.resources", ["ngResource", "mb.filters"], ($provide) ->
 
   $provide.factory "Database", [
     "$resource", (resource) ->
@@ -8,15 +8,15 @@ angular.module "mb.resources", ["ngResource"], ($provide) ->
   ]
 
   $provide.factory "Collection", [
-    "$resource", (resource) ->
+    "$resource", "$filter", (resource, $filter) ->
 
-      resource "/api/databases/:dbName/collections.json", {},
+      resource "/api#{$filter("collectionsPath")()}.json", {},
         query: method: "GET", isArray: true
   ]
 
   $provide.factory "Document", [
-    "$resource", (resource) ->
+    "$resource", "$filter", (resource, $filter) ->
 
-      resource "/api/databases/:dbName/collections/:collectionName/documents.json", {},
+      resource "/api#{$filter("documentsPath")()}.json", {},
         query: method: "GET", isArray: false
   ]

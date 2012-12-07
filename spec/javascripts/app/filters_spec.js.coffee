@@ -69,3 +69,31 @@ describe "filters", ->
 
       expect(filter(o)).toContain('<span class="key">comapany_id:</span>')
       expect(filter(o)).toContain('ObjectId(<span class="string">"50bfc4b6dac5d56308000119"</span>)')
+
+  # url helpers
+
+  describe "#collectionsPath", ->
+    filter = null
+
+    beforeEach inject (collectionsPathFilter) ->
+      filter = collectionsPathFilter
+
+    it "without parameters generates an url with placeholders", ->
+      expect(filter()).toEqual("/databases/:dbName/collections")
+
+    it "generates an url for the given database collections", ->
+      database = { name: "foo_bar" }
+      expect(filter(database)).toEqual("/databases/foo_bar/collections")
+
+  describe "#documentsPath", ->
+    filter = null
+
+    beforeEach inject (documentsPathFilter) ->
+      filter = documentsPathFilter
+
+    it "without parameters generates an url with placeholders", ->
+      expect(filter()).toEqual("/databases/:dbName/collections/:collectionName/documents")
+
+    it "generates na url for the given collection documents", ->
+      collection = { dbName: "foo", name: "bars" }
+      expect(filter(collection)).toEqual("/databases/foo/collections/bars/documents")

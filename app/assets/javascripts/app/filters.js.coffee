@@ -33,3 +33,16 @@ module.filter "jsonDocument", -> (document) ->
       "<span class=\"#{cls}\">#{match}</span>"
 
   "<pre>#{syntaxHighlight(str)}</pre>"
+
+module.filter "collectionsPath", ->
+  (database = {}) ->
+    dbName = database.name || ":dbName"
+
+    "/databases/#{dbName}/collections"
+
+module.filter "documentsPath", (collectionsPathFilter) ->
+  (collection = {}) ->
+    dbName = collection.dbName || ":dbName"
+    collectionName = collection.name || ":collectionName"
+
+    "#{collectionsPathFilter(name: dbName)}/#{collectionName}/documents"

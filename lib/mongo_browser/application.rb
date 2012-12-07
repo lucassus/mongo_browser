@@ -77,9 +77,9 @@ module MongoBrowser
       database = server.database(db_name)
       collections = database.collections.map do |collection|
         {
-            db_name: collection.db_name,
-            name:    collection.name,
-            size:    collection.size
+            dbName: collection.db_name,
+            name:   collection.name,
+            size:   collection.size
         }
       end
 
@@ -127,10 +127,10 @@ module MongoBrowser
       respond_to do |format|
         format.json do
           {
-              documents:   documents,
-              size:        pagination.size,
-              page:        pagination.current_page,
-              total_pages: pagination.total_pages
+              documents:  documents,
+              size:       pagination.size,
+              page:       pagination.current_page,
+              totalPages: pagination.total_pages
           }.to_json
         end
       end
