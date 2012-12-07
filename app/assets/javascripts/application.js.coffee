@@ -11,7 +11,7 @@
 requires = [
   "bootstrap", "ngSanitize",
   "mb.controllers", "mb.directives", "mb.filters",
-  "mb.pager", "mb.tableFilter"]
+  "mb.dialogs", "mb.pager", "mb.tableFilter"]
 
 angular.module("mb", requires)
   .config [

@@ -1,28 +1,5 @@
 angular.module "mb.services", [], ($provide) ->
 
-  $provide.factory "dialogsHandler", -> bootbox
-
-  $provide.factory "confirmationDialog", [
-    "$log", "dialogsHandler", ($log, handler) ->
-
-      # Options:
-      #  message  - a message to display inside the dialog
-      #             default: "Are you sure?"
-      #  onOk     - a handler for Ok button
-      #  onCancel - a handler for Cancel button
-      (options = {}) ->
-        options.message ||= "Are you sure?"
-        $log.info("Displaying confirmation dialog:", options.message)
-
-        handler.confirm options.message, (confirmed) ->
-          if confirmed
-            $log.info("Confirmation dialog was confirmed")
-            (options.onOk || ->)()
-          else
-            $log.info("Confirmation dialog was disposed")
-            (options.onCancel || ->)()
-  ]
-
   $provide.factory "alerts", [
     "$log", "$timeout", ($log, $timeout) ->
       lastId: 0
@@ -45,7 +22,7 @@ angular.module "mb.services", [], ($provide) ->
       info: (text) -> @push("info", text)
       error: (text) -> @push("error", text)
 
-      # Removes a message with the given id
+      # Disposes a message with the given id
       dispose: (id) ->
         at = @messages.map((message) -> message.id).indexOf(id)
         @messages.splice(at, 1)
