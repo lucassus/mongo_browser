@@ -4,7 +4,7 @@
     <title>Mongo Browser</title>
     <link href="/assets/application.css" rel="stylesheet" media="screen">
   </head>
-  <body>
+  <body ng-controller="main">
     <div class="navbar navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -17,7 +17,7 @@
 
             <ul class="nav pull-right">
               <li><a href="/server_info">Server Info</a></li>
-              <li><a>v. <%= MongoBrowser::VERSION %></a></li>
+              <li><a>v. {{appVersion}}</a></li>
             </ul>
           </div>
         </div>

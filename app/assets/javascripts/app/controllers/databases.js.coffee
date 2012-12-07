@@ -5,13 +5,12 @@ class DatabasesController
     @loading = false
     @fetchDatabases()
 
-    @initializeScope()
+    @bindScope()
 
-  initializeScope: ->
+  bindScope: ->
     @$scope.filterValue = ""
 
     @$scope.isLoading = -> @loading
-
     @$scope.delete = (database) => @dropWithConfirmation(database)
 
   fetchDatabases: ->
