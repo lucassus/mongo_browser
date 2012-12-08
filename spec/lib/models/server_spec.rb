@@ -25,7 +25,6 @@ describe MongoBrowser::Models::Server do
     subject { server.database_names }
 
     it { should be_an_instance_of(Array) }
-    it { should have(2).items }
     it { should include("first_database") }
     it { should include("second_database") }
   end
@@ -35,7 +34,6 @@ describe MongoBrowser::Models::Server do
     subject { databases }
 
     it { should be_an_instance_of(Array) }
-    it { should have(2).items }
 
     it "contains Databases" do
       databases.each do |db|

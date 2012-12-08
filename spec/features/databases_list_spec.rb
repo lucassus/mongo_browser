@@ -53,7 +53,10 @@ describe "Databases list", type: :request, js: true do
 
       expect(page).to have_flash_message("Database first_database has been deleted.")
 
-      should_hide_the_table_and_display_a_notification
+      within "table.databases" do
+        expect(page).to_not have_link("first_database")
+        expect(page).to_not have_link("second_database")
+      end
     end
 
     def click_delete_button_for(database_name)
