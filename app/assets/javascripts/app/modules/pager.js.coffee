@@ -46,31 +46,34 @@ pager.factory "pager", ->
       left.concat(middle).concat(right)
 
 # TODO block button when the resource is loading
-pager.controller "pager", ($scope, pager) ->
-  paginate = ->
-    prepare = pager(page: $scope.page, totalPages: $scope.totalPages)
-    $scope.windowedPageNumbers = prepare.windowedPageNumbers()
+class PagerController
+  constructor: (@$scope, @pager) ->
+    @$scope.$watch "page", => @paginate()
+    @$scope.$watch "totalPages", => @paginate()
 
-  $scope.$watch "page", -> paginate()
-  $scope.$watch "totalPages", -> paginate()
+    @$scope.setPage = (page) =>
+      return if page < 1 or page > @$scope.totalPages
+      @$scope.page = page
 
-  $scope.setPage = (page) ->
-    return if page < 1 or page > $scope.totalPages
-    $scope.page = page
+    @$scope.next = =>
+      @$scope.page += 1 if @$scope.hasNext()
 
-  $scope.next = ->
-    $scope.page += 1 if $scope.hasNext()
+    @$scope.hasNext = =>
+      @$scope.page < @$scope.totalPages
 
-  $scope.hasNext = ->
-    $scope.page < $scope.totalPages
+    @$scope.prev = =>
+      @$scope.page -= 1 if @$scope.hasPrev()
 
-  $scope.prev = ->
-    $scope.page -= 1 if $scope.hasPrev()
+    @$scope.hasPrev = =>
+      @$scope.page > 1
 
-  $scope.hasPrev = ->
-    $scope.page > 1
+    @$scope.display = => @$scope.totalPages > 1
 
-  $scope.display = -> $scope.totalPages > 1
+  paginate: =>
+    prepare = @pager(page: @$scope.page, totalPages: @$scope.totalPages)
+    @$scope.windowedPageNumbers = prepare.windowedPageNumbers()
+
+pager.controller "pager", PagerController
 
 pager.directive "pager", ->
   templateUrl: "/ng/templates/pager.html"

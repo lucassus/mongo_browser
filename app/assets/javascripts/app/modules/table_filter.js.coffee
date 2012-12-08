@@ -1,11 +1,16 @@
 taleFilter = angular.module("mb.tableFilter", [])
 
-taleFilter.controller "tableFilter", ($scope) ->
-  # Clears the filter value
-  $scope.clear = -> $scope.value = ""
+class TableFilterController
+  constructor: ($scope) ->
+    # Clears the filter value
+    $scope.clear = -> $scope.value = ""
 
-  # Reruns true when the filter is empty
-  $scope.isEmpty = -> !$scope.value
+    # Reruns true when the filter is empty
+    $scope.isEmpty = -> !$scope.value
+
+TableFilterController.$inject = ["$scope"]
+
+taleFilter.controller "tableFilter", TableFilterController
 
 # Filter for databases and collections
 taleFilter.directive "tableFilter", ->

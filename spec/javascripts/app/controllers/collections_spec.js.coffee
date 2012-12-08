@@ -29,6 +29,15 @@ describe "collections", ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()
 
+  describe "#isLoading", ->
+    it "returns true when the resouce it loading", ->
+      $scope.loading = true
+      expect($scope.isLoading()).toBeTruthy()
+
+    it "otherwise returns false", ->
+      $scope.loading = false
+      expect($scope.isLoading()).toBeFalsy()
+
   # TODO refactor this spec
   describe "#delete", ->
     collection = null

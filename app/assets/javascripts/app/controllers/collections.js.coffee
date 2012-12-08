@@ -1,32 +1,40 @@
 module = angular.module("mb.controllers")
 
-module.controller "collections", ($scope, $routeParams, Collection, $http, confirmationDialog, alerts) ->
-  $scope.dbName = $routeParams.dbName
-  $scope.filterValue = ""
+# TODO clenup this controller, see DatabasesController
+class CollectionsController
+  constructor: (@$scope, @$routeParams, @Collection, @$http, @confirmationDialog, @alerts) ->
 
-  _onLoadComplete = (data) ->
-    $scope.collections = data
-    $scope.loading = false
+    @$scope.dbName = @$routeParams.dbName
+    @$scope.filterValue = ""
 
-  $scope.fetchCollections = ->
-    $scope.loading = true
-    $scope.collections = Collection.query({ dbName: $scope.dbName }, _onLoadComplete)
+    _onLoadComplete = (data) =>
+      @$scope.collections = data
+      @$scope.loading = false
 
-  $scope.fetchCollections()
+    @$scope.fetchCollections = =>
+      @$scope.loading = true
+      @$scope.collections = @Collection.query({ dbName: @$scope.dbName }, _onLoadComplete)
 
-  # TODO create resource for this call
-  $http.get("/api/databases/#{$scope.dbName}/stats.json").success (data) ->
-    $scope.dbStats = data
+    @$scope.fetchCollections()
 
-  $scope.isLoading = -> $scope.loading
+    # TODO create resource for this call
+    @$http.get("/api/databases/#{@$scope.dbName}/stats.json").success (data) =>
+      @$scope.dbStats = data
 
-  $scope.delete = (collection) ->
-    confirmationDialog
-      message: "Deleting #{collection.name}. Are you sure?"
-      onOk: ->
-        resource = new Collection()
-        params = dbName: collection.dbName, id: collection.name
+    @$scope.isLoading = => @$scope.loading
 
-        resource.$delete params, ->
-          alerts.info("Collection #{collection.name} has been deleted.")
-          $scope.fetchCollections()
+    @$scope.delete = (collection) =>
+      @confirmationDialog
+        message: "Deleting #{collection.name}. Are you sure?"
+        onOk: =>
+          resource = new @Collection()
+          params = dbName: collection.dbName, id: collection.name
+
+          resource.$delete params, =>
+            @alerts.info("Collection #{collection.name} has been deleted.")
+            @$scope.fetchCollections()
+
+CollectionsController.$inject = ["$scope", "$routeParams",
+  "Collection", "$http", "confirmationDialog", "alerts"]
+
+module.controller "collections", CollectionsController
