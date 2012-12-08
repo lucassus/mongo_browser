@@ -1,40 +1,42 @@
 require "singleton"
 
+# Utility for run and manage test mongod instance.
 class Mongod
   include Singleton
 
   MONGODB_DBPATH = "/tmp/mongo_browser/db"
+  # port for test mongod instance
+  MONGODB_PORT = 27018
 
-  attr_reader :port
   attr_reader :pid
 
-  def initialize
-    @port = find_available_port
-  end
-
+  # Start test mongod instance
+  # * it cleans up the test server directory
+  # * starts a daemon
+  # * and wait until its fully responsive
   def start!
     return if running?
 
     FileUtils.mkdir_p(MONGODB_DBPATH)
 
-    @pid = Mongod.start(port)
+    @pid = Mongod.start
     wait_until_responsive
 
-    yield port if block_given?
+    yield MONGODB_PORT if block_given?
   end
 
+  # Kills test mongod instance
   def shutdown!
     return unless running?
 
     Process.kill('HUP', pid)
-    FileUtils.rm_rf(MONGODB_DBPATH)
 
     @pid = nil
   end
 
   # Returns true is mongodb server is ready to use
   def responsive?
-    Mongo::Connection.new(MongoBrowser::DEFAULT_HOST, port)
+    Mongo::Connection.new(MongoBrowser::DEFAULT_HOST, MONGODB_PORT)
     true
   rescue Mongo::ConnectionFailure
     false
@@ -46,19 +48,29 @@ class Mongod
 
   private
 
-  def find_available_port
-    server = TCPServer.new(MongoBrowser::DEFAULT_HOST, 0)
-    server.addr[1]
-  ensure
-    server.close if server
-  end
+  class << self
 
-  # Starts a core MongoDB daemon on the given port.
-  def self.start(port)
-    command = "mongod --port #{port} --dbpath #{MONGODB_DBPATH} --nojournal"
-    log_file = File.open(File.expand_path("log/test_mongod.log"), "w")
+    # Check whether port for test mongod is available,
+    def test_port_available?
+      begin
+        server = TCPServer.new(MongoBrowser::DEFAULT_HOST, MONGODB_PORT)
+        true
+      rescue
+        false
+      end
+    ensure
+      server.close if server
+    end
 
-    Process.spawn(command, out: log_file)
+    # Starts a core MongoDB test daemon.
+    def start
+      raise "port #{MONGODB_PORT} is not available" unless test_port_available?
+
+      command = "mongod --config #{File.expand_path("spec/support/mongodb.conf")}"
+      log_file = File.open(File.expand_path("log/test_mongod.log"), "w")
+
+      Process.spawn(command, out: log_file)
+    end
   end
 
   # Uses exponential back-off technique for waiting for the mongodb server
