@@ -21,9 +21,6 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency("thin", "~> 1.5.0")
   gem.add_development_dependency("rspec", "~> 2.12.0")
-  gem.add_development_dependency("capybara", "~> 1.1.3")
-  gem.add_development_dependency("capybara-webkit", "~> 0.13.0")
-  gem.add_development_dependency("launchy", "~> 2.1.2")
   gem.add_development_dependency("simplecov", "~> 0.7.1")
   gem.add_development_dependency("debugger", "~> 1.2.2")
 
