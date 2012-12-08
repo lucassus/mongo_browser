@@ -4,19 +4,6 @@ require "mongo_browser"
 
 require "debugger"
 require "rspec"
-require "capybara"
-require "capybara/rspec"
-require "socket"
-
-require "capybara/webkit"
-Capybara.register_driver :webkit_silent do |app|
-  Capybara::Webkit::Driver.new(app, stdout: nil)
-end
-
-Capybara.javascript_driver = :webkit_silent
-
-Capybara.ignore_hidden_elements = true
-Capybara.app = MongoBrowser::Application
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # from spec/support/ and its subdirectories.
@@ -36,14 +23,6 @@ RSpec.configure do |config|
     end
 
     fixtures.load!
-  end
-
-  # Take a screenshot and html dump when the scenario has failed
-  config.after type: :request do
-    if example.exception
-      file_name = example.full_description.downcase.gsub(/\s/, "-")
-      capture_page(file_name)
-    end
   end
 end
 

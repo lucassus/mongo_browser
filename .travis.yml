@@ -10,6 +10,4 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
 
 script:
-  - "testacular start spec/javascripts/config/testacular.conf.js --single-run"
-  - "cucumber features"
-  - "rspec spec"
+  - "./script/ci_all"

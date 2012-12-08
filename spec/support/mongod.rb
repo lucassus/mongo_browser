@@ -1,3 +1,5 @@
+require "singleton"
+
 # Utility for run and manage test mongod instance.
 class Mongod
   include Singleton
@@ -15,6 +17,7 @@ class Mongod
   def start!
     return if running?
 
+    FileUtils.rm_rf(MONGODB_DBPATH) if Dir.exist?(MONGODB_DBPATH)
     FileUtils.mkdir_p(MONGODB_DBPATH)
 
     @pid = Mongod.start
@@ -25,6 +28,7 @@ class Mongod
 
   # Kills test mongod instance
   def shutdown!
+    puts "shutdown! test mongod instance"
     return unless running?
 
     Process.kill('HUP', pid)

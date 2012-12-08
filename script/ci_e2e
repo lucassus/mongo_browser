@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Start test backend instance
+bundle exec thin start -R config-e2e.ru -p 3001 -d
+
+testacular start spec/javascripts/config/testacular-e2e.conf.js --single-run
+RESULT=$?
+
+# Kill test backend instance
+kill `cat tmp/pids/thin.pid`
+exit $RESULT
