@@ -1,0 +1,25 @@
+#!/bin/bash
+
+echo "Running rspec scenarios.."
+./script/ci_rspec
+RSPEC_RESULT=$?
+
+echo -e "\nRunning cucumber scenarios..\n"
+./script/ci_cucumber
+CUCUMBER_RESULT=$?
+
+echo -e "\nRunning javascripts scenarios..\n"
+./script/ci_javascripts
+JAVASCRIPTS_RESULT=$?
+
+echo -e "\nRunning e2e scenarios..\n"
+./script/ci_e2e
+E2E_RESULT=$?
+
+if [ $RSPEC_RESULT -eq 1 -o $CUCUMBER_RESULT -eq 1 -o $JAVASCRIPTS_RESULT -eq 1 -o $E2E_RESULT -eq 1 ]; then
+  echo "error"
+  exit 1
+else
+  echo "allOk"
+  exit 0
+fi

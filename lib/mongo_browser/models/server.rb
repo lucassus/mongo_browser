@@ -26,7 +26,7 @@ module MongoBrowser
       #
       # @return [String]
       def database_names
-        connection.database_names
+        connection.database_names.reject { |name| name == "admin" }
       end
 
       # Return a list of available databases.

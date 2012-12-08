@@ -4,7 +4,7 @@ describe "Databases list", type: :request, js: true do
   before { visit "/" }
 
   describe "click on delete database button" do
-    it "deletes a database" do
+    xit "deletes a database" do
       click_delete_button_for("second_database")
       confirm_dialog
 

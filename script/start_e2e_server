@@ -1,3 +1,0 @@
-#!/bin/bash
-
-thin start -R config-e2e.ru -p 3001

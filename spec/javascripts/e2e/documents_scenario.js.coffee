@@ -5,7 +5,8 @@ describe "documents list page", ->
     element("table.collections tbody tr a:contains('first_collection')").click()
 
   it "shows the documents page", ->
-    expect(browser().location().url()).toBe("/databases/first_database/collections/first_collection")
+    expect(browser().location().url())
+        .toBe("/databases/first_database/collections/first_collection/documents")
 
     title = element("h2").text()
     expect(title).toEqual("first_collection documents")

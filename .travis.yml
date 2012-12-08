@@ -8,10 +8,6 @@ before_script:
   - "grunt html2js"
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "thin start -R config-e2e.ru -p 3001 -d"
 
 script:
-  - "testacular start spec/javascripts/config/testacular.conf.js --single-run"
-  - "testacular start spec/javascripts/config/testacular-e2e.conf.js --single-run"
-  - "cucumber features"
-  - "rspec spec"
+  - "./script/ci_all"

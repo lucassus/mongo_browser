@@ -14,3 +14,7 @@ end
 fixtures.load!
 
 run MongoBrowser::Application
+
+at_exit do
+  test_server.shutdown!
+end
