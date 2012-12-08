@@ -1,27 +1,39 @@
 module = angular.module("mb.controllers")
 
-module.controller "databases",  ($scope, Database, confirmationDialog, alerts) ->
-  $scope.filterValue = ""
+class DatabasesController
+  constructor: (@$scope, @Database, @confirmationDialog, @alerts) ->
+    @loading = false
+    @fetchDatabases()
 
-  _onLoadComplete = (data) ->
-    $scope.databases = data
-    $scope.loading = false
+    # Scope variables
+    @$scope.filterValue = ""
 
-  $scope.fetchDatabases = ->
-    $scope.loading = true
-    $scope.databases = Database.query(_onLoadComplete)
+    # Scope methods
+    @$scope.isLoading = -> @loading
+    @$scope.delete = (database) => @dropWithConfirmation(database)
 
-  $scope.fetchDatabases()
+  fetchDatabases: ->
+    @loading = true
+    @Database.query(@onLoadComplete)
 
-  $scope.isLoading = -> $scope.loading
+  onLoadComplete: (data) =>
+    @$scope.databases = data
+    @loading = false
 
-  $scope.delete = (database) ->
-    confirmationDialog
+  dropWithConfirmation: (database) =>
+    @confirmationDialog
       message: "Deleting #{database.name}. Are you sure?"
-      onOk: ->
-        resource = new Database()
-        params = id: database.name
+      onOk: => @drop(database)
 
-        resource.$delete params, ->
-          alerts.info("Database #{database.name} has been deleted.")
-          $scope.fetchDatabases()
+  drop: (database) ->
+    resource = new @Database()
+    params = id: database.name
+
+    resource.$delete params, =>
+      @alerts.info("Database #{database.name} has been deleted.")
+      @fetchDatabases()
+
+DatabasesController.$inject = ["$scope",
+  "Database", "confirmationDialog", "alerts"]
+
+module.controller "databases", DatabasesController

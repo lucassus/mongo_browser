@@ -47,15 +47,24 @@ section.container {
 
 table.table {
   tr {
-    &.document pre {
+    &.document td.data pre {
       background: none;
       border: 0px;
       padding: 0px;
       display: inline;
+
+      // syntax higlight for json document
+      span {
+        &.string { color: green; }
+        &.number { color: darkorange; }
+        &.boolean { color: blue; }
+        &.null { color: magenta; }
+        &.key { color: red; }
+      }
     }
 
     th.actions {
-      min-width: 90px;
+      width: 90px;
     }
   }
 }

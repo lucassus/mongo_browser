@@ -1,37 +1,49 @@
 module = angular.module("mb.controllers")
 
-module.controller "documents", ($scope, $routeParams, $http, Document, confirmationDialog, alerts) ->
-  $scope.dbName = $routeParams.dbName
-  $scope.collectionName = $routeParams.collectionName
+# TODO clenup this controller, see DatabasesController
+class DocumentsController
+  constructor: (@$scope, @$routeParams, @$http, @Document, @confirmationDialog, @alerts) ->
+    @$scope.dbName = @$routeParams.dbName
+    @$scope.collectionName = @$routeParams.collectionName
 
-  _onLoadComplete = (data) ->
-    $scope.loading = false
+    @$scope.isLoading = => @$scope.loading
 
-  $scope.fetchDocuments = ->
-    $scope.loading = true
+    _onLoadComplete = (data) =>
+      @$scope.loading = false
 
-    params = dbName: $scope.dbName, collectionName: $scope.collectionName
-    $scope.documents = Document.query(params, _onLoadComplete())
+      @$scope.documents = data.documents
+      @$scope.page = data.page
+      @$scope.totalPages = data.totalPages
+      @$scope.size = data.size
 
-  $scope.fetchDocuments()
+    @$scope.fetchDocuments = (page = 1) =>
+      return if @$scope.isLoading() # TODO workaround for doule request
+      @$scope.loading = true
 
-  $scope.page = 1
-  $scope.totalPages = 99
+      params = dbName: @$scope.dbName, collectionName: @$scope.collectionName, page: page
+      @Document.query(params, _onLoadComplete)
 
-  $scope.$watch "page", (page) ->
-    $scope.fetchDocuments()
+    @$scope.page = 1
+    @$scope.fetchDocuments()
 
-  # TODO create resource for this call
-  $http.get("/api/databases/#{$scope.dbName}/collections/#{$scope.collectionName}/stats.json").success (data) ->
-    $scope.collectionStats = data
+    @$scope.$watch "page", (page) =>
+      @$scope.fetchDocuments(page)
 
-  $scope.delete = (document) ->
-    confirmationDialog
-      message: "Are you sure?"
-      onOk: ->
-        resource = new Document()
-        params = dbName: $scope.dbName, collectionName: $scope.collectionName, id: document.id
+    # TODO create resource for this call
+    @$http.get("/api/databases/#{@$scope.dbName}/collections/#{@$scope.collectionName}/stats.json").success (data) =>
+      @$scope.collectionStats = data
 
-        resource.$delete params, ->
-          alerts.info("Document #{document.id} has been deleted.")
-          $scope.fetchDocuments()
+    @$scope.delete = (document) =>
+      @confirmationDialog
+        message: "Are you sure?"
+        onOk: =>
+          resource = new @Document()
+          params = dbName: @$scope.dbName, collectionName: @$scope.collectionName, id: document.id
+
+          resource.$delete params, =>
+            @alerts.info("Document #{document.id} has been deleted.")
+            @$scope.fetchDocuments()
+
+DocumentsController.$inject = ["$scope", "$routeParams", "$http", "Document", "confirmationDialog", "alerts"]
+
+module.controller "documents", DocumentsController

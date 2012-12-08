@@ -19,6 +19,8 @@ module MongoBrowser
     enable :sessions
 
     set :root, File.join(File.dirname(__FILE__), "../../app")
+    set :public_folder, File.join(settings.root, "../public")
+
     set :method_override, true
 
     use Middleware::SprocketsSinatra, :root => File.join(settings.root, "..")
@@ -32,7 +34,7 @@ module MongoBrowser
     # Welcome page
     # All routes without `/api` prefix
     get /^(?!\/api).+/ do
-      erb :"index"
+      File.read(File.join(settings.public_folder, "index.html"))
     end
 
     # Databases list
@@ -75,9 +77,9 @@ module MongoBrowser
       database = server.database(db_name)
       collections = database.collections.map do |collection|
         {
-            db_name: collection.db_name,
-            name: collection.name,
-            size: collection.size
+            dbName: collection.db_name,
+            name:   collection.name,
+            size:   collection.size
         }
       end
 
@@ -118,12 +120,19 @@ module MongoBrowser
       documents.map! do |doc|
         {
             id: doc.id.to_s,
-            data: doc.data.to_json
+            data: doc.data
         }
       end
 
       respond_to do |format|
-        format.json { documents.to_json }
+        format.json do
+          {
+              documents:  documents,
+              size:       pagination.size,
+              page:       pagination.current_page,
+              totalPages: pagination.total_pages
+          }.to_json
+        end
       end
     end
 
@@ -143,6 +152,14 @@ module MongoBrowser
 
       respond_to do |format|
         format.json { server_info.to_json }
+      end
+    end
+
+    get "/api/version.json" do
+      respond_to do |format|
+        format.json do
+          { version: MongoBrowser::VERSION }.to_json
+        end
       end
     end
 

@@ -2,12 +2,18 @@
 #= require app/resources
 #= require app/directives
 #= require app/filters
-#= require app/tabs
+#= require_tree ./app/modules
+
 #= require app/controllers
 #= require_tree ./app/controllers
 
 # App Module
-angular.module("mb", ["mb.controllers", "mb.directives", "mb.filters", "mb.tabs"])
+requires = [
+  "bootstrap", "ngSanitize",
+  "mb.controllers", "mb.directives", "mb.filters",
+  "mb.dialogs", "mb.pager", "mb.tableFilter"]
+
+angular.module("mb", requires)
   .config [
     "$routeProvider", "$locationProvider", (route, location) ->
       route
@@ -22,7 +28,7 @@ angular.module("mb", ["mb.controllers", "mb.directives", "mb.filters", "mb.tabs"
             controller: "collections"
 
         # list of documents for the given collection
-        .when "/databases/:dbName/collections/:collectionName",
+        .when "/databases/:dbName/collections/:collectionName/documents",
             templateUrl: "/ng/templates/documents.html",
             controller: "documents"
 

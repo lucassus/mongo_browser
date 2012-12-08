@@ -2,9 +2,9 @@
   <h2>{{dbName}} collections</h2>
 </header>
 
-<tabs ng-hide="isLoading()">
-  <pane title="Collections">
-    <filter value="filterValue.name" placeholder="Enter collection name"></filter>
+<div class="tabbable">
+  <div class="tab-pane" title="Collections" ng-hide="isLoading()">
+    <table-filter value="filterValue.name" placeholder="Enter collection name"></table-filter>
 
     <table ng-show="(collections | filter:filterValue).length" class="table table-striped table-hover collections">
       <thead>
@@ -17,12 +17,12 @@
       <tbody>
       <tr ng-repeat="collection in collections | orderBy:'name' | filter:filterValue">
         <td>
-          <a href="/databases/{{collection.db_name}}/collections/{{collection.name}}">
+          <a href="{{collection | documentsPath}}">
             {{collection.name}}
           </a>
         </td>
         <td>{{collection.size}}</td>
-        <td>
+        <td class="actions">
           <a class="btn btn-danger" ng-click="delete(collection)">
             <i class="icon-remove-circle"></i>
             Delete
@@ -35,9 +35,9 @@
     <div ng-hide="(collections | filter:filterValue).length" class="filter alert">
       Nothing has been found.
     </div>
-  </pane>
+  </div>
 
-  <pane title="Database stats">
+  <div class="tab-pane" title="Database stats">
     <table class="table table-striped table-hover">
       <thead>
       <tr>
@@ -52,5 +52,5 @@
       </tr>
       </tbody>
     </table>
-  </pane>
-</tabs>
+  </div>
+</div>

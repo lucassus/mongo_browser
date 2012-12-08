@@ -18,7 +18,7 @@ describe "Documents list", type: :request, js: true do
         end
 
         within "li:nth-child(2)" do
-          href = "/databases/first_database/collections/#{current_collection_name}"
+          href = "/databases/first_database/collections/#{current_collection_name}/documents"
           expect(page).to have_link(current_collection_name, href: href)
         end
       end
@@ -77,8 +77,8 @@ describe "Documents list", type: :request, js: true do
       end
 
       def click_delete_button_for(document)
-        database_row = find(:xpath, %Q{//table//tr/td[1][contains(text(), "#{document["_id"]}")]/..})
-        within(database_row) { click_link "Delete" }
+        document_row = find("tr.id-#{document["_id"]}")
+        within(document_row) { click_link "Delete" }
       end
     end
   end
