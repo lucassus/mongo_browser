@@ -1,3 +1,4 @@
 #!/bin/bash
 
+grunt html2js
 testacular start spec/javascripts/config/testacular.conf.js --single-run
