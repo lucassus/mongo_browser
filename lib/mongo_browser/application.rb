@@ -26,6 +26,24 @@ module MongoBrowser
     use Middleware::SprocketsSinatra, :root => File.join(settings.root, "..")
     register Sinatra::RespondWith
 
+    if settings.test?
+      require File.join(settings.root, "../spec/support/fixtures")
+
+      # Execute e2e runner
+      get "/e2e" do
+        File.read(File.join(settings.root, "../spec/javascripts/e2e/runner.html"))
+      end
+
+      # Load database fixtures
+      get "/e2e/load_fixtures" do
+        Fixtures.instance.load!
+
+        respond_to do |format|
+          format.json { true }
+        end
+      end
+    end
+
     # Loads given template from assets/templates directory
     get "/ng/templates/:name.html" do |template_name|
       send_file File.join(settings.root, "assets/templates/#{template_name}.html")

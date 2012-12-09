@@ -1,6 +1,8 @@
 describe "collections list page", ->
   beforeEach ->
+    browser().navigateTo("/e2e/load_fixtures")
     browser().navigateTo("/")
+
     element("table.databases tbody tr a:contains('first_database')").click()
 
   it "navigates to the valid url", ->

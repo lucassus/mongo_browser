@@ -36,5 +36,13 @@
         "name": "first_collection"
       }
     ]
+  },
+  {
+    "name": "third_database",
+    "collections": [
+      {
+        "name": "first_collection"
+      }
+    ]
   }
 ]

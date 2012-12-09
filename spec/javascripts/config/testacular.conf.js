@@ -7,7 +7,9 @@ files = [
   // Libraries
   "vendor/assets/javascripts/jquery.js",
   "vendor/assets/javascripts/angular/angular.js",
-  "vendor/assets/javascripts/angular/angular-*.js",
+  "vendor/assets/javascripts/angular/angular-resource.js",
+  "vendor/assets/javascripts/angular/angular-sanitize.js",
+  "vendor/assets/javascripts/angular/angular-bootstrap.js",
   "vendor/assets/javascripts/*.js",
 
   // The app
@@ -16,7 +18,7 @@ files = [
   "app/assets/javascripts/application.js.coffee",
 
   // Specs
-  "spec/javascripts/lib/angular/angular-mocks.js",
+  "spec/javascripts/lib/angular-mocks.js",
 
   "spec/javascripts/helpers/**/*.js.coffee",
   "spec/javascripts/**/*_spec.js.coffee",
@@ -38,4 +40,4 @@ reporters = ["dots"];
 browsers = ["PhantomJS"];
 
 autoWatch = true;
-singleRun = false
+singleRun = false;
