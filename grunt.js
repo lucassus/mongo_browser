@@ -23,7 +23,10 @@ module.exports = function(grunt) {
     var files = grunt._watch_changed_files || grunt.file.expand(this.data);
 
     files.forEach(function(file) {
-      grunt.file.write(file + '.js', grunt.template.process(TPL, {
+      var parts = file.split("/");
+      var name = parts[parts.length - 1];
+
+      grunt.file.write("app/assets/javascripts/templates/" + name + '.js', grunt.template.process(TPL, {
         file: file,
         path: "/ng/templates/" + file.split("/").pop(),
         content: escapeContent(grunt.file.read(file))

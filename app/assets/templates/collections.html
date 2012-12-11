@@ -23,10 +23,7 @@
         </td>
         <td>{{collection.size}}</td>
         <td class="actions">
-          <a class="btn btn-danger" ng-click="delete(collection)">
-            <i class="icon-remove-circle"></i>
-            Delete
-          </a>
+          <delete-button ng-click="delete(collection)" />
         </td>
       </tr>
       </tbody>

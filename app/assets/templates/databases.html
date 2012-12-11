@@ -20,10 +20,7 @@
       <td>{{database.count}}</td>
       <td>{{database.size | humanSize}}</td>
       <td class="actions">
-        <a class="btn btn-danger" ng-click="delete(database)">
-          <i class="icon-remove-circle"></i>
-          Delete
-        </a>
+        <delete-button ng-click="delete(database)" />
       </td>
     </tr>
     </tbody>

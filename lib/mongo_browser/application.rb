@@ -29,9 +29,13 @@ module MongoBrowser
     if settings.test?
       require File.join(settings.root, "../spec/support/fixtures")
 
+      get "/jasmine" do
+        File.read(File.join(settings.root, "../spec/javascripts/runner.html"))
+      end
+
       # Execute e2e runner
       get "/e2e" do
-        File.read(File.join(settings.root, "../spec/javascripts/e2e/runner.html"))
+        File.read(File.join(settings.root, "../spec/javascripts/runner_e2e.html"))
       end
 
       # Load database fixtures

@@ -18,8 +18,8 @@ module MongoBrowser
         @environment.append_path "vendor/assets/stylesheets"
         @environment.append_path "vendor/assets/images"
 
-        # Serve e2e specs
-        @environment.append_path "spec/javascripts/e2e"
+        # Serve specs
+        @environment.append_path "spec/javascripts"
       end
 
       def call(env)
