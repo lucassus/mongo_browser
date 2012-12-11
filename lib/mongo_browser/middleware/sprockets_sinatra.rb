@@ -1,6 +1,8 @@
+require "mongo_browser/middleware/sprockets_base"
+
 module MongoBrowser
   module Middleware
-    class SprocketsSinatra
+    class SprocketsSinatra < SprocketsBase
       def initialize(app, options = {})
         @app = app
         @root = options[:root]
@@ -17,15 +19,6 @@ module MongoBrowser
         @environment.append_path "vendor/assets/javascripts"
         @environment.append_path "vendor/assets/stylesheets"
         @environment.append_path "vendor/assets/images"
-
-        # Serve specs
-        @environment.append_path "spec/javascripts"
-      end
-
-      def call(env)
-        return @app.call(env) unless @matcher =~ env["PATH_INFO"]
-        env["PATH_INFO"].sub!(@matcher, "")
-        @environment.call(env)
       end
     end
   end

@@ -23,11 +23,15 @@ module MongoBrowser
 
     set :method_override, true
 
-    use Middleware::SprocketsSinatra, :root => File.join(settings.root, "..")
     register Sinatra::RespondWith
+
+    use Middleware::SprocketsSinatra, :root => File.join(settings.root, "..")
 
     if settings.test?
       require File.join(settings.root, "../spec/support/fixtures")
+
+      require "mongo_browser/middleware/sprockets_specs"
+      use Middleware::SprocketsSpecs, :root => File.join(settings.root, "..")
 
       get "/jasmine" do
         File.read(File.join(settings.root, "../spec/javascripts/runner.html"))
