@@ -58,13 +58,14 @@ describe "databases list page", ->
 
     describe "when the dialog was confirmed", ->
       beforeEach ->
-        element("div.bootbox a:contains('OK')").click()
+        appElement "div.bootbox a:contains('OK')", ($element) ->
+          $element.click()
 
       xit "deletes a database", ->
         expect(repeater("table.databases tbody tr").count()).toBe(2)
         expect(repeater("table.databases tbody tr").column("database.name"))
-            .toEqual(["first_database", "second_database"])
+          .toEqual(["first_database", "second_database"])
 
         expect(repeater(".alert").count()).toBe(1)
-        expect(repeater("aside#alerts .alert").column("text"))
+        expect(repeater(".alert").column("text"))
             .toContain("Database third_database has been deleted.")

@@ -3,6 +3,7 @@ basePath = "../../../";
 files = [
   ANGULAR_SCENARIO,
   ANGULAR_SCENARIO_ADAPTER,
+  "spec/javascripts/helpers_e2e/**/*.js.coffee",
   "spec/javascripts/e2e/**/*.js.coffee"
 ];
 
