@@ -7,7 +7,6 @@ class Fixtures
   def load!
     cleanup!
 
-    data = JSON.parse(File.open(File.expand_path("spec/support/fixtures/databases.json"), "r").read)
     data.each do |database_data|
       database = connection.db(database_data["name"])
 
@@ -23,9 +22,25 @@ class Fixtures
 
   # Delete all databases
   def cleanup!
-    connection.database_names.each do |db_name|
+    fixture_databases = data.map { |db| db["name"] }
+
+    # Drop all databases outside fixtures
+    other_databases = connection.database_names - fixture_databases
+    other_databases.each do |db_name|
       connection.drop_database(db_name)
     end
+
+    # Drop collections inside databases
+    fixture_databases.each do |db_name|
+      collection_names = connection[db_name].collection_names - ["system.indexes"]
+      collection_names.each do |collection_name|
+        connection[db_name][collection_name].drop
+      end
+    end
+  end
+
+  def data
+    JSON.parse(File.open(File.expand_path("spec/support/fixtures/databases.json"), "r").read)
   end
 
   def connection
