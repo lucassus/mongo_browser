@@ -49,23 +49,26 @@ describe "databases list page", ->
 
     describe "when the dialog was disposed", ->
       beforeEach ->
-        element("div.modal .modal-footer a:contains('Cancel')").click()
+        appElement "div.modal .modal-footer a:contains('Cancel')", ($element) ->
+          $element.click()
 
-      xit "does nothig", ->
-        expect(repeater("table.databases tbody tr").count()).toBe(3)
-        expect(repeater("table.databases tbody tr").column("database.name"))
-            .toEqual(["first_database", "second_database", "third_database"])
+      it "does nothig", ->
+          expect(repeater("table.databases tbody tr").count()).toBe(3)
+          expect(repeater("table.databases tbody tr").column("database.name"))
+              .toEqual(["first_database", "second_database", "third_database"])
 
-    describe "when the dialog was confirmed", ->
+    # TODO figure out how to test it
+    xdescribe "when the dialog was confirmed", ->
       beforeEach ->
         appElement "div.bootbox a:contains('OK')", ($element) ->
           $element.click()
 
-      xit "deletes a database", ->
+      it "shows the alert", ->
+        expect(repeater("aside#alerts .alert").count()).toBe(1)
+        expect(repeater("aside#alerts .alert").column("message.text"))
+            .toContain("Database third_database has been deleted.")
+
+      it "deletes a database", ->
         expect(repeater("table.databases tbody tr").count()).toBe(2)
         expect(repeater("table.databases tbody tr").column("database.name"))
-          .toEqual(["first_database", "second_database"])
-
-        expect(repeater(".alert").count()).toBe(1)
-        expect(repeater(".alert").column("text"))
-            .toContain("Database third_database has been deleted.")
+            .toEqual(["first_database", "second_database"])
