@@ -57,13 +57,13 @@ describe "databases list page", ->
           expect(repeater("table.databases tbody tr").column("database.name"))
               .toEqual(["first_database", "second_database", "third_database"])
 
-    # TODO figure out how to test it
-    xdescribe "when the dialog was confirmed", ->
+    describe "when the dialog was confirmed", ->
       beforeEach ->
         appElement "div.bootbox a:contains('OK')", ($element) ->
           $element.click()
 
-      it "shows the alert", ->
+      # TODO figure out how to test it
+      xit "shows the alert", ->
         expect(repeater("aside#alerts .alert").count()).toBe(1)
         expect(repeater("aside#alerts .alert").column("message.text"))
             .toContain("Database third_database has been deleted.")
