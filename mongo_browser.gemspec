@@ -26,7 +26,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency("mongo", "~> 1.8.0")
   gem.add_dependency("bson_ext", "~> 1.8.0")
   gem.add_dependency("vegas", "~> 0.1.11")
-  gem.add_dependency("awesome_print", "~> 1.1.0")
 
   gem.add_dependency("sinatra", "~> 1.3.3")
   gem.add_dependency("sinatra-contrib", "~> 1.3.2")

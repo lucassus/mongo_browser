@@ -2,7 +2,6 @@ require "mongo_browser/version"
 
 require "mongo"
 require "json"
-require "ap"
 
 module MongoBrowser
   DEFAULT_MONGODB_HOST = "127.0.0.1"
