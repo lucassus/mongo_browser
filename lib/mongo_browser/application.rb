@@ -12,10 +12,6 @@ module MongoBrowser
   class Application < Sinatra::Base
     include Models
 
-    configure :development do
-      register Sinatra::Reloader
-    end
-
     enable :sessions
 
     set :root, File.join(File.dirname(__FILE__), "../../app")
@@ -27,29 +23,9 @@ module MongoBrowser
 
     use Middleware::SprocketsSinatra, :root => File.join(settings.root, "..")
 
-    if settings.test?
-      require File.join(settings.root, "../spec/support/fixtures")
-
-      require "mongo_browser/middleware/sprockets_specs"
-      use Middleware::SprocketsSpecs, :root => File.join(settings.root, "..")
-
-      get "/jasmine" do
-        File.read(File.join(settings.root, "../spec/javascripts/runner.html"))
-      end
-
-      # Execute e2e runner
-      get "/e2e" do
-        File.read(File.join(settings.root, "../spec/javascripts/runner_e2e.html"))
-      end
-
-      # Load database fixtures
-      get "/e2e/load_fixtures" do
-        Fixtures.instance.load!
-
-        respond_to do |format|
-          format.json { true }
-        end
-      end
+    if settings.development? or settings.test?
+      require "mongo_browser/application/development"
+      register Development
     end
 
     # Loads given template from assets/templates directory
