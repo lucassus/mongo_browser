@@ -1,53 +1,16 @@
 #!/usr/bin/env ruby
 
-require "optparse"
-require "methadone"
+require "vegas"
 require "mongo_browser"
-require "forever"
 
-class App
-  include Methadone::Main
-  include Methadone::CLILogging
-
-  main do
-    app_port = options[:port] || 4567
-    info("Running on the master node #{MongoBrowser.mongodb_host}:#{MongoBrowser.mongodb_port}")
-    info("Application is accessible at http://localhost:#{app_port}")
-
-    if options[:demonize]
-      Forever.run do
-        pid '/tmp/mongo_browser.pid'
-        log '/tmp/mongo_browser.log'
-
-        on_ready do
-          MongoBrowser::Application.run!(port: app_port)
-        end
-      end
-    else
-      MongoBrowser::Application.run!(port: app_port)
-    end
-  end
-
-  version MongoBrowser::VERSION
-
-  on("--port PORT", "MongoBrowser port",
-     "(Default: 4567)")
-
-  on("--mongodb-host HOST", "Mongodb database host",
-     "(Default: #{MongoBrowser.mongodb_host})") do |host|
-
-    MongoBrowser.mongodb_host = host
-  end
-
-  on("--mongodb-port PORT", "Mongodb database port",
-     "(Default: #{MongoBrowser.mongodb_port})") do |port|
-
+Vegas::Runner.new(MongoBrowser::Application, "mongo_browser") do |runner, opts, app|
+  opts.on("--mongodb-port PORT", "Specify mongodb port") do |port|
+    runner.logger.info "Using mongodb port #{port}"
     MongoBrowser.mongodb_port = port.to_i
   end
 
-  on("--demonize", "Run the app in the background")
-
-  use_log_level_option
-
-  go!
+  opts.on("--mongodb-host HOST", "Specify mongodb host") do |host|
+    runner.logger.info "Using mongodb host #{host}"
+    MongoBrowser.mongodb_host = host.to_i
+  end
 end

@@ -4,10 +4,6 @@ echo "Running rspec scenarios.."
 ./script/ci_rspec
 RSPEC_RESULT=$?
 
-echo -e "\nRunning cucumber scenarios..\n"
-./script/ci_cucumber
-CUCUMBER_RESULT=$?
-
 echo -e "\nRunning javascripts scenarios..\n"
 ./script/ci_javascripts
 JAVASCRIPTS_RESULT=$?

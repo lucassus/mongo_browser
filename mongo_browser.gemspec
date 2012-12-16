@@ -16,7 +16,6 @@ Gem::Specification.new do |gem|
   gem.version       = MongoBrowser::VERSION
 
   gem.add_development_dependency("rdoc", "~> 3.12")
-  gem.add_development_dependency("aruba", "~> 0.5.1")
   gem.add_development_dependency("rake", "~> 10.0.2")
 
   gem.add_development_dependency("thin", "~> 1.5.0")
@@ -26,8 +25,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency("mongo", "~> 1.8.0")
   gem.add_dependency("bson_ext", "~> 1.8.0")
-  gem.add_dependency("methadone", "~> 1.2.2")
-  gem.add_dependency("foreverb", "~> 0.3.2")
+  gem.add_dependency("vegas", "~> 0.1.11")
   gem.add_dependency("awesome_print", "~> 1.1.0")
 
   gem.add_dependency("sinatra", "~> 1.3.3")

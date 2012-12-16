@@ -5,19 +5,19 @@ require "json"
 require "ap"
 
 module MongoBrowser
-  DEFAULT_HOST = "127.0.0.1"
-  DEFAULT_PORT = 27017
+  DEFAULT_MONGODB_HOST = "127.0.0.1"
+  DEFAULT_MONGODB_PORT = 27017
 
   class << self
     attr_writer :mongodb_host
     attr_writer :mongodb_port
 
     def mongodb_host
-      @mongodb_host || DEFAULT_HOST
+      @mongodb_host || DEFAULT_MONGODB_HOST
     end
 
     def mongodb_port
-      @mongodb_port || DEFAULT_PORT
+      @mongodb_port || DEFAULT_MONGODB_PORT
     end
   end
 end
