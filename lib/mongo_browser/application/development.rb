@@ -1,6 +1,7 @@
 class MongoBrowser::Application
   module Development
     def self.registered(app)
+
       require "mongo_browser/middleware/sprockets_specs"
       app.use MongoBrowser::Middleware::SprocketsSpecs, :root => File.join(settings.root, "..")
 
@@ -15,7 +16,6 @@ class MongoBrowser::Application
 
       # Execute e2e runner
       app.get "/e2e" do
-        require "debugger"; debugger;
         File.read(File.join(settings.spec_root, "javascripts/runner_e2e.html"))
       end
 
@@ -28,6 +28,7 @@ class MongoBrowser::Application
           format.json { true }
         end
       end
+
     end
   end
 end
