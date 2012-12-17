@@ -2,6 +2,8 @@ module = angular.module("mb.controllers")
 
 # TODO clenup this controller, see DatabasesController
 class DocumentsController
+  @$inject = ["$scope", "$routeParams", "$http",
+              "Document", "confirmationDialog", "alerts"]
   constructor: (@$scope, @$routeParams, @$http, @Document, @confirmationDialog, @alerts) ->
     @$scope.dbName = @$routeParams.dbName
     @$scope.collectionName = @$routeParams.collectionName
@@ -43,7 +45,5 @@ class DocumentsController
           resource.$delete params, =>
             @alerts.info("Document #{document.id} has been deleted.")
             @$scope.fetchDocuments()
-
-DocumentsController.$inject = ["$scope", "$routeParams", "$http", "Document", "confirmationDialog", "alerts"]
 
 module.controller "documents", DocumentsController

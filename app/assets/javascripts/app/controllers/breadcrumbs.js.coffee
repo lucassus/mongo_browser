@@ -2,6 +2,7 @@ module = angular.module("mb.controllers")
 
 # TODO find better solution for breadcrumbs
 class BreadcrumbsController
+  @$inject = ["$rootScope", "$scope"]
   constructor: (@$rootScope, @$scope) ->
 
     @$scope.showDatabase = => @$scope.dbName
@@ -19,7 +20,5 @@ class BreadcrumbsController
           @$scope.collection =
             dbName: @$scope.dbName
             name: @$scope.collectionName
-
-BreadcrumbsController.$inject = ["$rootScope", "$scope"]
 
 module.controller "breadcrumbs", BreadcrumbsController

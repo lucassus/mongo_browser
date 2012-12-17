@@ -1,6 +1,7 @@
 module = angular.module("mb.controllers")
 
 class ServerInfo
+  @$inject = ["$scope", "$http"]
   constructor: (@$scope, @$http) ->
     @$scope.loading = true
     @$http.get("/api/server_info.json").success(@onLoadComplete)
@@ -8,7 +9,5 @@ class ServerInfo
   onLoadComplete: (data) =>
     @$scope.serverInfo = data
     @$scope.loading = false
-
-ServerInfo.$inject = ["$scope", "$http"]
 
 module.controller "serverInfo", ServerInfo
