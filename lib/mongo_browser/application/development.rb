@@ -2,9 +2,6 @@ class MongoBrowser::Application
   module Development
     def self.registered(app)
 
-      require "mongo_browser/middleware/sprockets_specs"
-      app.use MongoBrowser::Middleware::SprocketsSpecs, :root => File.join(settings.root, "..")
-
       app.register Sinatra::Reloader
 
       app.set :spec_root, File.join(settings.root, "../../spec")

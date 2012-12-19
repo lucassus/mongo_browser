@@ -24,6 +24,9 @@ module MongoBrowser
     use Middleware::SprocketsSinatra, :root => File.join(settings.root, "..")
 
     if settings.development? or settings.test?
+      require "mongo_browser/middleware/sprockets_specs"
+      use MongoBrowser::Middleware::SprocketsSpecs, :root => File.join(settings.root, "..")
+
       require "mongo_browser/application/development"
       register Development
     end
