@@ -1,7 +1,7 @@
 describe "mb.tableFilter", ->
   beforeEach module("mb.tableFilter")
 
-  describe "tableFilter controller", ->
+  describe "controller", ->
     $scope = null
 
     beforeEach inject ($controller, $rootScope) ->
@@ -25,7 +25,7 @@ describe "mb.tableFilter", ->
 
         expect($scope.value).toEqual("")
 
-  describe "tableFilter", ->
+  describe "directive", ->
     $scope = null
     element = null
 

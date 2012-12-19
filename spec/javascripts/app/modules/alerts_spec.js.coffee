@@ -1,4 +1,4 @@
-describe "alerts", ->
+describe "mb.alerts", ->
   beforeEach module("mb.alerts")
 
   describe "controller", ->
@@ -36,7 +36,24 @@ describe "alerts", ->
         expect($scope.alertMessages).toContain(id: 1, type: "info", text: "Information..")
         expect($scope.alertMessages).not.toContain(id: 2, type: "error", text: "Error..")
 
-  describe "alerts", ->
+  describe "directive", ->
+    $scope = null
+    element = null
+
+    beforeEach module("app/assets/templates/alerts.html")
+
+    beforeEach inject ($rootScope, $compile) ->
+      $scope = $rootScope
+
+      tpl = "<alerts></alerts>"
+      element = $compile(tpl)($scope)
+      $scope.$digest()
+
+    it "renders alerts", ->
+      $scope.$apply -> $scope.alertMessages = [type: "info", text: "Test message"]
+      expect(element.find(".alert-info").length).toEqual(1)
+
+  describe "service", ->
     it "is defined", inject (alerts) ->
       expect(alerts).toBeDefined()
 

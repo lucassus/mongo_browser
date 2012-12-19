@@ -44,3 +44,12 @@ alerts.factory "alerts", [
         @dispose(id)
       $timeout(disposeTheAlert, timeout)
 ]
+
+alerts.directive "alerts", ->
+  restrict: "E"
+  transclude: true
+
+  templateUrl: "/ng/templates/alerts.html"
+  replace: true
+
+  controller: "alerts"
