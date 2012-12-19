@@ -1,2 +1,2 @@
 # Simply define a module for controllers..
-angular.module("mb.controllers", ["mb.services", "mb.resources"])
+angular.module("mb.controllers", ["mb.resources"])

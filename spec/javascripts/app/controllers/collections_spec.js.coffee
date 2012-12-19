@@ -1,6 +1,7 @@
 describe "collections", ->
   beforeEach module("mb.controllers")
   beforeEach module("mb.dialogs")
+  beforeEach module("mb.alerts")
   beforeEach module("mocks")
 
   $scope = null
