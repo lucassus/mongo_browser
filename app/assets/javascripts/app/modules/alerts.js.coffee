@@ -11,7 +11,7 @@ class AlertsController
 alerts.controller "alerts", AlertsController
 
 alerts.factory "alerts", [
-  "$log", "$timeout", ($log, $timeout) ->
+  "$log", "$timeout", "alertTimeout", ($log, $timeout, alertTimeout) ->
     lastId: 0
     messages: []
 
@@ -38,11 +38,12 @@ alerts.factory "alerts", [
       @messages.splice(at, 1)
 
     # Dispose the message after the given time in milliseconds
-    delayedDispose: (id, timeout = 3000) ->
-      disposeTheAlert = =>
-        $log.info("Disposing alert", id, "after", timeout, "milliseconds")
-        @dispose(id)
-      $timeout(disposeTheAlert, timeout)
+    delayedDispose: (id) ->
+      if alertTimeout? and alertTimeout > 0
+        disposeTheAlert = =>
+          $log.info("Disposing alert", id, "after", alertTimeout, "milliseconds")
+          @dispose(id)
+        $timeout(disposeTheAlert, alertTimeout)
 ]
 
 alerts.directive "alerts", ->

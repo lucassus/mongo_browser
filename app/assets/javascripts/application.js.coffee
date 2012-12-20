@@ -8,7 +8,9 @@ requires = [
 
 angular.module("mb", requires)
   .config [
-    "$routeProvider", "$locationProvider", (route, location) ->
+    "$provide", "$routeProvider", "$locationProvider", ($provide, route, location) ->
+      $provide.value("alertTimeout", 3000)
+
       route
         # Main page, list of all available databases
         .when "/",

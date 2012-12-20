@@ -1,5 +1,6 @@
 describe "mb.alerts", ->
   beforeEach module("mb.alerts")
+  beforeEach module("mocks")
 
   describe "controller", ->
     $scope = null
