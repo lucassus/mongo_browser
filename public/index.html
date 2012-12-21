@@ -23,6 +23,7 @@
             <ul class="nav pull-right">
               <li><a href="/server_info">Server Info</a></li>
               <li><a>v. {{appVersion}}</a></li>
+              <li ng-show="showEnvironment()"><a>env {{environment}}</a></li>
             </ul>
           </div>
         </div>

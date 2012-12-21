@@ -123,7 +123,10 @@ class MongoBrowser::Application
       app.get "/api/version.json" do
         respond_to do |format|
           format.json do
-            { version: MongoBrowser::VERSION }.to_json
+            {
+                version: MongoBrowser::VERSION,
+                environment: settings.environment
+            }.to_json
           end
         end
       end
