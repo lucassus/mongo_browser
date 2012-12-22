@@ -10,6 +10,7 @@ class AlertsController
 
 alerts.controller "alerts", AlertsController
 
+# TODO figure out how to create coffeescript class for services
 alerts.factory "alerts", [
   "$log", "$timeout", "alertTimeout", ($log, $timeout, alertTimeout) ->
     lastId: 0

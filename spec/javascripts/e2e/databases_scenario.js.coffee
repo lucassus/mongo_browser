@@ -1,7 +1,11 @@
 describe "databases list page", ->
+  databasesList = null
+
   beforeEach ->
     browser().navigateTo("/e2e/load_fixtures")
     browser().navigateTo("/")
+
+    databasesList = repeater("table.databases tbody tr")
 
   it "navigates to the valid url", ->
     expect(browser().location().url()).toBe("/")
@@ -11,35 +15,35 @@ describe "databases list page", ->
     expect(title).toEqual("localhost databases")
 
   it "displays available databases ordered by name", ->
-    expect(repeater("table.databases tbody tr").column("database.name"))
+    expect(databasesList.column("database.name"))
         .toEqual(["first_database", "second_database", "third_database"])
 
   describe "filtering by database name", ->
     it "displays all databases when the filter is not provided", ->
       input("value").enter("")
-      expect(repeater("table.databases tbody tr").count()).toBe(3)
-      expect(repeater("table.databases tbody tr").column("database.name"))
+      expect(databasesList.count()).toBe(3)
+      expect(databasesList.column("database.name"))
           .toEqual(["first_database", "second_database", "third_database"])
 
     it "filters by database name", ->
       input("value").enter("first")
-      expect(repeater("table.databases tbody tr").count()).toBe(1)
-      expect(repeater("table.databases tbody tr").column("database.name"))
+      expect(databasesList.count()).toBe(1)
+      expect(databasesList.column("database.name"))
           .toEqual(["first_database"])
 
       input("value").enter("second")
-      expect(repeater("table.databases tbody tr").count()).toBe(1)
-      expect(repeater("table.databases tbody tr").column("database.name"))
+      expect(databasesList.count()).toBe(1)
+      expect(databasesList.column("database.name"))
           .toEqual(["second_database"])
 
       input("value").enter("not existing")
-      expect(repeater("table.databases tbody tr").count()).toBe(0)
+      expect(databasesList.count()).toBe(0)
       expect(element(".filter.alert:visible").text()).toMatch(/Nothing has been found./)
 
     it "displays all records when the filter is cleared", ->
       element("button:contains('Clear')").click()
-      expect(repeater("table.databases tbody tr").count()).toBe(3)
-      expect(repeater("table.databases tbody tr").column("database.name"))
+      expect(databasesList.count()).toBe(3)
+      expect(databasesList.column("database.name"))
           .toEqual(["first_database", "second_database", "third_database"])
 
   describe "delete a database", ->
@@ -53,8 +57,8 @@ describe "databases list page", ->
           $element.click()
 
       it "does nothig", ->
-          expect(repeater("table.databases tbody tr").count()).toBe(3)
-          expect(repeater("table.databases tbody tr").column("database.name"))
+          expect(databasesList.count()).toBe(3)
+          expect(databasesList.column("database.name"))
               .toEqual(["first_database", "second_database", "third_database"])
 
     describe "when the dialog was confirmed", ->
@@ -62,13 +66,12 @@ describe "databases list page", ->
         appElement "div.bootbox a:contains('OK')", ($element) ->
           $element.click()
 
-      # TODO figure out how to test it
-      xit "shows the alert", ->
+      it "shows the alert", ->
         expect(repeater("aside#alerts .alert").count()).toBe(1)
         expect(repeater("aside#alerts .alert").column("message.text"))
             .toContain("Database third_database has been deleted.")
 
       it "deletes a database", ->
-        expect(repeater("table.databases tbody tr").count()).toBe(2)
-        expect(repeater("table.databases tbody tr").column("database.name"))
+        expect(databasesList.count()).toBe(2)
+        expect(databasesList.column("database.name"))
             .toEqual(["first_database", "second_database"])

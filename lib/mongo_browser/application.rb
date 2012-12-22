@@ -42,7 +42,7 @@ module MongoBrowser
     # Welcome page
     # All routes without `/api` prefix
     get /^(?!\/api).+/ do
-      File.read(File.join(settings.public_folder, "index.html"))
+      erb :index
     end
 
     private
