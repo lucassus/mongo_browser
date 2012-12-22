@@ -47,14 +47,17 @@ describe "databases list page", ->
           .toEqual(["first_database", "second_database", "third_database"])
 
   describe "delete a database", ->
+    deleteDatabase = (name) ->
+      element("table.databases tbody tr:contains('#{name}') td.actions a:contains('Delete')")
+          .click()
+
     beforeEach ->
-      element("table.databases tbody tr:contains('third_database') td.actions a:contains('Delete')").click()
-      expect(element("div.modal .modal-body").text()).toContain("Deleting third_database. Are you sure?")
+      deleteDatabase("third_database")
+      expect(element("div.modal .modal-body").text())
+          .toContain("Deleting third_database. Are you sure?")
 
     describe "when the dialog was disposed", ->
-      beforeEach ->
-        appElement "div.modal .modal-footer a:contains('Cancel')", ($element) ->
-          $element.click()
+      beforeEach -> disposeDialog()
 
       it "does nothig", ->
           expect(databasesList.count()).toBe(3)
@@ -62,9 +65,7 @@ describe "databases list page", ->
               .toEqual(["first_database", "second_database", "third_database"])
 
     describe "when the dialog was confirmed", ->
-      beforeEach ->
-        appElement "div.bootbox a:contains('OK')", ($element) ->
-          $element.click()
+      beforeEach -> confirmDialog()
 
       it "shows the alert", ->
         expect(repeater("aside#alerts .alert").count()).toBe(1)
