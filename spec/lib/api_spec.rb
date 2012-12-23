@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe MongoBrowser::Application::Api do
+describe MongoBrowser::Api do
   include Rack::Test::Methods
 
   def app
-    MongoBrowser::Application::Api
+    described_class
   end
 
   let(:server) { MongoBrowser::Models::Server.current }

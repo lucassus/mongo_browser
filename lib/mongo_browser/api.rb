@@ -1,10 +1,10 @@
 require "grape"
 
-class MongoBrowser::Application
+module MongoBrowser
   class Api < Grape::API
     format :json
 
-    include MongoBrowser::Models
+    include Models
 
     helpers do
       def server
