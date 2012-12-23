@@ -10,7 +10,6 @@ require "mongo_browser/middleware/sprockets_sinatra"
 
 module MongoBrowser
   class Application < Sinatra::Base
-    include Models
 
     enable :sessions
 
@@ -31,24 +30,14 @@ module MongoBrowser
       register Development
     end
 
-    require "mongo_browser/application/api"
-    register Api
-
     # Loads given template from assets/templates directory
     get "/ng/templates/:name.html" do |template_name|
       send_file File.join(settings.root, "assets/templates/#{template_name}.html")
     end
 
     # Welcome page
-    # All routes without `/api` prefix
-    get /^(?!\/api).+/ do
+    get "/*" do
       erb :index
-    end
-
-    private
-
-    def server
-      @server ||= Server.current
     end
   end
 end

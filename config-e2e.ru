@@ -14,7 +14,9 @@ end
 fixtures.load!
 fixtures.load_documents!
 
-run MongoBrowser::Application
+run Rack::URLMap.new \
+    "/" => MongoBrowser::Application.new,
+    "/api" => MongoBrowser::Application::Api.new
 
 at_exit do
   test_server.shutdown!

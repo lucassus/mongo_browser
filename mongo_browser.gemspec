@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency("thin", "~> 1.5.0")
   gem.add_development_dependency("rspec", "~> 2.12.0")
+  gem.add_development_dependency("rack-test", "~> 0.6.2")
   gem.add_development_dependency("simplecov", "~> 0.7.1")
   gem.add_development_dependency("debugger", "~> 1.2.2")
 
@@ -30,6 +31,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency("sinatra", "~> 1.3.3")
   gem.add_dependency("sinatra-contrib", "~> 1.3.2")
   gem.add_dependency("json", "~> 1.7.5")
+  gem.add_dependency("grape", "~> 0.2.2")
 
   gem.add_dependency("sprockets", "~> 2.8.1")
   gem.add_dependency("coffee-script", "~> 2.2.0")

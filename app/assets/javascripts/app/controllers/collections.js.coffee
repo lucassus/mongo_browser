@@ -14,7 +14,8 @@ class CollectionsController
 
     @$scope.fetchCollections = =>
       @$scope.loading = true
-      @$scope.collections = @Collection.query({ dbName: @$scope.dbName }, _onLoadComplete)
+      params = dbName: @$scope.dbName
+      @$scope.collections = @Collection.query(params, _onLoadComplete)
 
     @$scope.fetchCollections()
 
@@ -29,7 +30,7 @@ class CollectionsController
         message: "Deleting #{collection.name}. Are you sure?"
         onOk: =>
           resource = new @Collection()
-          params = dbName: collection.dbName, id: collection.name
+          params = dbName: collection.dbName, collectionName: collection.name
 
           resource.$delete params, =>
             @alerts.info("Collection #{collection.name} has been deleted.")

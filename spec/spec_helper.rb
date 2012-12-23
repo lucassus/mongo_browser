@@ -4,6 +4,7 @@ require "mongo_browser"
 
 require "debugger"
 require "rspec"
+require "rack/test"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # from spec/support/ and its subdirectories.
