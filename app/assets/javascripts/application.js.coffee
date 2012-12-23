@@ -8,10 +8,10 @@ requires = [
 
 angular.module("mb", requires)
   .config [
-    "$provide", "$routeProvider", "$locationProvider", ($provide, route, location) ->
+    "$provide", "$routeProvider", "$locationProvider", ($provide, $route, $location) ->
       $provide.value("alertTimeout", 3000)
 
-      route
+      $route
         # Main page, list of all available databases
         .when "/",
             templateUrl: "/ng/templates/databases.html",
@@ -25,7 +25,8 @@ angular.module("mb", requires)
         # list of documents for the given collection
         .when "/databases/:dbName/collections/:collectionName/documents",
             templateUrl: "/ng/templates/documents.html",
-            controller: "documents"
+            controller: "documents",
+            reloadOnSearch: false
 
         # Information about the server
         .when "/server_info",
@@ -34,5 +35,5 @@ angular.module("mb", requires)
 
         .otherwise(redirectTo: "/")
 
-      location.html5Mode(true)
+      $location.html5Mode(true)
   ]

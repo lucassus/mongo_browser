@@ -2,9 +2,9 @@ module = angular.module("mb.controllers")
 
 # TODO clenup this controller, see DatabasesController
 class DocumentsController
-  @$inject = ["$scope", "$routeParams", "$http",
+  @$inject = ["$scope", "$routeParams", "$location", "$http",
               "Document", "confirmationDialog", "alerts"]
-  constructor: (@$scope, @$routeParams, @$http, @Document, @confirmationDialog, @alerts) ->
+  constructor: (@$scope, @$routeParams, @$location, @$http, @Document, @confirmationDialog, @alerts) ->
     @$scope.dbName = @$routeParams.dbName
     @$scope.collectionName = @$routeParams.collectionName
 
@@ -25,10 +25,14 @@ class DocumentsController
       params = dbName: @$scope.dbName, collectionName: @$scope.collectionName, page: page
       @Document.query(params, _onLoadComplete)
 
-    @$scope.page = 1
-    @$scope.fetchDocuments()
+    @$scope.page = parseInt(@$location.search().page || 1)
 
     @$scope.$watch "page", (page) =>
+      if page > 1
+        @$location.search("page", page)
+      else
+        @$location.search("page", null)
+
       @$scope.fetchDocuments(page)
 
     # TODO create resource for this call
