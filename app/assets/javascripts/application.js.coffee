@@ -8,10 +8,27 @@ requires = [
 
 angular.module("mb", requires)
   .config [
-    "$provide", "$routeProvider", "$locationProvider", ($provide, $route, $location) ->
+    "$provide", "$httpProvider", "$routeProvider", "$locationProvider",
+    ($provide, $httpProvider, $routeProvider, $locationProvider) ->
       $provide.value("alertTimeout", 3000)
 
-      $route
+      httpInterceptor = ($q, $log, $window) ->
+        (promise) ->
+          onSuccess = (response) ->
+            $log.info("Http response:",response)
+            response
+
+          onError = (response) ->
+            $log.info("Http error", response)
+            $window.alert(response.data)
+            $q.reject(response)
+
+          promise.then(onSuccess, onError)
+      httpInterceptor.$inject = ["$q", "$log", "$window"]
+
+      $httpProvider.responseInterceptors.push(httpInterceptor)
+
+      $routeProvider
         # Main page, list of all available databases
         .when "/",
             templateUrl: "/ng/templates/databases.html",
@@ -35,5 +52,5 @@ angular.module("mb", requires)
 
         .otherwise(redirectTo: "/")
 
-      $location.html5Mode(true)
+      $locationProvider.html5Mode(true)
   ]
