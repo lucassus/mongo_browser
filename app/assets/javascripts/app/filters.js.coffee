@@ -46,3 +46,8 @@ module.filter "documentsPath", (collectionsPathFilter) ->
     collectionName = collection.name || ":collectionName"
 
     "#{collectionsPathFilter(name: dbName)}/#{collectionName}/documents"
+
+module.filter "documentPrettyTime", ->
+  (document) ->
+    timestamp = document.id.toString().substring(0, 8)
+    new Date(parseInt(timestamp, 16) * 1000).toGMTString()

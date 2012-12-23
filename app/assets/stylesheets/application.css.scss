@@ -47,24 +47,31 @@ section.container {
 
 table.table {
   tr {
-    &.document td.data pre {
-      background: none;
-      border: 0px;
-      padding: 0px;
-      display: inline;
-
-      // syntax higlight for json document
-      span {
-        &.string { color: green; }
-        &.number { color: darkorange; }
-        &.boolean { color: blue; }
-        &.null { color: magenta; }
-        &.key { color: red; }
+    &.document td.data {
+      .id {
+        font-size: large;
+        font-weight: bold;
       }
-    }
 
-    th.actions {
-      width: 90px;
+      pre {
+        background: none;
+        border: 0px;
+        padding: 0px;
+        display: inline;
+
+        // syntax higlight for json document
+        span {
+          &.string { color: green; }
+          &.number { color: darkorange; }
+          &.boolean { color: blue; }
+          &.null { color: magenta; }
+          &.key { color: red; }
+        }
+      }
+
+      th.actions {
+        width: 90px;
+      }
     }
   }
 }

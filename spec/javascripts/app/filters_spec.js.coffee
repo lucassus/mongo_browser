@@ -97,3 +97,16 @@ describe "filters", ->
     it "generates na url for the given collection documents", ->
       collection = { dbName: "foo", name: "bars" }
       expect(filter(collection)).toEqual("/databases/foo/collections/bars/documents")
+
+  describe "documentPrettyTime", ->
+    filter = null
+
+    beforeEach inject (documentPrettyTimeFilter) ->
+      filter = documentPrettyTimeFilter
+
+    it "extracts time from document id", ->
+      expect(filter(id: "50c33814dac5d5c9310001bd"))
+        .toEqual("Sat, 08 Dec 2012 12:52:36 GMT")
+
+      expect(filter(id: "50d7134ddac5d501aa000003"))
+        .toEqual("Sun, 23 Dec 2012 14:21:01 GMT")

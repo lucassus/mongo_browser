@@ -15,7 +15,11 @@
       </thead>
       <tbody>
       <tr ng-repeat="document in documents" class="document id-{{document.id}}">
-        <td class="data" ng-bind-html="document.data | jsonDocument"></td>
+        <td class="data">
+          <span class="id">{{document.id}}</span>
+          <span>{{document | documentPrettyTime}}</span>
+          <div ng-bind-html="document.data | jsonDocument"></div>
+        </td>
         <td class="actions">
           <delete-button ng-click="delete(document)" />
         </td>
