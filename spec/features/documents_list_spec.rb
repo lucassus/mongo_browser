@@ -10,31 +10,8 @@ describe "Documents list", type: :request, js: true do
     within("table.collections") { click_link current_collection_name }
   end
 
-  shared_examples "breadcrumbs for documents list" do
-    xit "displays the breadcrumb" do
-      within ".breadcrumbs" do
-        within "li:nth-child(1)" do
-          expect(page).to have_link("first_database")
-        end
-
-        within "li:nth-child(2)" do
-          href = "/databases/first_database/collections/#{current_collection_name}/documents"
-          expect(page).to have_link(current_collection_name, href: href)
-        end
-      end
-    end
-
-    xit "has a valid title" do
-      within "h2" do
-        expect(page).to have_content("#{current_collection_name} documents")
-      end
-    end
-  end
-
   context "with small number for documents" do
     let(:current_collection_name) { "first_collection" }
-
-    include_examples "breadcrumbs for documents list"
 
     xit "displays all documents for the selected collection" do
       expect(page).to have_css("tr.document", count: 2)
@@ -69,8 +46,6 @@ describe "Documents list", type: :request, js: true do
 
       visit current_path
     end
-
-    include_examples "breadcrumbs for documents list"
 
     xit "displays a pagination" do
       expect(page).to have_css("div.pagination", count: 2)

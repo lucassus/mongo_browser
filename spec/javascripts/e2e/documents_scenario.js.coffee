@@ -17,6 +17,20 @@ describe "documents list page", ->
     title = element("h2").text()
     expect(title).toEqual("first_collection documents")
 
+  it "shows the breadcrumbs", ->
+    link = element(".container a.brand")
+    expect(link.text()).toEqual("Mongo Browser")
+    expect(link.attr("href")).toEqual("/")
+
+    dbLink = element(".container .breadcrumbs li:nth-child(1) a")
+    expect(dbLink.text()).toEqual("first_database")
+    expect(dbLink.attr("href")).toEqual("/databases/first_database/collections")
+
+    collectionLink = element(".container .breadcrumbs li:nth-child(2) a")
+    expect(collectionLink.text()).toEqual("first_collection")
+    expect(collectionLink.attr("href"))
+        .toEqual("/databases/first_database/collections/first_collection/documents")
+
   it "displays a tab with collection stats", ->
     element(".tabbable a:contains('Collection stats')").click()
     expect(documentsList.count()).toBeGreaterThan(0)

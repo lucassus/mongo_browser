@@ -11,6 +11,15 @@ describe "collections list page", ->
   it "navigates to the valid url", ->
     expect(browser().location().url()).toBe("/databases/first_database/collections")
 
+  it "shows the breadcrumbs", ->
+    link = element(".container a.brand")
+    expect(link.text()).toEqual("Mongo Browser")
+    expect(link.attr("href")).toEqual("/")
+
+    dbLink = element(".container .breadcrumbs li:nth-child(1) a")
+    expect(dbLink.text()).toEqual("first_database")
+    expect(dbLink.attr("href")).toEqual("/databases/first_database/collections")
+
   it "displays a valid section title", ->
     title = element("h2").text()
     expect(title).toEqual("first_database collections")

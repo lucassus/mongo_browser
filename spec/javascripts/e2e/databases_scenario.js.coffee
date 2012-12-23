@@ -10,6 +10,11 @@ describe "databases list page", ->
   it "navigates to the valid url", ->
     expect(browser().location().url()).toBe("/")
 
+  it "shows the breadcrumbs", ->
+    link = element(".container a.brand")
+    expect(link.text()).toEqual("Mongo Browser")
+    expect(link.attr("href")).toEqual("/")
+
   it "displays a valid section title", ->
     title = element("h2").text()
     expect(title).toEqual("localhost databases")
