@@ -37,7 +37,7 @@ describe "documents list page", ->
 
   describe "delete a document", ->
     beforeEach ->
-      element("table.documents tbody tr:first td.actions a:contains('Delete')")
+      element("table.documents tbody tr:first td:last-child a:contains('Delete')")
         .click()
 
       expect(element("div.modal .modal-body").text())

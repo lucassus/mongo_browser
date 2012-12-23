@@ -34,12 +34,12 @@ describe "mb.tableFilter", ->
     beforeEach inject ($rootScope, $compile) ->
       $scope = $rootScope
 
-      tpl = """
-            <div>
-              <table-filter value="filterValue" placeholder="Enter database name"></table-filter>
-            </div>
-            """
-      element = $compile(tpl)($scope)
+      element = angular.element """
+        <div>
+          <table-filter value="filterValue" placeholder="Enter database name"></table-filter>
+        </div>
+      """
+      $compile(element)($scope)
       $scope.$digest()
 
     it "sets the valid placeholder", ->

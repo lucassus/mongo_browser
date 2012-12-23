@@ -15,12 +15,17 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="database in databases | orderBy:'name' | filter:filterValue">
+    <tr ng-repeat="database in databases | orderBy:'name' | filter:filterValue"
+        ng-mouseleave="showActions = false"
+        ng-mouseenter="showActions = true">
       <td><a href="{{database | collectionsPath}}">{{database.name}}</a></td>
       <td>{{database.count}}</td>
       <td>{{database.size | humanSize}}</td>
-      <td class="actions">
-        <delete-button ng-click="delete(database)" />
+      <td>
+        <span class="actions" ng-show="showActions">
+          <show-button path="{{database | collectionsPath}}"></show-button>
+          <delete-button ng-click="delete(database)"></delete-button>
+        </span>
       </td>
     </tr>
     </tbody>

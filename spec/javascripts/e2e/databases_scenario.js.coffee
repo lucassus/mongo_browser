@@ -53,8 +53,8 @@ describe "databases list page", ->
 
   describe "delete a database", ->
     deleteDatabase = (name) ->
-      element("table.databases tbody tr:contains('#{name}') td.actions a:contains('Delete')")
-          .click()
+      element("table.databases tbody tr:contains('#{name}') td:last-child a:contains('Delete')")
+        .click()
 
     beforeEach ->
       deleteDatabase("third_database")

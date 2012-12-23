@@ -46,8 +46,8 @@ describe "mb.alerts", ->
     beforeEach inject ($rootScope, $compile) ->
       $scope = $rootScope
 
-      tpl = "<alerts></alerts>"
-      element = $compile(tpl)($scope)
+      element = angular.element "<alerts></alerts>"
+      $compile(element)($scope)
       $scope.$digest()
 
     it "renders alerts", ->

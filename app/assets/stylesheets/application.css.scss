@@ -47,6 +47,15 @@ section.container {
 
 table.table {
   tr {
+    height: 47px;
+
+    td {
+      vertical-align: middle;
+      &:last-child {
+        width: 175px;
+      }
+    }
+
     &.document td.data {
       .id {
         font-size: large;
@@ -67,10 +76,6 @@ table.table {
           &.null { color: magenta; }
           &.key { color: red; }
         }
-      }
-
-      th.actions {
-        width: 90px;
       }
     }
   }

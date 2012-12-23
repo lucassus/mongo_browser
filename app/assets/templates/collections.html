@@ -15,15 +15,20 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="collection in collections | orderBy:'name' | filter:filterValue">
+      <tr ng-repeat="collection in collections | orderBy:'name' | filter:filterValue"
+          ng-mouseleave="showActions = false"
+          ng-mouseenter="showActions = true">
         <td>
           <a href="{{collection | documentsPath}}">
             {{collection.name}}
           </a>
         </td>
         <td>{{collection.size}}</td>
-        <td class="actions">
-          <delete-button ng-click="delete(collection)" />
+        <td>
+          <span class="actions" ng-show="showActions">
+            <show-button path="{{collection | documentsPath}}"></show-button>
+            <delete-button ng-click="delete(collection)"></delete-button>
+          </span>
         </td>
       </tr>
       </tbody>

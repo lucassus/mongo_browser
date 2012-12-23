@@ -62,7 +62,7 @@ describe "collections list page", ->
 
   describe "delete a collection", ->
     deleteCollection = (name) ->
-      element("table.collections tbody tr:contains('#{name}') td.actions a:contains('Delete')")
+      element("table.collections tbody tr:contains('#{name}') td:last-child a:contains('Delete')")
         .click()
 
     beforeEach ->

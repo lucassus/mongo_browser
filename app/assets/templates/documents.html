@@ -14,14 +14,18 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="document in documents" class="document id-{{document.id}}">
+      <tr ng-repeat="document in documents" class="document id-{{document.id}}"
+          ng-mouseleave="showActions = false"
+          ng-mouseenter="showActions = true">
         <td class="data">
           <span class="id">{{document.id}}</span>
           <span>{{document | documentPrettyTime}}</span>
           <div ng-bind-html="document.data | jsonDocument"></div>
         </td>
-        <td class="actions">
-          <delete-button ng-click="delete(document)" />
+        <td>
+          <span class="actions" ng-show="showActions">
+            <delete-button ng-click="delete(document)"></delete-button>
+          </span>
         </td>
       </tr>
       </tbody>

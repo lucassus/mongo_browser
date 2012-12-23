@@ -9,6 +9,19 @@ module.directive "onEsc", ->
       return unless event.keyCode is EscapeCode
       $scope.$apply(attrs.onEsc)
 
+module.directive "showButton", ->
+  replace: true
+  restrict: "E"
+  scope:
+    path: "@path",
+    label: "@label"
+  template: """
+            <a class="btn btn-success" href="{{path}}">
+              <i class="icon-th-list"></i>
+              {{label || "Show"}}
+            </a>
+            """
+
 module.directive "deleteButton", ->
   replace: true
   restrict: "E"
