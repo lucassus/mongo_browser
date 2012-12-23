@@ -23,7 +23,9 @@ module MongoBrowser
       end
 
       def total_pages
-        (size.to_f / per_page).ceil
+        if size == 0 then 1
+        else (size.to_f / per_page).ceil
+        end
       end
     end
   end

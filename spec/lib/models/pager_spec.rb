@@ -53,7 +53,7 @@ describe MongoBrowser::Models::Pager do
   describe "#total_pages" do
     subject { pager.total_pages }
 
-    { 1 => 1, 25 => 1, 26 => 2, 50 => 2, 51 => 3, 101 => 5 }.each do |size, expected|
+    { 0 => 1, 1 => 1, 25 => 1, 26 => 2, 50 => 2, 51 => 3, 101 => 5 }.each do |size, expected|
       context "when the size is #{size}" do
         let(:size) { size }
 
