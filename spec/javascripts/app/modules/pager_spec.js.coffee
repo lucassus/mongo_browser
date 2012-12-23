@@ -14,7 +14,6 @@ describe "mb.pager", ->
       expect(p.outerWindow).toEqual(0)
 
     describe "windowedPageNumbers", ->
-
       it "calculates windowed visible links", inject (pager) ->
         prepare = pager(page: 6, totalPages: 11, innerWindow: 1, outerWindow: 1)
         expect(prepare.windowedPageNumbers()).toEqual [1, 2, null, 5, 6, 7, null, 10, 11]

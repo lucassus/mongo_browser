@@ -51,7 +51,9 @@ describe "mb.alerts", ->
       $scope.$digest()
 
     it "renders alerts", ->
-      $scope.$apply -> $scope.alertMessages = [type: "info", text: "Test message"]
+      $scope.$apply -> $scope.alertMessages = [
+        type: "info", text: "Test message"
+      ]
       expect(element.find(".alert-info").length).toEqual(1)
 
   describe "service", ->

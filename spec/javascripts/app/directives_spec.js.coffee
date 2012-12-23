@@ -10,7 +10,7 @@ describe "directives", ->
       $scope.bar = ->
 
       element = angular.element """
-        <input type="text" on-esc="bar()" />
+      <input type="text" on-esc="bar()" />
       """
       $compile(element)($scope)
       $scope.$digest()
@@ -46,10 +46,10 @@ describe "directives", ->
 
     describe "when a custom label is not provided", ->
       template = """
-        <div>
-          <show-button path="/foo/bar/biz" />
-        </div>
-      """
+       <div>
+         <show-button path="/foo/bar/biz" />
+       </div>
+       """
 
       compileTemplate template, (element) ->
         renderedButton = element.find("a")
@@ -67,10 +67,10 @@ describe "directives", ->
 
     describe "when a custom label is provided", ->
       template = """
-        <div>
-          <show-button label="Display me the foo" path="/foo/bar" />
-        </div>
-      """
+       <div>
+         <show-button label="Display me the foo" path="/foo/bar" />
+       </div>
+       """
 
       compileTemplate template, (element) ->
         renderedButton = element.find("a")
@@ -90,9 +90,9 @@ describe "directives", ->
       $scope.bar = ->
 
       element = angular.element """
-        <div>
-          <delete-button ng-click="bar()" />
-        </div>
+      <div>
+        <delete-button ng-click="bar()" />
+      </div>
       """
       $compile(element)($scope)
       $scope.$digest()

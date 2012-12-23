@@ -16,9 +16,9 @@ describe "collections", ->
 
     $httpBackend = $injector.get("$httpBackend")
     $httpBackend.when("GET", "/api/databases/test_database/collections.json")
-        .respond([])
+      .respond([])
     $httpBackend.when("GET", "/api/databases/test_database/stats.json")
-        .respond({})
+      .respond({})
 
     $scope = $rootScope.$new()
     $controller "collections",
@@ -49,17 +49,15 @@ describe "collections", ->
     it "shows a confirmation dialog", inject (dialogsHandler) ->
       spyOn(dialogsHandler, "confirm")
 
-
       $scope.delete(collection)
 
-      expect(dialogsHandler.confirm).toHaveBeenCalledWith \
-          "Deleting dummy-collection-id. Are you sure?",
-          jasmine.any(Function)
+      expect(dialogsHandler.confirm).toHaveBeenCalledWith "Deleting dummy-collection-id. Are you sure?",
+        jasmine.any(Function)
 
     describe "when the dialog was confirmed", ->
       beforeEach inject (dialogsHandler) ->
         $httpBackend.when("DELETE", "/api/databases/test_database/collections.json?id=dummy-collection-id")
-            .respond([])
+          .respond([])
 
         spyOn(alerts, "info")
         $scope.delete(collection)

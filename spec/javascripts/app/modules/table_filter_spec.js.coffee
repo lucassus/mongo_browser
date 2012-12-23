@@ -35,9 +35,9 @@ describe "mb.tableFilter", ->
       $scope = $rootScope
 
       element = angular.element """
-        <div>
-          <table-filter value="filterValue" placeholder="Enter database name"></table-filter>
-        </div>
+      <div>
+        <table-filter value="filterValue" placeholder="Enter database name"></table-filter>
+      </div>
       """
       $compile(element)($scope)
       $scope.$digest()

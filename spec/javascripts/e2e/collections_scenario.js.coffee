@@ -26,32 +26,32 @@ describe "collections list page", ->
 
   it "displays available collections ordered by name", ->
     expect(collectionsList.column("collection.name"))
-        .toEqual(["first_collection", "second_collection", "system.indexes", "third_collection"])
+      .toEqual(["first_collection", "second_collection", "system.indexes", "third_collection"])
 
   it "filters the collections list", ->
     input("value").enter("")
     expect(collectionsList.count()).toBe(4)
     expect(collectionsList.column("collection.name"))
-        .toEqual(["first_collection", "second_collection", "system.indexes", "third_collection"])
+      .toEqual(["first_collection", "second_collection", "system.indexes", "third_collection"])
 
     input("value").enter("first")
     expect(collectionsList.count()).toBe(1)
     expect(collectionsList.column("collection.name"))
-        .toEqual(["first_collection"])
+      .toEqual(["first_collection"])
 
     input("value").enter("second")
     expect(collectionsList.count()).toBe(1)
     expect(collectionsList.column("collection.name"))
-        .toEqual(["second_collection"])
+      .toEqual(["second_collection"])
 
     input("value").enter("collection")
     expect(collectionsList.count()).toBe(3)
     expect(collectionsList.column("collection.name"))
-        .toEqual(["first_collection", "second_collection", "third_collection"])
+      .toEqual(["first_collection", "second_collection", "third_collection"])
 
     input("value").enter("not existing")
     expect(collectionsList.count()).toBe(0)
-    expect(element(".filter.alert:visible").text()).toMatch(/Nothing has been found./)
+    expect(element(".alert:visible").text()).toMatch(/Nothing has been found./)
 
     element("button:contains('Clear')").click()
     expect(collectionsList.count()).toBe(4)

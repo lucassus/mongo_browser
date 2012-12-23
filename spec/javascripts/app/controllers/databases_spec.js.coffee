@@ -16,7 +16,7 @@ describe "databases", ->
 
     $scope = $rootScope.$new()
     $controller "databases",
-        $scope: $scope
+      $scope: $scope
 
     $httpBackend.flush()
 
@@ -29,14 +29,13 @@ describe "databases", ->
     it "shows a confirmation dialog", inject (dialogsHandler) ->
       spyOn(dialogsHandler, "confirm")
       $scope.delete(name: "test_database_name")
-      expect(dialogsHandler.confirm).toHaveBeenCalledWith \
-          "Deleting test_database_name. Are you sure?",
-          jasmine.any(Function)
+      expect(dialogsHandler.confirm).toHaveBeenCalledWith "Deleting test_database_name. Are you sure?",
+        jasmine.any(Function)
 
     describe "when the dialog was confirmed", ->
       beforeEach inject (dialogsHandler) ->
         $httpBackend.when("DELETE", "/api/databases.json?id=test_database_name")
-            .respond([])
+          .respond([])
 
         spyOn(alerts, "info")
         $scope.delete(name: "test_database_name")

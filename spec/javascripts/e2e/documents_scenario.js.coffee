@@ -12,7 +12,7 @@ describe "documents list page", ->
 
   it "shows the documents page", ->
     expect(browser().location().url())
-        .toBe("/databases/first_database/collections/first_collection/documents")
+      .toBe("/databases/first_database/collections/first_collection/documents")
 
     title = element("h2").text()
     expect(title).toEqual("first_collection documents")
@@ -29,7 +29,7 @@ describe "documents list page", ->
     collectionLink = element(".container .breadcrumbs li:nth-child(2) a")
     expect(collectionLink.text()).toEqual("first_collection")
     expect(collectionLink.attr("href"))
-        .toEqual("/databases/first_database/collections/first_collection/documents")
+      .toEqual("/databases/first_database/collections/first_collection/documents")
 
   it "displays a tab with collection stats", ->
     element(".tabbable a:contains('Collection stats')").click()

@@ -58,17 +58,17 @@ describe "filters", ->
       expect(filter(o)).toContain('<span class="null">null</span>')
 
     it "can format ObjectId", ->
-      o = {
+      document = {
         _id: { $oid: "50bfc4b6dac5d5630800017a" },
         foo: "something",
         comapany_id: { $oid: "50bfc4b6dac5d56308000119" }
       }
 
-      expect(filter(o)).toContain('<span class="key">_id:</span>')
-      expect(filter(o)).toContain('ObjectId(<span class="string">"50bfc4b6dac5d5630800017a"</span>)')
+      expect(filter(document)).toContain('<span class="key">_id:</span>')
+      expect(filter(document)).toContain('ObjectId(<span class="string">"50bfc4b6dac5d5630800017a"</span>)')
 
-      expect(filter(o)).toContain('<span class="key">comapany_id:</span>')
-      expect(filter(o)).toContain('ObjectId(<span class="string">"50bfc4b6dac5d56308000119"</span>)')
+      expect(filter(document)).toContain('<span class="key">comapany_id:</span>')
+      expect(filter(document)).toContain('ObjectId(<span class="string">"50bfc4b6dac5d56308000119"</span>)')
 
   # url helpers
 

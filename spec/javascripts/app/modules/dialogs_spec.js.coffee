@@ -22,8 +22,7 @@ describe "mb.dialogs", ->
       confirmationDialog(message: "This is a test message")
 
       # Then
-      expect(dialogsHandler.confirm).toHaveBeenCalledWith \
-        "This is a test message",
+      expect(dialogsHandler.confirm).toHaveBeenCalledWith "This is a test message",
         jasmine.any(Function)
 
     describe "when the dialog was confirmed", ->
