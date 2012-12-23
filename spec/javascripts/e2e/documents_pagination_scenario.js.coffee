@@ -20,14 +20,14 @@ describe "documents list page", ->
       element("div.pagination:first li a:contains('Next')").click()
       expect(documentsList.count()).toEqual(25)
       expect(browser().location().url())
-        .toBe("/databases/first_database/collections/first_collection/documents?page=2")
+        .toBe("/databases/first_database/collections/second_collection/documents?page=2")
 
       element("div.pagination:first li a:contains('Next')").click()
       expect(documentsList.count()).toEqual(20)
       expect(browser().location().url())
-        .toBe("/databases/first_database/collections/first_collection/documents/?page=3")
+        .toBe("/databases/first_database/collections/second_collection/documents?page=3")
 
       element("div.pagination:first li a:contains('1')").click()
       expect(documentsList.count()).toEqual(25)
       expect(browser().location().url())
-        .toBe("/databases/first_database/collections/first_collection/documents")
+        .toBe("/databases/first_database/collections/second_collection/documents")
