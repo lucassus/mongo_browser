@@ -8,6 +8,9 @@ class DocumentsController
     @$scope.dbName = @$routeParams.dbName
     @$scope.collectionName = @$routeParams.collectionName
 
+    @$scope.showDocuments = =>
+      @$scope.size > 0
+
     @$scope.isLoading = => @$scope.loading
 
     _onLoadComplete = (data) =>

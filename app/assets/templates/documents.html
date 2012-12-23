@@ -6,7 +6,7 @@
   <div class="tab-pane" title="Documents">
     <pager page="page" total-pages="totalPages"></pager>
 
-    <table class="table table-striped table-hover documents">
+    <table ng-show="showDocuments()" class="table table-striped table-hover documents">
       <thead>
       <tr>
         <th>Data</th>
@@ -30,6 +30,10 @@
       </tr>
       </tbody>
     </table>
+
+    <div ng-hide="showDocuments()" class="alert">
+      Nothing has been found.
+    </div>
 
     <pager page="page" total-pages="totalPages"></pager>
   </div>

@@ -31,6 +31,15 @@ describe "documents", ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()
 
+  describe "#showDocuments", ->
+    it "returns true when the collection size is > 0", ->
+      $scope.size = 1
+      expect($scope.showDocuments()).toBeTruthy()
+
+    it "return false when the collection size is 0", ->
+      $scope.size = 0
+      expect($scope.showDocuments()).toBeFalsy()
+
   # TODO rewrite this spec
   describe "#delete", ->
     it "shows a confirmation dialog", inject (dialogsHandler) ->
