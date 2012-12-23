@@ -4,7 +4,7 @@
 requires = [
   "bootstrap", "ngSanitize",
   "mb.controllers", "mb.directives", "mb.filters",
-  "mb.dialogs", "mb.pager", "mb.tableFilter", "mb.alerts"]
+  "mb.dialogs", "mb.pager", "mb.tableFilter", "mb.alerts", "mb.spinner"]
 
 angular.module("mb", requires)
   .config [
@@ -12,33 +12,21 @@ angular.module("mb", requires)
     ($provide, $httpProvider, $routeProvider, $locationProvider) ->
       $provide.value("alertTimeout", 3000)
 
-      showSpinner = (data) ->
-        $("li.spinner a").show()
-        data
-
-      hideSpinner = ->
-        $("li.spinner a").hide()
-
-      httpInterceptor = ($q, $log, $window) ->
+      httpErrorsInterceptor = ($q, $log, $window) ->
         (promise) ->
           onSuccess = (response) ->
             $log.info("Http response:",response)
-            hideSpinner()
-
             response
 
           onError = (response) ->
             $log.info("Http error", response)
             $window.alert(response.data)
-            hideSpinner()
-
             $q.reject(response)
 
           promise.then(onSuccess, onError)
-      httpInterceptor.$inject = ["$q", "$log", "$window"]
+      httpErrorsInterceptor.$inject = ["$q", "$log", "$window"]
 
-      $httpProvider.responseInterceptors.push(httpInterceptor)
-      $httpProvider.defaults.transformRequest.push(showSpinner)
+      $httpProvider.responseInterceptors.push(httpErrorsInterceptor)
 
       $routeProvider
         # Main page, list of all available databases
