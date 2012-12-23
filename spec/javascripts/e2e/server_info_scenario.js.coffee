@@ -3,6 +3,10 @@ describe "server info page", ->
     browser().navigateTo("/")
     element("a:contains('Server Info')").click()
 
+  it "displays a valid section title", ->
+    title = element("h2").text()
+    expect(title).toEqual("server info")
+
   it "displays details about the server", ->
     expect(browser().location().url()).toBe("/server_info")
 

@@ -54,33 +54,6 @@ describe "Documents list", type: :request, js: true do
         end
       end
     end
-
-    describe "click on delete document button" do
-      let(:document) do
-        database = connection.db("first_database")
-        collection = database.collection(current_collection_name)
-        collection.find_one(name: "This is the second sample record")
-      end
-
-      xit "removes a document from the collection" do
-        click_delete_button_for(document)
-        confirm_dialog
-
-        expect(page).to have_flash_message("Document #{document["_id"]} has been deleted.")
-
-        expect(page).to have_css("tr.document", count: 1)
-
-        within "table" do
-          expect(page).to have_content("This is a sample record")
-          expect(page).not_to have_content(document["name"])
-        end
-      end
-
-      def click_delete_button_for(document)
-        document_row = find("tr.id-#{document["_id"]}")
-        within(document_row) { click_link "Delete" }
-      end
-    end
   end
 
   context "with large number of documents" do

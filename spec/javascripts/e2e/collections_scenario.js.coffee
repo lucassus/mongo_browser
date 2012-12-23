@@ -50,3 +50,34 @@ describe "collections list page", ->
   it "displays a tab with database stats", ->
     element(".tabbable a:contains('Database stats')").click()
     expect(repeater("table tbody tr").count()).toBeGreaterThan(0)
+
+  describe "delete a collection", ->
+    deleteCollection = (name) ->
+      element("table.collections tbody tr:contains('#{name}') td.actions a:contains('Delete')")
+        .click()
+
+    beforeEach ->
+      deleteCollection("third_collection")
+      expect(element("div.modal .modal-body").text())
+        .toContain("Deleting third_collection. Are you sure?")
+
+    describe "when the dialog was disposed", ->
+      beforeEach -> disposeDialog()
+
+      it "does nothig", ->
+        expect(collectionsList.count()).toBe(4)
+        expect(collectionsList.column("collection.name"))
+          .toEqual(["first_collection", "second_collection", "system.indexes", "third_collection"])
+
+    describe "when the dialog was confirmed", ->
+      beforeEach -> confirmDialog()
+
+      it "shows the alert", ->
+        expect(repeater("aside#alerts .alert").count()).toBe(1)
+        expect(repeater("aside#alerts .alert").column("message.text"))
+          .toContain("Collection third_collection has been deleted.")
+
+      it "deletes a database", ->
+        expect(collectionsList.count()).toBe(3)
+        expect(collectionsList.column("collection.name"))
+          .toEqual(["first_collection", "second_collection", "system.indexes"])
