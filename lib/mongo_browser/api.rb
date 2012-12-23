@@ -1,10 +1,10 @@
 require "grape"
+require "grape-swagger"
 
 module MongoBrowser
-  class Api < Grape::API
-    format :json
-
+  class DatabasesApi < Grape::API
     include Models
+    format :json
 
     helpers do
       def server
@@ -25,10 +25,10 @@ module MongoBrowser
         end
       end
 
+      params do
+        requires :db_name, type: String, desc: "Database name."
+      end
       segment "/:db_name" do
-        params do
-          requires :db_name, :type => String, :desc => "Database name."
-        end
 
         desc "Deletes a database with the given name"
         delete do
@@ -56,10 +56,10 @@ module MongoBrowser
             end
           end
 
+          params do
+            requires :collection_name, type: String, desc: "Collection name."
+          end
           segment "/:collection_name" do
-            params do
-              requires :collection_name, :type => String, :desc => "Collection name."
-            end
 
             desc "Get stats for a collection with the given name"
             get "/stats" do
@@ -75,6 +75,9 @@ module MongoBrowser
             end
 
             resources :documents do
+              params do
+                optional :page, type: Integer, desc: "Page number."
+              end
               get do
                 collection = server.database(params[:db_name]).collection(params[:collection_name])
                 documents, pagination = collection.documents_with_pagination(params[:page])
@@ -94,11 +97,10 @@ module MongoBrowser
                 }
               end
 
+              params do
+                requires :id, type: String, desc: "Document id."
+              end
               segment "/:id" do
-                params do
-                  requires :id, :type => String, :desc => "Document id."
-                end
-
                 delete do
                   collection = server.database(params[:db_name]).collection(params[:collection_name])
                   document = collection.find(params[:id])
@@ -124,5 +126,17 @@ module MongoBrowser
           environment: ENV["RACK_ENV"]
       }
     end
+  end
+
+  class Api < Grape::API
+    before do
+      header["Access-Control-Allow-Origin"] = "*"
+      header["Access-Control-Request-Method"] = "*"
+    end
+
+    mount DatabasesApi
+    add_swagger_documentation \
+      base_path: "http://localhost:3000/api",
+      hide_documentation_path: true
   end
 end
