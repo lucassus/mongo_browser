@@ -20,6 +20,16 @@ class Fixtures
     end
   end
 
+  def load_documents!
+    database = connection.db("first_database")
+    collection = database.collection("second_collection")
+    collection.remove()
+
+    70.times do |n|
+      collection.insert(name: "Document #{n}", position: n)
+    end
+  end
+
   # Delete all databases
   def cleanup!
     fixture_databases = data.map { |db| db["name"] }

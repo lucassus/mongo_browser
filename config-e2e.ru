@@ -12,6 +12,7 @@ test_server.start! do |port|
 end
 
 fixtures.load!
+fixtures.load_documents!
 
 run MongoBrowser::Application
 

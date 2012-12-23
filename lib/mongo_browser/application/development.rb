@@ -19,7 +19,10 @@ class MongoBrowser::Application
       # Load database fixtures
       app.get "/e2e/load_fixtures" do
         require File.join(settings.spec_root, "support/fixtures")
-        Fixtures.instance.load!
+        fixtures = Fixtures.instance
+
+        fixtures.load!
+        fixtures.load_documents!
 
         respond_to do |format|
           format.json { true }
