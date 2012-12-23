@@ -12,7 +12,11 @@ echo -e "\nRunning e2e scenarios..\n"
 ./script/ci_e2e
 E2E_RESULT=$?
 
-if [ $RSPEC_RESULT -eq 1 -o $CUCUMBER_RESULT -eq 1 -o $JAVASCRIPTS_RESULT -eq 1 -o $E2E_RESULT -eq 1 ]; then
+if [ "$RSPEC_RESULT" = 1 -o \
+     "$CUCUMBER_RESULT" = 1 -o \
+     "$JAVASCRIPTS_RESULT" = 1 -o \
+     "$E2E_RESULT" = 1 ]; then
+
   echo "error"
   exit 1
 else
