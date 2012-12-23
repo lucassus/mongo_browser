@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.0.3
+ * @license AngularJS v1.1.1
  * (c) 2010-2012 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -42,8 +42,8 @@
  * @param {Object.<Object>=} actions Hash with declaration of custom action that should extend the
  *   default set of resource actions. The declaration should be created in the following format:
  *
- *       {action1: {method:?, params:?, isArray:?},
- *        action2: {method:?, params:?, isArray:?},
+ *       {action1: {method:?, params:?, isArray:?, headers:?},
+ *        action2: {method:?, params:?, isArray:?, headers:?},
  *        ...}
  *
  *   Where:
@@ -55,6 +55,7 @@
  *   - `params` – {object=} – Optional set of pre-bound parameters for this action.
  *   - isArray – {boolean=} – If true then the returned object for this action is an array, see
  *     `returns` section.
+ *   - `headers` – {object=} – Optional HTTP headers to send
  *
  * @returns {Object} A resource "class" object with methods for the default set of resource actions
  *   optionally extended with custom `actions`. The default set contains these actions:
@@ -136,7 +137,7 @@
  * The object returned from this function execution is a resource "class" which has "static" method
  * for each action in the definition.
  *
- * Calling these methods invoke `$http` on the `url` template with the given `method` and `params`.
+ * Calling these methods invoke `$http` on the `url` template with the given `method`, `params` and `headers`.
  * When the data is returned from the server then the object is an instance of the resource type and
  * all of the non-GET methods are available with `$` prefix. This allows you to easily support CRUD
  * operations (create, read, update, delete) on server-side data.
@@ -375,7 +376,8 @@ angular.module('ngResource', ['ng']).
           $http({
             method: action.method,
             url: route.url(extend({}, extractParams(data, action.params || {}), params)),
-            data: data
+            data: data,
+            headers: extend({}, action.headers || {})
           }).then(function(response) {
               var data = response.data;
 
