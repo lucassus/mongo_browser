@@ -32,7 +32,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency("sinatra-contrib", "~> 1.3.2")
   gem.add_dependency("json", "~> 1.7.5")
   gem.add_dependency("grape", "~> 0.2.2")
-  gem.add_dependency("grape-swagger", "~> 0.3.0")
 
   gem.add_dependency("sprockets", "~> 2.8.1")
   gem.add_dependency("coffee-script", "~> 2.2.0")

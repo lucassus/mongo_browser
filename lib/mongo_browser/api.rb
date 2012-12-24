@@ -1,5 +1,4 @@
 require "grape"
-require "grape-swagger"
 
 module MongoBrowser
   class DatabasesApi < Grape::API
@@ -132,15 +131,6 @@ module MongoBrowser
       end
     end
 
-    before do
-      header["Access-Control-Allow-Origin"] = "*"
-      header["Access-Control-Request-Method"] = "*"
-    end
-
     mount DatabasesApi
-    add_swagger_documentation \
-      base_path: "http://localhost:3000/api",
-      markdown: true,
-      hide_documentation_path: true
   end
 end
