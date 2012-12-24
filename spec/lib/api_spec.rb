@@ -1,5 +1,6 @@
 require "spec_helper"
 
+# TODO cleanup specs, write custom machers / macros
 describe MongoBrowser::Api do
   include Rack::Test::Methods
 
@@ -25,10 +26,12 @@ describe MongoBrowser::Api do
       end
     end
 
-    describe "DELETE /databases/first_database.json" do
+    describe "DELETE /databases/:db_name.json" do
+      let(:db_name) { "first_database" }
+
       before do
         expect do
-          delete "/databases/first_database.json"
+          delete "/databases/#{db_name}.json"
         end.to change { server.databases.count }.from(3).to(2)
       end
 
@@ -39,8 +42,10 @@ describe MongoBrowser::Api do
       end
     end
 
-    describe "GET /databases/first_database/stats.json" do
-      before { get "/databases/:db_name/stats.json" }
+    describe "GET /databases/:db_name/stats.json" do
+      let(:db_name) { "first_database" }
+
+      before { get "/databases/#{db_name}/stats.json" }
 
       it "gets stats for the given database" do
         expect(last_response.status).to be(200)
@@ -51,8 +56,10 @@ describe MongoBrowser::Api do
   end
 
   describe "collections" do
-    describe "GET /databases/first_database/collections.json" do
-      before { get "/databases/first_database/collections.json" }
+    let(:db_name) { "first_database" }
+
+    describe "GET /databases/:db_name/collections.json" do
+      before { get "/databases/#{db_name}/collections.json" }
 
       it "returns a list of all available collections for the given database" do
         expect(last_response.status).to be(200)
@@ -67,8 +74,10 @@ describe MongoBrowser::Api do
       end
     end
 
-    describe "GET /databases/first_database/collections/first_collection/stats" do
-      before { get "/databases/first_database/collections/first_collection/stats" }
+    describe "GET /databases/:db_name/collections/:collection_name/stats" do
+      let(:collection_name) { "first_collection" }
+
+      before { get "/databases/#{db_name}/collections/#{collection_name}/stats" }
 
       it "returns stats for the collection with the given name" do
         expect(last_response.status).to be(200)
@@ -77,10 +86,12 @@ describe MongoBrowser::Api do
       end
     end
 
-    describe "DELETE /databases/first_database/collections/first_collection" do
+    describe "DELETE /databases/:db_name/collections/first_collection" do
+      let(:collection_name) { "first_collection" }
+
       before do
         expect do
-          delete "/databases/first_database/collections/first_collection"
+          delete "/databases/#{db_name}/collections/#{collection_name}"
         end.to change { server.database("first_database").collections.count }.from(4).to(3)
       end
 
@@ -93,8 +104,11 @@ describe MongoBrowser::Api do
   end
 
   describe "documents" do
-    describe "GET /databases/first_database/collections/first_collection/documents" do
-      before { get "/databases/first_database/collections/first_collection/documents" }
+    let(:db_name) { "first_database" }
+    let(:collection_name) { "first_collection" }
+
+    describe "GET /databases/:db_name/collections/:collection_name/documents" do
+      before { get "/databases/#{db_name}/collections/#{collection_name}/documents" }
 
       it "returns a list of paginated documents" do
         expect(last_response.status).to be(200)
@@ -114,16 +128,16 @@ describe MongoBrowser::Api do
       end
     end
 
-    describe "DELETE /databases/first_database/collections/first_collection/documents/:id" do
+    describe "DELETE /databases/:db_name/collections/:collection_name/documents/:id" do
       let(:id) do
-        document = server.database("first_database").collection("first_collection").mongo_collection.find({}, limit: 1).first
+        document = server.database(db_name).collection(collection_name).mongo_collection.find({}, limit: 1).first
         document["_id"]
       end
 
       before do
         expect do
-          delete "/databases/first_database/collections/first_collection/documents/#{id}"
-        end.to change { server.database("first_database").collection("first_collection").size }.from(2).to(1)
+          delete "/databases/#{db_name}/collections/#{collection_name}/documents/#{id}"
+        end.to change { server.database(db_name).collection(collection_name).size }.from(2).to(1)
       end
 
       it "deletes a document with the given id" do

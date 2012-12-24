@@ -1,5 +1,6 @@
 require "grape"
 
+# TODO split this module into separate files
 module MongoBrowser
   class DatabasesApi < Grape::API
     format :json
