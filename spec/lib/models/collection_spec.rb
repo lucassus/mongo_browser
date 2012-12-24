@@ -41,9 +41,7 @@ describe MongoBrowser::Models::Collection do
   end
 
   describe "#documents_with_pagination" do
-    it "returns a collection of documents"
-
-    it "returns a pager"
+    it "returns paged collection of documents"
   end
 
   describe "#find" do

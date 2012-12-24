@@ -3,26 +3,18 @@ require "grape-swagger"
 
 module MongoBrowser
   class DatabasesApi < Grape::API
-    include Models
     format :json
 
     helpers do
       def server
-        @server ||= Server.current
+        @server ||= MongoBrowser::Models::Server.current
       end
     end
 
     resource :databases do
       desc "Get a list of all databases for the current server"
       get do
-        server.databases.map do |db|
-          {
-              id:    db.id,
-              name:  db.name,
-              size:  db.size,
-              count: db.count
-          }
-        end
+        present server.databases, with: Api::Entities::Database
       end
 
       params do
@@ -47,13 +39,8 @@ module MongoBrowser
           desc "Get a list of all collections for the given database"
           get do
             database = server.database(params[:db_name])
-            database.collections.map do |collection|
-              {
-                  dbName: collection.db_name,
-                  name:   collection.name,
-                  size:   collection.size
-              }
-            end
+            collections = database.collections
+            present collections, with: Api::Entities::Collection
           end
 
           params do
@@ -80,21 +67,8 @@ module MongoBrowser
               end
               get do
                 collection = server.database(params[:db_name]).collection(params[:collection_name])
-                documents, pagination = collection.documents_with_pagination(params[:page])
-
-                documents.map! do |doc|
-                  {
-                      id: doc.id.to_s,
-                      data: doc.data
-                  }
-                end
-
-                {
-                    documents:  documents,
-                    size:       pagination.size,
-                    page:       pagination.current_page,
-                    totalPages: pagination.total_pages
-                }
+                documents = collection.documents_with_pagination(params[:page])
+                present documents, with: Api::Entities::PagedDocuments
               end
 
               params do
@@ -129,6 +103,35 @@ module MongoBrowser
   end
 
   class Api < Grape::API
+    module Entities
+      class Database < Grape::Entity
+        expose :name, documentation: { type: String, desc: "Database name." }
+        expose :size, documentation: { type: Integer, desc: "Database size in bytes." }
+        expose :count, documentation: { type: Integer, desc: "Number of collections." }
+      end
+
+      # TODO add docs
+      class Collection < Grape::Entity
+        expose(:dbName) { |collection| collection.db_name }
+        expose :name
+        expose :size
+      end
+
+      # TODO add docs
+      class Document < Grape::Entity
+        expose(:id) { |document| document.id.to_s }
+        expose :data
+      end
+
+      # TODO add docs
+      class PagedDocuments < Grape::Entity
+        expose :page
+        expose :size
+        expose(:totalPages) { |paged| paged.total_pages }
+        expose :documents, using: Document
+      end
+    end
+
     before do
       header["Access-Control-Allow-Origin"] = "*"
       header["Access-Control-Request-Method"] = "*"
@@ -137,6 +140,7 @@ module MongoBrowser
     mount DatabasesApi
     add_swagger_documentation \
       base_path: "http://localhost:3000/api",
+      markdown: true,
       hide_documentation_path: true
   end
 end

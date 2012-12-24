@@ -17,6 +17,11 @@ describe MongoBrowser::Api do
         expect(last_response.status).to be(200)
         databases = JSON.parse(last_response.body)
         expect(databases).to have(3).items
+
+        first_database = databases.find { |db| db["name"] == "first_database" }
+        expect(first_database).to_not be_nil
+        expect(first_database["name"]).to eq("first_database")
+        expect(first_database["count"]).to eq(4)
       end
     end
 
@@ -51,8 +56,14 @@ describe MongoBrowser::Api do
 
       it "returns a list of all available collections for the given database" do
         expect(last_response.status).to be(200)
-        databases = JSON.parse(last_response.body)
-        expect(databases).to have(4).items
+        collections = JSON.parse(last_response.body)
+        expect(collections).to have(4).items
+
+        first_collection = collections.find { |collection| collection["name"] == "first_collection" }
+        expect(first_collection).to_not be_nil
+        expect(first_collection["dbName"]).to eq("first_database")
+        expect(first_collection["name"]).to eq("first_collection")
+        expect(first_collection["size"]).to eq(2)
       end
     end
 
@@ -87,12 +98,19 @@ describe MongoBrowser::Api do
 
       it "returns a list of paginated documents" do
         expect(last_response.status).to be(200)
-        databases = JSON.parse(last_response.body)
+        paged_documents = JSON.parse(last_response.body)
 
-        expect(databases["documents"]).to have(2).items
-        expect(databases["size"]).to equal(2)
-        expect(databases["page"]).to equal(1)
-        expect(databases["totalPages"]).to equal(1)
+        expect(paged_documents["page"]).to equal(1)
+        expect(paged_documents["size"]).to equal(2)
+        expect(paged_documents["totalPages"]).to equal(1)
+
+        expect(paged_documents["documents"]).not_to be_nil
+        expect(paged_documents["documents"]).to have(2).items
+
+        first_document = paged_documents["documents"].first
+        expect(first_document).to_not be_nil
+        expect(first_document["id"]).to_not be_nil
+        expect(first_document["data"]).to_not be_nil
       end
     end
 
