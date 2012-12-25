@@ -122,17 +122,19 @@ module MongoBrowser
         expose :count, documentation: { type: Integer, desc: "Number of collections." }
       end
 
-      # TODO add docs
       class Collection < Grape::Entity
-        expose(:dbName) { |collection| collection.db_name }
-        expose :name
-        expose :size
+        expose(:dbName, documentation: { type: String, desc: "Database name." }) do |collection|
+          collection.db_name
+        end
+        expose :name, documentation: { type: String, desc: "Collection name." }
+        expose :size, documentation: { type: Integer, desc: "Number of documents." }
       end
 
-      # TODO add docs
       class Document < Grape::Entity
-        expose(:id) { |document| document.id.to_s }
-        expose :data
+        expose(:id, documentation: { type: String, desc: "Document id." }) do |document|
+          document.id.to_s
+        end
+        expose :data, document: { type: Hash, desc: "Document" }
       end
 
       # TODO add docs
