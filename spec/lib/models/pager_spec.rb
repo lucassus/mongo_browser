@@ -63,6 +63,11 @@ describe MongoBrowser::Models::Pager do
   end
 
   describe "#to_hash" do
-    it "returns a hash"
+    subject { pager.to_hash }
+
+    it { should be_an_instance_of(Hash) }
+    its([:size]) { should == 25 }
+    its([:page]) { should == 1 }
+    its([:total_pages]) { should == 1 }
   end
 end
