@@ -1,67 +1,7 @@
 require "grape"
 
-# TODO split this module into separate files
 module MongoBrowser
-  class CollectionsApi < Grape::API
-    format :json
-
-    helpers do
-      def server
-        @server ||= MongoBrowser::Models::Server.current
-      end
-    end
-
-    desc "Get a list of all collections for the given database"
-    get do
-      database = server.database(params[:db_name])
-      collections = database.collections
-      present collections, with: Api::Entities::Collection
-    end
-
-    params do
-      requires :collection_name, type: String, desc: "Collection name."
-    end
-    segment "/:collection_name" do
-
-      desc "Get stats for a collection with the given name"
-      get "/stats" do
-        collection = server.database(params[:db_name]).collection(params[:collection_name])
-        collection.stats
-      end
-
-      desc "Drop a collection with the given name"
-      delete do
-        collection = server.database(params[:db_name]).collection(params[:collection_name])
-        collection.drop!
-        { success: true }
-      end
-
-      resources :documents do
-        params do
-          optional :page, type: Integer, desc: "Page number."
-        end
-        get do
-          collection = server.database(params[:db_name]).collection(params[:collection_name])
-          documents = collection.documents_with_pagination(params[:page])
-          present documents, with: Api::Entities::PagedDocuments
-        end
-
-        params do
-          requires :id, type: String, desc: "Document id."
-        end
-        segment "/:id" do
-          delete do
-            collection = server.database(params[:db_name]).collection(params[:collection_name])
-            document = collection.find(params[:id])
-            collection.remove!(document)
-            { success: true }
-          end
-        end
-      end
-    end
-  end
-
-  class DatabasesApi < Grape::API
+  class Api < Grape::API
     format :json
 
     helpers do
@@ -95,7 +35,54 @@ module MongoBrowser
         end
 
         resources :collections do
-          mount CollectionsApi
+          desc "Get a list of all collections for the given database"
+          get do
+            database = server.database(params[:db_name])
+            collections = database.collections
+            present collections, with: Api::Entities::Collection
+          end
+
+          params do
+            requires :collection_name, type: String, desc: "Collection name."
+          end
+          segment "/:collection_name" do
+
+            desc "Get stats for a collection with the given name"
+            get "/stats" do
+              collection = server.database(params[:db_name]).collection(params[:collection_name])
+              collection.stats
+            end
+
+            desc "Drop a collection with the given name"
+            delete do
+              collection = server.database(params[:db_name]).collection(params[:collection_name])
+              collection.drop!
+              { success: true }
+            end
+
+            resources :documents do
+              params do
+                optional :page, type: Integer, desc: "Page number."
+              end
+              get do
+                collection = server.database(params[:db_name]).collection(params[:collection_name])
+                documents = collection.documents_with_pagination(params[:page])
+                present documents, with: Api::Entities::PagedDocuments
+              end
+
+              params do
+                requires :id, type: String, desc: "Document id."
+              end
+              segment "/:id" do
+                delete do
+                  collection = server.database(params[:db_name]).collection(params[:collection_name])
+                  document = collection.find(params[:id])
+                  collection.remove!(document)
+                  { success: true }
+                end
+              end
+            end
+          end
         end
       end
     end
@@ -112,40 +99,5 @@ module MongoBrowser
           environment: ENV["RACK_ENV"]
       }
     end
-  end
-
-  class Api < Grape::API
-    module Entities
-      class Database < Grape::Entity
-        expose :name, documentation: { type: String, desc: "Database name." }
-        expose :size, documentation: { type: Integer, desc: "Database size in bytes." }
-        expose :count, documentation: { type: Integer, desc: "Number of collections." }
-      end
-
-      class Collection < Grape::Entity
-        expose(:dbName, documentation: { type: String, desc: "Database name." }) do |collection|
-          collection.db_name
-        end
-        expose :name, documentation: { type: String, desc: "Collection name." }
-        expose :size, documentation: { type: Integer, desc: "Number of documents." }
-      end
-
-      class Document < Grape::Entity
-        expose(:id, documentation: { type: String, desc: "Document id." }) do |document|
-          document.id.to_s
-        end
-        expose :data, document: { type: Hash, desc: "Document" }
-      end
-
-      # TODO add docs
-      class PagedDocuments < Grape::Entity
-        expose :page
-        expose :size
-        expose(:totalPages) { |paged| paged.total_pages }
-        expose :documents, using: Document
-      end
-    end
-
-    mount DatabasesApi
   end
 end
