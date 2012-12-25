@@ -134,20 +134,24 @@ describe MongoBrowser::Api do
 
       its(:status) { should == 200 }
 
-      it "returns a list of paginated documents" do
-        paged_documents = JSON.parse(response.body)
+      describe "returned documents" do
+        subject(:data) { JSON.parse(response.body) }
 
-        expect(paged_documents["page"]).to equal(1)
-        expect(paged_documents["size"]).to equal(2)
-        expect(paged_documents["totalPages"]).to equal(1)
+        it("contains the current page") { expect(data["page"]).to equal(1) }
+        it("contains size") { expect(data["size"]).to equal(2) }
+        it("contains total pages") { expect(data["totalPages"]).to equal(1) }
+        it("contains all documents") do
+          expect(data["documents"]).not_to be_nil
+          expect(data["documents"]).to have(2).items
+        end
 
-        expect(paged_documents["documents"]).not_to be_nil
-        expect(paged_documents["documents"]).to have(2).items
+        describe "a document" do
+          subject(:document) { data["documents"].first }
 
-        first_document = paged_documents["documents"].first
-        expect(first_document).to_not be_nil
-        expect(first_document["id"]).to_not be_nil
-        expect(first_document["data"]).to_not be_nil
+          it { should_not be_nil }
+          it("contains id") { expect(document["id"]).to_not be_nil }
+          it("contains document data") { expect(document["data"]).to_not be_nil }
+        end
       end
     end
 
