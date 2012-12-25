@@ -20,7 +20,6 @@ module MongoBrowser
         requires :db_name, type: String, desc: "Database name."
       end
       segment "/:db_name" do
-
         desc "Deletes a database with the given name"
         delete do
           database = server.database(params[:db_name])
@@ -46,7 +45,6 @@ module MongoBrowser
             requires :collection_name, type: String, desc: "Collection name."
           end
           segment "/:collection_name" do
-
             desc "Get stats for a collection with the given name"
             get "/stats" do
               collection = server.database(params[:db_name]).collection(params[:collection_name])
