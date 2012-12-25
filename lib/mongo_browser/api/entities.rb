@@ -21,11 +21,12 @@ class MongoBrowser::Api
       expose :data, document: { type: Hash, desc: "Document" }
     end
 
-    # TODO add docs
     class PagedDocuments < Grape::Entity
-      expose :page
-      expose :size
-      expose(:totalPages) { |paged| paged.total_pages }
+      expose :page, documentation: { type: Integer, desc: "Current page." }
+      expose :size, documentation: { type: Integer, desc: "Total number of records." }
+      expose(:totalPages, documentation: { type: Integer, desc: "Total number of pages" }) do |paged|
+        paged.total_pages
+      end
       expose :documents, using: Document
     end
   end
