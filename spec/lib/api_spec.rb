@@ -1,18 +1,14 @@
 require "spec_helper"
 
 describe MongoBrowser::Api do
-  include Rack::Test::Methods
+  include ApiExampleGroup
 
   def app
     described_class
   end
 
-  let(:server) { MongoBrowser::Models::Server.current }
-
   describe "databases" do
-    describe "GET /databases.json" do
-      subject(:response) { get "/databases.json" }
-
+    describe_endpoint :get, "/databases" do
       it { should be_successful }
 
       describe "returned databases" do
@@ -31,15 +27,13 @@ describe MongoBrowser::Api do
       end
     end
 
-    describe "DELETE /databases/:db_name.json" do
+    describe_endpoint :delete, "/databases/:db_name" do
       let(:db_name) { "first_database" }
 
       before do
-        expect do
-          delete "/databases/#{db_name}.json"
-        end.to change { server.databases.count }.by(-1)
+        expect { do_request }.to \
+          change { server.databases.count }.by(-1)
       end
-      subject(:response) { last_response }
 
       it { should be_successful }
 
@@ -49,9 +43,8 @@ describe MongoBrowser::Api do
       end
     end
 
-    describe "GET /databases/:db_name/stats.json" do
+    describe_endpoint :get, "/databases/:db_name/stats" do
       let(:db_name) { "first_database" }
-      subject(:response) { get "/databases/#{db_name}/stats.json" }
 
       it { should be_successful }
 
@@ -65,9 +58,7 @@ describe MongoBrowser::Api do
   describe "collections" do
     let(:db_name) { "first_database" }
 
-    describe "GET /databases/:db_name/collections.json" do
-      subject(:response) { get "/databases/#{db_name}/collections.json" }
-
+    describe_endpoint :get, "/databases/:db_name/collections" do
       it { should be_successful }
 
       describe "returned collections" do
@@ -87,9 +78,8 @@ describe MongoBrowser::Api do
       end
     end
 
-    describe "GET /databases/:db_name/collections/:collection_name/stats" do
+    describe_endpoint :get, "/databases/:db_name/collections/:collection_name/stats" do
       let(:collection_name) { "first_collection" }
-      subject(:response) { get "/databases/#{db_name}/collections/#{collection_name}/stats" }
 
       it { should be_successful }
 
@@ -99,15 +89,13 @@ describe MongoBrowser::Api do
       end
     end
 
-    describe "DELETE /databases/:db_name/collections/first_collection" do
+    describe_endpoint :delete, "/databases/:db_name/collections/:collection_name" do
       let(:collection_name) { "first_collection" }
 
       before do
-        expect do
-          delete "/databases/#{db_name}/collections/#{collection_name}"
-        end.to change { server.database("first_database").collections.count }.from(4).to(3)
+        expect { do_request }.to \
+          change { server.database("first_database").collections.count }.by(-1)
       end
-      subject(:response) { last_response }
 
       it { should be_successful }
 
@@ -122,9 +110,7 @@ describe MongoBrowser::Api do
     let(:db_name) { "first_database" }
     let(:collection_name) { "first_collection" }
 
-    describe "GET /databases/:db_name/collections/:collection_name/documents" do
-      subject(:response) { get "/databases/#{db_name}/collections/#{collection_name}/documents" }
-
+    describe_endpoint :get, "/databases/:db_name/collections/:collection_name/documents" do
       it { should be_successful }
 
       describe "returned documents" do
@@ -148,18 +134,16 @@ describe MongoBrowser::Api do
       end
     end
 
-    describe "DELETE /databases/:db_name/collections/:collection_name/documents/:id" do
+    describe_endpoint :delete, "/databases/:db_name/collections/:collection_name/documents/:id" do
       let(:id) do
         document = server.database(db_name).collection(collection_name).mongo_collection.find({}, limit: 1).first
         document["_id"]
       end
 
       before do
-        expect do
-          delete "/databases/#{db_name}/collections/#{collection_name}/documents/#{id}"
-        end.to change { server.database(db_name).collection(collection_name).size }.from(2).to(1)
+        expect { do_request }.to \
+          change { server.database(db_name).collection(collection_name).size }.from(2).to(1)
       end
-      subject(:response) { last_response }
 
       it { should be_successful }
 
@@ -170,9 +154,7 @@ describe MongoBrowser::Api do
     end
   end
 
-  describe "GET /server_info.json" do
-    subject(:response) { get "/server_info.json" }
-
+  describe_endpoint :get, "/server_info" do
     it { should be_successful }
 
     it "returns info about the server" do
@@ -181,9 +163,7 @@ describe MongoBrowser::Api do
     end
   end
 
-  describe "GET /version.json" do
-    subject(:response) { get "/version.json" }
-
+  describe_endpoint :get, "/version" do
     it { should be_successful }
 
     it "returns application version" do
