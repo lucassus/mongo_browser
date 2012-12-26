@@ -18,7 +18,7 @@ class MongoBrowser::Api
       expose(:id, documentation: { type: String, desc: "Document id." }) do |document|
         document.id.to_s
       end
-      expose :data, document: { type: Hash, desc: "Document" }
+      expose :data, documentation: { type: Hash, desc: "Document" }
     end
 
     class PagedDocuments < Grape::Entity
