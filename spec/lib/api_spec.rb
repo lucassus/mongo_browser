@@ -11,10 +11,9 @@ describe MongoBrowser::Api do
 
   describe "databases" do
     describe "GET /databases.json" do
-      before { get "/databases.json" }
-      subject(:response) { last_response }
+      subject(:response) { get "/databases.json" }
 
-      its(:status) { should == 200 }
+      it { should be_successful }
 
       describe "returned databases" do
         subject(:data) { JSON.parse(response.body) }
@@ -42,7 +41,7 @@ describe MongoBrowser::Api do
       end
       subject(:response) { last_response }
 
-      its(:status) { should == 200 }
+      it { should be_successful }
 
       it "deletes a database with the given name" do
         data = JSON.parse(response.body)
@@ -52,11 +51,9 @@ describe MongoBrowser::Api do
 
     describe "GET /databases/:db_name/stats.json" do
       let(:db_name) { "first_database" }
+      subject(:response) { get "/databases/#{db_name}/stats.json" }
 
-      before { get "/databases/#{db_name}/stats.json" }
-      subject(:response) { last_response }
-
-      its(:status) { should == 200 }
+      it { should be_successful }
 
       it "gets stats for the given database" do
         stats = JSON.parse(response.body)
@@ -69,10 +66,9 @@ describe MongoBrowser::Api do
     let(:db_name) { "first_database" }
 
     describe "GET /databases/:db_name/collections.json" do
-      before { get "/databases/#{db_name}/collections.json" }
-      subject(:response) { last_response }
+      subject(:response) { get "/databases/#{db_name}/collections.json" }
 
-      its(:status) { should == 200 }
+      it { should be_successful }
 
       describe "returned collections" do
         subject(:collections) { JSON.parse(response.body) }
@@ -93,11 +89,9 @@ describe MongoBrowser::Api do
 
     describe "GET /databases/:db_name/collections/:collection_name/stats" do
       let(:collection_name) { "first_collection" }
+      subject(:response) { get "/databases/#{db_name}/collections/#{collection_name}/stats" }
 
-      before { get "/databases/#{db_name}/collections/#{collection_name}/stats" }
-      subject(:response) { last_response }
-
-      its(:status) { should == 200 }
+      it { should be_successful }
 
       it "returns stats for the collection with the given name" do
         stats = JSON.parse(response.body)
@@ -115,7 +109,7 @@ describe MongoBrowser::Api do
       end
       subject(:response) { last_response }
 
-      its(:status) { should == 200 }
+      it { should be_successful }
 
       it "deletes a collection with the given name" do
         data = JSON.parse(response.body)
@@ -129,10 +123,9 @@ describe MongoBrowser::Api do
     let(:collection_name) { "first_collection" }
 
     describe "GET /databases/:db_name/collections/:collection_name/documents" do
-      before { get "/databases/#{db_name}/collections/#{collection_name}/documents" }
-      subject(:response) { last_response }
+      subject(:response) { get "/databases/#{db_name}/collections/#{collection_name}/documents" }
 
-      its(:status) { should == 200 }
+      it { should be_successful }
 
       describe "returned documents" do
         subject(:data) { JSON.parse(response.body) }
@@ -168,7 +161,7 @@ describe MongoBrowser::Api do
       end
       subject(:response) { last_response }
 
-      its(:status) { should == 200 }
+      it { should be_successful }
 
       it "deletes a document with the given id" do
         data = JSON.parse(response.body)
@@ -178,10 +171,9 @@ describe MongoBrowser::Api do
   end
 
   describe "GET /server_info.json" do
-    before { get "/server_info.json" }
-    subject(:response) { last_response }
+    subject(:response) { get "/server_info.json" }
 
-    its(:status) { should == 200 }
+    it { should be_successful }
 
     it "returns info about the server" do
       server_info = JSON.parse(response.body)
@@ -190,10 +182,9 @@ describe MongoBrowser::Api do
   end
 
   describe "GET /version.json" do
-    before { get "/version.json" }
-    subject(:response) { last_response }
+    subject(:response) { get "/version.json" }
 
-    its(:status) { should == 200 }
+    it { should be_successful }
 
     it "returns application version" do
       data = JSON.parse(response.body)
