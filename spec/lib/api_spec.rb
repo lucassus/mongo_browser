@@ -94,7 +94,7 @@ describe MongoBrowser::Api do
 
       before do
         expect { do_request }.to \
-          change { server.database("first_database").collections.count }.by(-1)
+          change { server.database(db_name).collections.count }.by(-1)
       end
 
       it { should be_successful }
@@ -142,7 +142,7 @@ describe MongoBrowser::Api do
 
       before do
         expect { do_request }.to \
-          change { server.database(db_name).collection(collection_name).size }.from(2).to(1)
+          change { server.database(db_name).collection(collection_name).size }.by(-1)
       end
 
       it { should be_successful }
