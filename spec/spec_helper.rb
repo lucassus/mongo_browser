@@ -14,8 +14,6 @@ test_server = Mongod.instance
 fixtures = Fixtures.instance
 
 RSpec.configure do |config|
-  config.include FeatureExampleGroup, type: :request
-
   # Run test mongod instance and load database fixtures
   config.before do
     test_server.start! do |port|
