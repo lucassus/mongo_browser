@@ -17,7 +17,7 @@ module MongoBrowser
       end
 
       params do
-        requires :db_name, type: String, desc: "Database name."
+        requires :db_name, type: String, desc: "Database name"
       end
       segment "/:db_name" do
         desc "Deletes a database with the given name"
@@ -42,7 +42,7 @@ module MongoBrowser
           end
 
           params do
-            requires :collection_name, type: String, desc: "Collection name."
+            requires :collection_name, type: String, desc: "Collection name"
           end
           segment "/:collection_name" do
             desc "Get stats for a collection with the given name"
@@ -59,8 +59,9 @@ module MongoBrowser
             end
 
             resources :documents do
+              desc "Get a list of paginated documents"
               params do
-                optional :page, type: Integer, desc: "Page number."
+                optional :page, type: Integer, desc: "Page number"
               end
               get do
                 collection = server.database(params[:db_name]).collection(params[:collection_name])
@@ -68,8 +69,9 @@ module MongoBrowser
                 present documents, with: Api::Entities::PagedDocuments
               end
 
+              desc "Deletes a document with the given id"
               params do
-                requires :id, type: String, desc: "Document id."
+                requires :id, type: String, desc: "Document id"
               end
               segment "/:id" do
                 delete do

@@ -16,6 +16,10 @@ module ApiExampleGroup
     #   end
     def describe_endpoint(method, interpolated_path, &block)
       describe "#{method.upcase} #{interpolated_path}" do
+        route = described_class.routes.find do |route|
+          route.route_path.match(/^#{interpolated_path}/)
+        end
+
         let(:path) do
           path = interpolated_path.clone
           interpolated_path.scan(/(:(\w+))/).each do |place_holder, name|
@@ -28,7 +32,13 @@ module ApiExampleGroup
         let(:do_request) { send(method.downcase.to_sym, path) }
         subject(:response) { do_request }
 
-        instance_eval(&block)
+        if route and route.route_description
+          describe route.route_description do
+            instance_eval(&block)
+          end
+        else
+          instance_eval(&block)
+        end
       end
     end
   end
