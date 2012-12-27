@@ -41,9 +41,15 @@ describe MongoBrowser::Models::Collection do
   end
 
   describe "#documents_with_pagination" do
-    it "returns a collection of documents"
+    subject { collection.documents_with_pagination }
 
-    it "returns a pager"
+    it { should be_an_instance_of(OpenStruct) }
+    its(:size) { should == 2 }
+    its(:page) { should == 1 }
+    its(:total_pages) { should == 1 }
+
+    its(:documents) { should be_an_instance_of(Array) }
+    its(:documents) { should have(2).items }
   end
 
   describe "#find" do

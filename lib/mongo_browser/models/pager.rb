@@ -3,15 +3,16 @@ module MongoBrowser
     class Pager
       PER_PAGE = 25
 
-      attr_reader :current_page
+      attr_reader :page
       attr_reader :size
 
-      def initialize(current_page, size)
+      def initialize(page, size)
         @size = size
-        @current_page = if current_page.to_i <= 0 then 1
-                        else
-                          [current_page.to_i, total_pages].min
-                        end
+        @page = if page.to_i <= 0 then
+                  1
+                else
+                  [page.to_i, total_pages].min
+                end
       end
 
       def per_page
@@ -19,13 +20,23 @@ module MongoBrowser
       end
 
       def offset
-        (current_page - 1) * per_page
+        (page - 1) * per_page
       end
 
       def total_pages
-        if size == 0 then 1
-        else (size.to_f / per_page).ceil
+        if size == 0 then
+          1
+        else
+          (size.to_f / per_page).ceil
         end
+      end
+
+      def to_hash
+        {
+            size: size,
+            page: page,
+            total_pages: total_pages
+        }
       end
     end
   end

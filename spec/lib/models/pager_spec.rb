@@ -1,49 +1,49 @@
 require "spec_helper"
 
 describe MongoBrowser::Models::Pager do
-  let(:current_page) { 1 }
+  let(:page) { 1 }
   let(:size) { 25 }
 
-  let(:pager) { described_class.new(current_page, size) }
+  let(:pager) { described_class.new(page, size) }
   subject { pager }
 
   before { pager.stub(:per_page).and_return(25) }
 
-  describe "#current_page" do
-    subject { pager.current_page }
+  describe "#page" do
+    subject { pager.page }
 
     [-2, -1, 0, 1].each do |number|
       context "when the given page number is #{number}" do
-        let(:current_page) { number }
+        let(:page) { number }
 
         it("return the first page") { should == 1 }
       end
     end
 
     context "when the given page number exceed the total pages number" do
-      let(:current_page) { 3 }
+      let(:page) { 3 }
       let(:size) { 30 }
 
       it("returns the last page number") { should == 2 }
     end
 
     context "otherwise" do
-      let(:current_page) { 2 }
+      let(:page) { 2 }
       let(:size) { 26 }
 
-      it("returns the current page") { should == current_page }
+      it("returns the current page") { should == page }
     end
   end
 
   describe "#offset" do
     subject { pager.offset }
 
-    context "when current_page eq 1" do
+    context "when page eq 1" do
       it { should == 0 }
     end
 
     context "otherwise" do
-      let(:current_page) { 2 }
+      let(:page) { 2 }
       let(:size) { 26 }
 
       it("return a valid offset") { should == 25 }
@@ -60,5 +60,14 @@ describe MongoBrowser::Models::Pager do
         it { should == expected }
       end
     end
+  end
+
+  describe "#to_hash" do
+    subject { pager.to_hash }
+
+    it { should be_an_instance_of(Hash) }
+    its([:size]) { should == 25 }
+    its([:page]) { should == 1 }
+    its([:total_pages]) { should == 1 }
   end
 end

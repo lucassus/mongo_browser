@@ -30,13 +30,14 @@ module MongoBrowser
       end
 
       def documents_with_pagination(page_number = 1)
-        pager = pager_for(page_number)
+        pager = Pager.new(page_number, size)
 
-        paged_documents = mongo_collection.find
-            .skip(pager.offset)
-            .limit(pager.per_page)
+        documents = mongo_collection.find
+          .skip(pager.offset)
+          .limit(pager.per_page)
+          .map { |doc| Document.new(doc) }
 
-        return paged_documents.map { |doc| Document.new(doc) }, pager
+        OpenStruct.new pager.to_hash.merge(documents: documents)
       end
 
       def drop!
@@ -55,12 +56,6 @@ module MongoBrowser
       # Removes the given document from the collection.
       def remove!(document)
         mongo_collection.remove(_id: document.id)
-      end
-
-      private
-
-      def pager_for(page)
-        Pager.new(page, size)
       end
     end
   end
