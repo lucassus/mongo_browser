@@ -164,7 +164,12 @@ describe MongoBrowser::Api do
 
             it { should_not be_successful }
             it("responds with 400") { expect(response.status).to eq(400) }
-            it("should notify about invalid param") { expect(response.body).to eq("invalid parameter: page") }
+
+            it("should notify about invalid param") do
+              error = JSON.parse(response.body)["error"]
+              expect(error).not_to be_nil
+              expect(error).to eq("invalid parameter: page")
+            end
           end
         end
       end

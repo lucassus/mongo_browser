@@ -13,7 +13,9 @@ module MongoBrowser
     resource :databases do
       desc "Get a list of all databases for the current server"
       get do
-        present server.databases, with: Api::Entities::Database
+        server.databases.map do |database|
+          Entities::Database.new(database).serializable_hash
+        end
       end
 
       params do
@@ -37,8 +39,9 @@ module MongoBrowser
           desc "Get a list of all collections for the given database"
           get do
             database = server.database(params[:db_name])
-            collections = database.collections
-            present collections, with: Api::Entities::Collection
+            database.collections.map do |collection|
+              Entities::Collection.new(collection).serializable_hash
+            end
           end
 
           params do
@@ -66,7 +69,7 @@ module MongoBrowser
               get do
                 collection = server.database(params[:db_name]).collection(params[:collection_name])
                 documents = collection.documents_with_pagination(params[:page])
-                present documents, with: Api::Entities::PagedDocuments
+                Entities::PagedDocuments.new(documents).serializable_hash
               end
 
               desc "Deletes a document with the given id"
