@@ -3,8 +3,8 @@ module = angular.module("mb.controllers")
 # TODO clenup this controller, see DatabasesController
 class DocumentsController
   @$inject = ["$scope", "$routeParams", "$location", "$http",
-              "Document", "confirmationDialog", "alerts"]
-  constructor: (@$scope, @$routeParams, @$location, @$http, @Document, @confirmationDialog, @alerts) ->
+              "Collection", "Document", "confirmationDialog", "alerts"]
+  constructor: (@$scope, @$routeParams, @$location, @$http, @Collection, @Document, @confirmationDialog, @alerts) ->
     @$scope.dbName = @$routeParams.dbName
     @$scope.collectionName = @$routeParams.collectionName
 
@@ -38,18 +38,16 @@ class DocumentsController
 
       @$scope.fetchDocuments(page)
 
-    # TODO create resource for this call
-    @$http.get("/api/databases/#{@$scope.dbName}/collections/#{@$scope.collectionName}/stats.json").success (data) =>
+    new @Collection(dbName: @$scope.dbName, name: @$scope.collectionName).$stats (data) =>
       @$scope.collectionStats = data
 
-    @$scope.delete = (document) =>
+    @$scope.delete = (data) =>
       @confirmationDialog
         message: "Are you sure?"
         onOk: =>
-          resource = new @Document()
-          params = dbName: @$scope.dbName, collectionName: @$scope.collectionName, id: document.id
-
-          resource.$delete params, =>
+          params = dbName: @$scope.dbName, collectionName: @$scope.collectionName, id: data.id
+          document = new @Document(params)
+          document.$delete =>
             @alerts.info("Document #{document.id} has been deleted.")
             @$scope.fetchDocuments()
 

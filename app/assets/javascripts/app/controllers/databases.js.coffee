@@ -27,12 +27,10 @@ class DatabasesController
       message: "Deleting #{database.name}. Are you sure?"
       onOk: => @drop(database)
 
-  drop: (database) ->
-    resource = new @Database()
-    params = dbName: database.name
-
-    resource.$delete params, =>
-      @alerts.info("Database #{database.name} has been deleted.")
+  drop: (data) ->
+    database = new @Database(data)
+    database.$delete =>
+      @alerts.info("Database #{data.name} has been deleted.")
       @fetchDatabases()
 
 module.controller "databases", DatabasesController

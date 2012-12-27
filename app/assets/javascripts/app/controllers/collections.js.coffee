@@ -3,8 +3,8 @@ module = angular.module("mb.controllers")
 # TODO clenup this controller, see DatabasesController
 class CollectionsController
   @$inject = ["$scope", "$routeParams",
-              "Collection", "$http", "confirmationDialog", "alerts"]
-  constructor: (@$scope, @$routeParams, @Collection, @$http, @confirmationDialog, @alerts) ->
+              "Database", "Collection", "$http", "confirmationDialog", "alerts"]
+  constructor: (@$scope, @$routeParams, @Database, @Collection, @$http, @confirmationDialog, @alerts) ->
     @$scope.dbName = @$routeParams.dbName
     @$scope.filterValue = ""
 
@@ -19,21 +19,18 @@ class CollectionsController
 
     @$scope.fetchCollections()
 
-    # TODO create resource for this call
-    @$http.get("/api/databases/#{@$scope.dbName}/stats.json").success (data) =>
+    new @Database(name: @$scope.dbName).$stats (data) =>
       @$scope.dbStats = data
 
     @$scope.isLoading = => @$scope.loading
 
-    @$scope.delete = (collection) =>
+    @$scope.delete = (data) =>
       @confirmationDialog
-        message: "Deleting #{collection.name}. Are you sure?"
+        message: "Deleting #{data.name}. Are you sure?"
         onOk: =>
-          resource = new @Collection()
-          params = dbName: collection.dbName, collectionName: collection.name
-
-          resource.$delete params, =>
-            @alerts.info("Collection #{collection.name} has been deleted.")
+          collection = new @Collection(data)
+          collection.$delete =>
+            @alerts.info("Collection #{data.name} has been deleted.")
             @$scope.fetchCollections()
 
 module.controller "collections", CollectionsController
