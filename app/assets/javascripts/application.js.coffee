@@ -19,8 +19,8 @@ angular.module("mb", requires)
             response
 
           onError = (response) ->
-            $log.info("Http error", response)
-            $window.alert(response.data)
+            $log.info("HTTP error", response)
+            $window.alert("HTTP error")
             $q.reject(response)
 
           promise.then(onSuccess, onError)
