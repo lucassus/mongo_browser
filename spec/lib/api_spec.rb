@@ -110,18 +110,11 @@ describe MongoBrowser::Api do
     let(:db_name) { "first_database" }
     let(:collection_name) { "first_collection" }
 
-    describe_endpoint :get, "/databases/:db_name/collections/:collection_name/documents" do
-      it { should be_successful }
-
-      describe "returned documents" do
-        subject(:data) { JSON.parse(response.body) }
-
-        it("contains the current page") { expect(data["page"]).to equal(1) }
-        it("contains size") { expect(data["size"]).to equal(2) }
-        it("contains total pages") { expect(data["totalPages"]).to equal(1) }
+    describe "paged documents list" do
+      shared_examples :returned_documents do
         it("contains all documents") do
           expect(data["documents"]).not_to be_nil
-          expect(data["documents"]).to have(2).items
+          expect(data["documents"]).to have_at_least(1).item
         end
 
         describe "a document" do
@@ -130,6 +123,49 @@ describe MongoBrowser::Api do
           it { should_not be_nil }
           it("contains id") { expect(document["id"]).to_not be_nil }
           it("contains document data") { expect(document["data"]).to_not be_nil }
+        end
+      end
+
+      describe_endpoint :get, "/databases/:db_name/collections/:collection_name/documents" do
+        it { should be_successful }
+
+        describe "returned documents" do
+          subject(:data) { JSON.parse(response.body) }
+
+          it("contains the current page") { expect(data["page"]).to equal(1) }
+          it("contains size") { expect(data["size"]).to equal(2) }
+          it("contains total pages") { expect(data["totalPages"]).to equal(1) }
+
+          include_examples :returned_documents
+        end
+      end
+
+      describe "for a large set of documents" do
+        before { Fixtures.instance.load_documents! }
+        let(:collection_name) { "second_collection" }
+
+        describe_endpoint :get, "/databases/:db_name/collections/:collection_name/documents?page=:page" do
+          let(:page) { 3 }
+
+          it { should be_successful }
+
+          describe "returned documents" do
+            subject(:data) { JSON.parse(response.body) }
+
+            it("contains the current page") { expect(data["page"]).to equal(3) }
+            it("contains size") { expect(data["size"]).to equal(70) }
+            it("contains total pages") { expect(data["totalPages"]).to equal(3) }
+
+            include_examples :returned_documents
+          end
+
+          context "when the page number is invalid" do
+            let(:page) { "invalid" }
+
+            it { should_not be_successful }
+            it("responds with 400") { expect(response.status).to eq(400) }
+            it("should notify about invalid param") { expect(response.body).to eq("invalid parameter: page") }
+          end
         end
       end
     end

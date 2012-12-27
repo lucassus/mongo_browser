@@ -14,15 +14,11 @@ module ApiExampleGroup
     #     let(:db_name) { "first_database" }
     #     # some assertions here
     #   end
-    def describe_endpoint(method, interpolated_path, &block)
-      describe "#{method.upcase} #{interpolated_path}" do
-        route = described_class.routes.find do |route|
-          route.route_path.match(/^#{interpolated_path}/)
-        end
-
+    def describe_endpoint(method, route_path, &block)
+      describe "#{method.upcase} #{route_path}" do
         let(:path) do
-          path = interpolated_path.clone
-          interpolated_path.scan(/(:(\w+))/).each do |place_holder, name|
+          path = route_path.clone
+          route_path.scan(/(:(\w+))/).each do |place_holder, name|
             path.sub!(place_holder, instance_eval(name).to_s)
           end
 
@@ -31,6 +27,10 @@ module ApiExampleGroup
 
         let(:do_request) { send(method.downcase.to_sym, path) }
         subject(:response) { do_request }
+
+        # Create a new context with route description
+        by_path = -> route { route.route_path.match(/^#{route_path.split("?").first}/) }
+        route = described_class.routes.find(&by_path)
 
         if route and route.route_description
           describe route.route_description do
