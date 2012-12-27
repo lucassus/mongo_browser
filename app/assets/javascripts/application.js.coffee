@@ -12,7 +12,7 @@ angular.module("mb", requires)
     ($provide, $httpProvider, $routeProvider, $locationProvider) ->
       $provide.value("alertTimeout", 3000)
 
-      httpErrorsInterceptor = ($q, $log, $window) ->
+      httpErrorsInterceptor = ($q, $log, alerts) ->
         (promise) ->
           onSuccess = (response) ->
             $log.info("Http response:",response)
@@ -20,11 +20,11 @@ angular.module("mb", requires)
 
           onError = (response) ->
             $log.info("HTTP error", response)
-            $window.alert("HTTP error")
+            alerts.push("error", "HTTP error")
             $q.reject(response)
 
           promise.then(onSuccess, onError)
-      httpErrorsInterceptor.$inject = ["$q", "$log", "$window"]
+      httpErrorsInterceptor.$inject = ["$q", "$log", "alerts"]
 
       $httpProvider.responseInterceptors.push(httpErrorsInterceptor)
 
