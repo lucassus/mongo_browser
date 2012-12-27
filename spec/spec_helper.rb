@@ -4,6 +4,7 @@ require "mongo_browser"
 
 require "debugger"
 require "rspec"
+require "rack/test"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # from spec/support/ and its subdirectories.
@@ -13,8 +14,6 @@ test_server = Mongod.instance
 fixtures = Fixtures.instance
 
 RSpec.configure do |config|
-  config.include FeatureExampleGroup, type: :request
-
   # Run test mongod instance and load database fixtures
   config.before do
     test_server.start! do |port|

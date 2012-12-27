@@ -29,7 +29,7 @@ class DatabasesController
 
   drop: (database) ->
     resource = new @Database()
-    params = id: database.name
+    params = dbName: database.name
 
     resource.$delete params, =>
       @alerts.info("Database #{database.name} has been deleted.")
