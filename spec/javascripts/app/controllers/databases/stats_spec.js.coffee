@@ -1,4 +1,4 @@
-describe "collections stats controller", ->
+describe "databases stats controller", ->
   beforeEach module("mb.controllers")
 
   $scope = null
@@ -7,14 +7,13 @@ describe "collections stats controller", ->
   beforeEach inject ($injector, $rootScope, $controller) ->
     $routeParams = $injector.get("$routeParams")
     $routeParams.dbName = "test_database"
-    $routeParams.collectionName = "test_collection"
 
     $httpBackend = $injector.get("$httpBackend")
-    $httpBackend.whenGET("/api/databases/test_database/collections/test_collection/stats.json")
+    $httpBackend.whenGET("/api/databases/test_database/stats.json")
       .respond(foo: "bar")
 
     $scope = $rootScope.$new()
-    $controller "collections.stats",
+    $controller "databases.stats",
       $scope: $scope
 
     $httpBackend.flush()
@@ -24,5 +23,5 @@ describe "collections stats controller", ->
     $httpBackend.verifyNoOutstandingRequest()
 
   it "fetches the collection stats", ->
-    expect($scope.collectionStats).toBeDefined()
-    expect(angular.equals({ foo: "bar" }, $scope.collectionStats)).toBeTruthy()
+    expect($scope.dbStats).toBeDefined()
+    expect(angular.equals({ foo: "bar" }, $scope.dbStats)).toBeTruthy()
