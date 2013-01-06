@@ -26,5 +26,5 @@ describe "databases stats controller", ->
     expect($scope.dbName).toEqual("test_database")
 
   it "fetches the collection stats", ->
-    expect($scope.dbStats).toBeDefined()
-    expect(angular.equals({ foo: "bar" }, $scope.dbStats)).toBeTruthy()
+    expect($scope.stats).toBeDefined()
+    expect(angular.equals({ foo: "bar" }, $scope.stats)).toBeTruthy()

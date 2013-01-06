@@ -30,5 +30,5 @@ describe "collections stats controller", ->
     expect($scope.collectionName).toEqual("test_collection")
 
   it "fetches the collection stats", ->
-    expect($scope.collectionStats).toBeDefined()
-    expect(angular.equals({ foo: "bar" }, $scope.collectionStats)).toBeTruthy()
+    expect($scope.stats).toBeDefined()
+    expect(angular.equals({ foo: "bar" }, $scope.stats)).toBeTruthy()

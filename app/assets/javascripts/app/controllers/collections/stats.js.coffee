@@ -11,6 +11,6 @@ class CollectionsStatsController
 
   fetchStats: ->
     @collection.$stats (data) =>
-      @$scope.collectionStats = data
+      @$scope.stats = data
 
 module.controller "collections.stats", CollectionsStatsController

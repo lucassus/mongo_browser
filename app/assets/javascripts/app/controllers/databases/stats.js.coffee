@@ -10,6 +10,6 @@ class DatabasesStatsController
 
   fetchStats: ->
     @database.$stats (data) =>
-      @$scope.dbStats = data
+      @$scope.stats = data
 
 module.controller "databases.stats", DatabasesStatsController
