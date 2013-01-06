@@ -3,13 +3,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     watch: {
       templates: {
-        files: 'app/assets/templates/*.html',
-        tasks: 'html2js:directives'
+        files: "public/ng/templates/**/*.html",
+        tasks: "html2js:directives"
       }
     },
 
     html2js: {
-      directives: ['app/assets/templates/*.html']
+      directives: ["public/ng/templates/**/*.html"]
     }
   });
 
@@ -19,14 +19,14 @@ module.exports = function(grunt) {
     return content.replace(/"/g, '\\"').replace(/\n/g, '" +\n    "');
   };
 
-  grunt.registerMultiTask('html2js', 'Generate js version of html template.', function() {
+  grunt.registerMultiTask("html2js", "Generate js version of html template.", function() {
     var files = grunt._watch_changed_files || grunt.file.expand(this.data);
 
     files.forEach(function(file) {
-      var parts = file.split("/");
-      var name = parts[parts.length - 1];
+      var parts = file.split("/").slice(3);
+      var name = parts.join("/");
 
-      grunt.file.write("app/assets/javascripts/templates/" + name + '.js', grunt.template.process(TPL, {
+      grunt.file.write("app/assets/javascripts/templates/" + name + ".js", grunt.template.process(TPL, {
         file: file,
         path: "/ng/templates/" + file.split("/").pop(),
         content: escapeContent(grunt.file.read(file))
