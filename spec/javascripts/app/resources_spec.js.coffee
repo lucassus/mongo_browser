@@ -25,7 +25,7 @@ describe "reources", ->
 
     describe "#$stats", ->
       it "queries for database stats", ->
-        $httpBackend.when("GET", "/api/databases/test_database/stats.json").respond([])
+        $httpBackend.when("GET", "/api/databases/test_database/stats.json").respond({})
 
         database = new Database(name: "test_database")
         database.$stats()
@@ -36,7 +36,8 @@ describe "reources", ->
     Collection = null
     beforeEach inject ($injector) ->
       Collection = $injector.get("Collection")
-      $httpBackend.when("GET", "/api/databases/test_database/collections.json").respond([])
+      $httpBackend.when("GET", "/api/databases/test_database/collections.json")
+        .respond([])
 
     it "is defined", ->
       expect(Collection).toBeDefined()
@@ -48,10 +49,14 @@ describe "reources", ->
 
     describe "#$stats", ->
       it "queries for collection stats", ->
-        $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/stats.json").respond([])
+        # TODO replace with whenGET
+        fakeResponse = foo: "bar"
+        $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/stats.json")
+          .respond(fakeResponse)
 
         collection = new Collection(dbName: "test_database", name: "test_collection")
-        collection.$stats()
+        collection.$stats (data) ->
+          expect(angular.equals(data, fakeResponse)).toBeTruthy()
 
         $httpBackend.flush()
 
@@ -59,7 +64,8 @@ describe "reources", ->
     Document = null
     beforeEach inject ($injector) ->
       Document = $injector.get("Document")
-      $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/documents.json").respond([])
+      $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/documents.json")
+        .respond([])
 
     it "is defined", ->
       expect(Document).toBeDefined()

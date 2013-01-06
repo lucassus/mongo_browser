@@ -1,4 +1,4 @@
-describe "databases", ->
+describe "databases index controller", ->
   beforeEach module("mb.controllers")
   beforeEach module("mb.dialogs")
   beforeEach module("mb.alerts")
@@ -15,7 +15,7 @@ describe "databases", ->
     $httpBackend.when("GET", "/api/databases.json").respond([])
 
     $scope = $rootScope.$new()
-    $controller "databases",
+    $controller "databases.index",
       $scope: $scope
 
     $httpBackend.flush()

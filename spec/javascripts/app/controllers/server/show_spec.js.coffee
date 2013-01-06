@@ -1,4 +1,4 @@
-describe "serverInfo", ->
+describe "servers show controller", ->
   beforeEach module("mb.controllers")
   beforeEach module("mocks")
 
@@ -8,10 +8,10 @@ describe "serverInfo", ->
   beforeEach inject ($injector, $rootScope, $controller) ->
     $scope = $rootScope.$new()
 
-    $httpBackend = $injector.get('$httpBackend')
+    $httpBackend = $injector.get("$httpBackend")
     $httpBackend.when("GET", "/api/server_info.json").respond([])
 
-    $controller "serverInfo",
+    $controller "servers.show",
       $scope: $scope
 
     $httpBackend.flush()

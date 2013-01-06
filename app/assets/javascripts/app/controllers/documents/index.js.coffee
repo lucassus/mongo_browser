@@ -22,7 +22,7 @@ class DocumentsIndexController
       @$scope.size = data.size
 
     @$scope.fetchDocuments = (page = 1) =>
-      return if @$scope.isLoading() # TODO workaround for doule request
+      return if @$scope.isLoading() # TODO workaround for double request
       @$scope.loading = true
 
       params = dbName: @$scope.dbName, collectionName: @$scope.collectionName, page: page
@@ -37,6 +37,8 @@ class DocumentsIndexController
         @$location.search("page", null)
 
       @$scope.fetchDocuments(page)
+
+    @$scope.fetchDocuments()
 
     @$scope.delete = (data) =>
       @confirmationDialog

@@ -1,4 +1,4 @@
-describe "collections", ->
+describe "collections index controller", ->
   beforeEach module("mb.controllers")
   beforeEach module("mb.dialogs")
   beforeEach module("mb.alerts")
@@ -17,11 +17,9 @@ describe "collections", ->
     $httpBackend = $injector.get("$httpBackend")
     $httpBackend.when("GET", "/api/databases/test_database/collections.json")
       .respond([])
-    $httpBackend.when("GET", "/api/databases/test_database/stats.json")
-      .respond({})
 
     $scope = $rootScope.$new()
-    $controller "collections",
+    $controller "collections.index",
       $scope: $scope
 
     $httpBackend.flush()

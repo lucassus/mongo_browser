@@ -58,7 +58,7 @@ angular.module("mb", requires)
         # Information about the server
         .when "/server_info",
             templateUrl: "/ng/templates/server/show.html",
-            controller: "server.show"
+            controller: "servers.show"
 
         .otherwise(redirectTo: "/")
 
