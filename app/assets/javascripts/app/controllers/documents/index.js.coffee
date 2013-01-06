@@ -1,10 +1,10 @@
 module = angular.module("mb.controllers")
 
 # TODO clenup this controller, see DatabasesController
-class DocumentsController
-  @$inject = ["$scope", "$routeParams", "$location", "$http",
-              "Collection", "Document", "confirmationDialog", "alerts"]
-  constructor: (@$scope, @$routeParams, @$location, @$http, @Collection, @Document, @confirmationDialog, @alerts) ->
+class DocumentsIndexController
+  @$inject = ["$scope", "$routeParams", "$location",
+              "Document", "confirmationDialog", "alerts"]
+  constructor: (@$scope, @$routeParams, @$location, @Document, @confirmationDialog, @alerts) ->
     @$scope.dbName = @$routeParams.dbName
     @$scope.collectionName = @$routeParams.collectionName
 
@@ -38,9 +38,6 @@ class DocumentsController
 
       @$scope.fetchDocuments(page)
 
-    new @Collection(dbName: @$scope.dbName, name: @$scope.collectionName).$stats (data) =>
-      @$scope.collectionStats = data
-
     @$scope.delete = (data) =>
       @confirmationDialog
         message: "Are you sure?"
@@ -51,4 +48,4 @@ class DocumentsController
             @alerts.info("Document #{document.id} has been deleted.")
             @$scope.fetchDocuments()
 
-module.controller "documents", DocumentsController
+module.controller "documents.index", DocumentsIndexController

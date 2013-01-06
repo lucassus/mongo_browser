@@ -69,6 +69,12 @@ describe "reources", ->
         Document.query(dbName: "test_database", collectionName: "test_collection")
         $httpBackend.flush()
 
+    describe "#$query", ->
+      it "queries for all documents", ->
+        document = new Document(dbName: "test_database", collectionName: "test_collection")
+        document.$query()
+        $httpBackend.flush()
+
     describe "$delete", ->
       it "deletes a document", ->
         $httpBackend.when("DELETE", "/api/databases/test_database/collections/test_collection/documents/document-id.json").respond([])

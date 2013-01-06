@@ -2,7 +2,7 @@
 
 # App Module
 requires = [
-  "bootstrap", "ngSanitize",
+  "ngSanitize",
   "mb.controllers", "mb.directives", "mb.filters",
   "mb.dialogs", "mb.pager", "mb.tableFilter", "mb.alerts", "mb.spinner"]
 
@@ -31,24 +31,34 @@ angular.module("mb", requires)
       $routeProvider
         # Main page, list of all available databases
         .when "/",
-            templateUrl: "/ng/templates/databases.html",
-            controller: "databases"
+            templateUrl: "/ng/templates/databases/index.html",
+            controller: "databases.index"
+
+        # Database stats
+        .when "/databases/:dbName/stats",
+          templateUrl: "/ng/templates/databases/stats.html",
+          controller: "databases.stats"
 
         # List of collections for the given database
         .when "/databases/:dbName/collections",
-            templateUrl: "/ng/templates/collections.html",
-            controller: "collections"
+            templateUrl: "/ng/templates/collections/index.html",
+            controller: "collections.index"
 
-        # list of documents for the given collection
+        # Collection stats
+        .when "/databases/:dbName/collections/:collectionName/stats",
+          templateUrl: "/ng/templates/collections/stats.html",
+          controller: "collections.stats",
+
+        # List of documents for the given collection
         .when "/databases/:dbName/collections/:collectionName/documents",
-            templateUrl: "/ng/templates/documents.html",
-            controller: "documents",
+            templateUrl: "/ng/templates/documents/index.html",
+            controller: "documents.index",
             reloadOnSearch: false
 
         # Information about the server
         .when "/server_info",
-            templateUrl: "/ng/templates/server_info.html",
-            controller: "serverInfo"
+            templateUrl: "/ng/templates/server/show.html",
+            controller: "server.show"
 
         .otherwise(redirectTo: "/")
 

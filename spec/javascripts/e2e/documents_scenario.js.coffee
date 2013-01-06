@@ -31,10 +31,6 @@ describe "documents list page", ->
     expect(collectionLink.attr("href"))
       .toEqual("/databases/first_database/collections/first_collection/documents")
 
-  it "displays a tab with collection stats", ->
-    element(".tabbable a:contains('Collection stats')").click()
-    expect(documentsList.count()).toBeGreaterThan(0)
-
   describe "delete a document", ->
     beforeEach ->
       element("table.documents tbody tr:first td:last-child a:contains('Delete')")

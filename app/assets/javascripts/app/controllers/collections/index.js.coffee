@@ -1,10 +1,9 @@
 module = angular.module("mb.controllers")
 
 # TODO clenup this controller, see DatabasesController
-class CollectionsController
-  @$inject = ["$scope", "$routeParams",
-              "Database", "Collection", "$http", "confirmationDialog", "alerts"]
-  constructor: (@$scope, @$routeParams, @Database, @Collection, @$http, @confirmationDialog, @alerts) ->
+class CollectionsIndexController
+  @$inject = ["$scope", "$routeParams", "Collection", "confirmationDialog", "alerts"]
+  constructor: (@$scope, @$routeParams, @Collection, @confirmationDialog, @alerts) ->
     @$scope.dbName = @$routeParams.dbName
     @$scope.filterValue = ""
 
@@ -19,9 +18,6 @@ class CollectionsController
 
     @$scope.fetchCollections()
 
-    new @Database(name: @$scope.dbName).$stats (data) =>
-      @$scope.dbStats = data
-
     @$scope.isLoading = => @$scope.loading
 
     @$scope.delete = (data) =>
@@ -33,4 +29,4 @@ class CollectionsController
             @alerts.info("Collection #{data.name} has been deleted.")
             @$scope.fetchCollections()
 
-module.controller "collections", CollectionsController
+module.controller "collections.index", CollectionsIndexController

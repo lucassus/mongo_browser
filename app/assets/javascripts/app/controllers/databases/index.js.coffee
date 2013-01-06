@@ -1,6 +1,6 @@
 module = angular.module("mb.controllers")
 
-class DatabasesController
+class DatabasesIndexController
   @$inject = ["$scope",
               "Database", "confirmationDialog", "alerts"]
   constructor: (@$scope, @Database, @confirmationDialog, @alerts) ->
@@ -33,4 +33,4 @@ class DatabasesController
       @alerts.info("Database #{data.name} has been deleted.")
       @fetchDatabases()
 
-module.controller "databases", DatabasesController
+module.controller "databases.index", DatabasesIndexController
