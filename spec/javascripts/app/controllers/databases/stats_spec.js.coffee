@@ -22,6 +22,9 @@ describe "databases stats controller", ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()
 
+  it "assigns database name", ->
+    expect($scope.dbName).toEqual("test_database")
+
   it "fetches the collection stats", ->
     expect($scope.dbStats).toBeDefined()
     expect(angular.equals({ foo: "bar" }, $scope.dbStats)).toBeTruthy()

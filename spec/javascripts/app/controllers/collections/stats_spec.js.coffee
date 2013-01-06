@@ -23,6 +23,12 @@ describe "collections stats controller", ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()
 
+  it "assings database name", ->
+    expect($scope.dbName).toEqual("test_database")
+
+  it "assings collection name", ->
+    expect($scope.collectionName).toEqual("test_collection")
+
   it "fetches the collection stats", ->
     expect($scope.collectionStats).toBeDefined()
     expect(angular.equals({ foo: "bar" }, $scope.collectionStats)).toBeTruthy()
