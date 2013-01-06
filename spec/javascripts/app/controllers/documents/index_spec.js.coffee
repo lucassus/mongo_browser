@@ -16,7 +16,7 @@ describe "documents index controller", ->
     $routeParams.collectionName = "test_collection"
 
     $httpBackend = $injector.get("$httpBackend")
-    $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/documents.json?page=1")
+    $httpBackend.whenGET("/api/databases/test_database/collections/test_collection/documents.json?page=1")
       .respond([])
 
     $scope = $rootScope.$new()
@@ -48,7 +48,7 @@ describe "documents index controller", ->
 
     describe "when the dialog was confirmed", ->
       beforeEach inject (dialogsHandler) ->
-        $httpBackend.when("DELETE", "/api/databases/test_database/collections/test_collection/documents/dummy-document-id.json")
+        $httpBackend.whenDELETE("/api/databases/test_database/collections/test_collection/documents/dummy-document-id.json")
           .respond([])
 
         spyOn(alerts, "info")

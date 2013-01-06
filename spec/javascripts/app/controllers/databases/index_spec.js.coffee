@@ -12,7 +12,7 @@ describe "databases index controller", ->
     alerts = $injector.get("alerts")
 
     $httpBackend = $injector.get("$httpBackend")
-    $httpBackend.when("GET", "/api/databases.json").respond([])
+    $httpBackend.whenGET("/api/databases.json").respond([])
 
     $scope = $rootScope.$new()
     $controller "databases.index",
@@ -34,7 +34,7 @@ describe "databases index controller", ->
 
     describe "when the dialog was confirmed", ->
       beforeEach inject (dialogsHandler) ->
-        $httpBackend.when("DELETE", "/api/databases/test_database_name.json")
+        $httpBackend.whenDELETE("/api/databases/test_database_name.json")
           .respond([])
 
         spyOn(alerts, "info")

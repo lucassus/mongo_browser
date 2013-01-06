@@ -8,7 +8,7 @@ describe "main", ->
     $scope = $rootScope.$new()
 
     $httpBackend = $injector.get('$httpBackend')
-    $httpBackend.when("GET", "/api/version.json").respond([])
+    $httpBackend.whenGET("/api/version.json").respond([])
 
     $controller "main",
       $scope: $scope

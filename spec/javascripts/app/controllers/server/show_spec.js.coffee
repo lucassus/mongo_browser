@@ -9,7 +9,7 @@ describe "servers show controller", ->
     $scope = $rootScope.$new()
 
     $httpBackend = $injector.get("$httpBackend")
-    $httpBackend.when("GET", "/api/server_info.json").respond([])
+    $httpBackend.whenGET("/api/server_info.json").respond([])
 
     $controller "servers.show",
       $scope: $scope

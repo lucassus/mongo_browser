@@ -11,7 +11,7 @@ describe "collections stats controller", ->
     $routeParams.collectionName = "test_collection"
 
     $httpBackend = $injector.get("$httpBackend")
-    $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/stats.json")
+    $httpBackend.whenGET("/api/databases/test_database/collections/test_collection/stats.json")
       .respond(foo: "bar")
 
     $scope = $rootScope.$new()

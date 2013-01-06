@@ -19,13 +19,13 @@ describe "reources", ->
 
     describe "#query", ->
       it "queries for all databases", ->
-        $httpBackend.when("GET", "/api/databases.json").respond([])
+        $httpBackend.whenGET("/api/databases.json").respond([])
         Database.query()
         $httpBackend.flush()
 
     describe "#$stats", ->
       it "queries for database stats", ->
-        $httpBackend.when("GET", "/api/databases/test_database/stats.json").respond({})
+        $httpBackend.whenGET("/api/databases/test_database/stats.json").respond({})
 
         database = new Database(name: "test_database")
         database.$stats()
@@ -36,7 +36,7 @@ describe "reources", ->
     Collection = null
     beforeEach inject ($injector) ->
       Collection = $injector.get("Collection")
-      $httpBackend.when("GET", "/api/databases/test_database/collections.json")
+      $httpBackend.whenGET("/api/databases/test_database/collections.json")
         .respond([])
 
     it "is defined", ->
@@ -49,9 +49,8 @@ describe "reources", ->
 
     describe "#$stats", ->
       it "queries for collection stats", ->
-        # TODO replace with whenGET
         fakeResponse = foo: "bar"
-        $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/stats.json")
+        $httpBackend.whenGET("/api/databases/test_database/collections/test_collection/stats.json")
           .respond(fakeResponse)
 
         collection = new Collection(dbName: "test_database", name: "test_collection")
@@ -64,7 +63,7 @@ describe "reources", ->
     Document = null
     beforeEach inject ($injector) ->
       Document = $injector.get("Document")
-      $httpBackend.when("GET", "/api/databases/test_database/collections/test_collection/documents.json")
+      $httpBackend.whenGET("/api/databases/test_database/collections/test_collection/documents.json")
         .respond([])
 
     it "is defined", ->
@@ -83,7 +82,7 @@ describe "reources", ->
 
     describe "$delete", ->
       it "deletes a document", ->
-        $httpBackend.when("DELETE", "/api/databases/test_database/collections/test_collection/documents/document-id.json").respond([])
+        $httpBackend.whenDELETE("/api/databases/test_database/collections/test_collection/documents/document-id.json").respond([])
 
         document = new Document(dbName: "test_database", collectionName: "test_collection", id: "document-id")
         document.$delete()
