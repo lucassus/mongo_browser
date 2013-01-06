@@ -1,11 +1,9 @@
 module = angular.module("mb.controllers")
 
 class DatabasesIndexController
-  @$inject = ["$scope",
-              "Database", "confirmationDialog", "alerts"]
+  @$inject = ["$scope", "Database", "confirmationDialog", "alerts"]
   constructor: (@$scope, @Database, @confirmationDialog, @alerts) ->
     @loading = false
-    @fetchDatabases()
 
     # Scope variables
     @$scope.filterValue = ""
@@ -13,6 +11,8 @@ class DatabasesIndexController
     # Scope methods
     @$scope.isLoading = -> @loading
     @$scope.delete = (database) => @dropWithConfirmation(database)
+
+    @fetchDatabases()
 
   fetchDatabases: ->
     @loading = true

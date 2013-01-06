@@ -1,32 +1,38 @@
 module = angular.module("mb.controllers")
 
-# TODO clenup this controller, see DatabasesController
 class CollectionsIndexController
   @$inject = ["$scope", "$routeParams", "Collection", "confirmationDialog", "alerts"]
   constructor: (@$scope, @$routeParams, @Collection, @confirmationDialog, @alerts) ->
+    @loading = false
+
+    # Scope variables
     @$scope.dbName = @$routeParams.dbName
     @$scope.filterValue = ""
 
-    _onLoadComplete = (data) =>
-      @$scope.collections = data
-      @$scope.loading = false
+    # Scope methods
+    @$scope.isLoading = -> @loading
+    @$scope.delete = (collection) => @deleteWithConfirmation(collection)
 
-    @$scope.fetchCollections = =>
-      @$scope.loading = true
-      params = dbName: @$scope.dbName
-      @$scope.collections = @Collection.query(params, _onLoadComplete)
+    @fetchCollections()
 
-    @$scope.fetchCollections()
+  fetchCollections: ->
+    @loading = true
+    params = dbName: @$scope.dbName
+    @$scope.collections = @Collection.query(params, @onLoadComplete)
 
-    @$scope.isLoading = => @$scope.loading
+  onLoadComplete: (data) =>
+    @$scope.collections = data
+    @loading = false
 
-    @$scope.delete = (data) =>
-      @confirmationDialog
-        message: "Deleting #{data.name}. Are you sure?"
-        onOk: =>
-          collection = new @Collection(data)
-          collection.$delete =>
-            @alerts.info("Collection #{data.name} has been deleted.")
-            @$scope.fetchCollections()
+  deleteWithConfirmation: (collection) ->
+    @confirmationDialog
+      message: "Deleting #{collection.name}. Are you sure?"
+      onOk: => @delete(collection)
+
+  delete: (data) ->
+    collection = new @Collection(data)
+    collection.$delete =>
+      @alerts.info("Collection #{data.name} has been deleted.")
+      @fetchCollections()
 
 module.controller "collections.index", CollectionsIndexController
