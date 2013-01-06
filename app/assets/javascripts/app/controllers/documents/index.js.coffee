@@ -40,14 +40,18 @@ class DocumentsIndexController
 
     @$scope.fetchDocuments()
 
-    @$scope.delete = (data) =>
-      @confirmationDialog
-        message: "Are you sure?"
-        onOk: =>
-          params = dbName: @$scope.dbName, collectionName: @$scope.collectionName, id: data.id
-          document = new @Document(params)
-          document.$delete =>
-            @alerts.info("Document #{document.id} has been deleted.")
-            @$scope.fetchDocuments()
+    @$scope.delete = (document) => @deleteWithConfirmation(document)
+
+  deleteWithConfirmation: (document) ->
+    @confirmationDialog
+      message: "Are you sure?"
+      onOk: => @delete(document)
+
+  delete: (data) ->
+    params = dbName: @$scope.dbName, collectionName: @$scope.collectionName, id: data.id
+    document = new @Document(params)
+    document.$delete =>
+      @alerts.info("Document #{document.id} has been deleted.")
+      @$scope.fetchDocuments()
 
 module.controller "documents.index", DocumentsIndexController

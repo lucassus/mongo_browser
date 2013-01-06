@@ -4,7 +4,6 @@ module = angular.module("mb.controllers")
 class BreadcrumbsController
   @$inject = ["$rootScope", "$scope"]
   constructor: (@$rootScope, @$scope) ->
-
     @$scope.showDatabase = => @$scope.dbName
     @$scope.showCollection = => @$scope.collectionName
 
