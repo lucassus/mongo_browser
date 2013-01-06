@@ -4,9 +4,9 @@ module = angular.module("mb.controllers")
 class DocumentsIndexController
   @$inject = ["$scope", "$routeParams", "$location",
               "Document", "confirmationDialog", "alerts"]
-  constructor: (@$scope, @$routeParams, @$location, @Document, @confirmationDialog, @alerts) ->
-    @$scope.dbName = @$routeParams.dbName
-    @$scope.collectionName = @$routeParams.collectionName
+  constructor: (@$scope, $routeParams, @$location, @Document, @confirmationDialog, @alerts) ->
+    @$scope.dbName = $routeParams.dbName
+    @$scope.collectionName = $routeParams.collectionName
 
     @$scope.showDocuments = =>
       @$scope.size > 0

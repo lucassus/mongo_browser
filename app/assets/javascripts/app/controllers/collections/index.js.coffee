@@ -2,11 +2,11 @@ module = angular.module("mb.controllers")
 
 class CollectionsIndexController
   @$inject = ["$scope", "$routeParams", "Collection", "confirmationDialog", "alerts"]
-  constructor: (@$scope, @$routeParams, @Collection, @confirmationDialog, @alerts) ->
+  constructor: (@$scope, $routeParams, @Collection, @confirmationDialog, @alerts) ->
     @loading = false
 
     # Scope variables
-    @$scope.dbName = @$routeParams.dbName
+    @$scope.dbName = $routeParams.dbName
     @$scope.filterValue = ""
 
     # Scope methods
