@@ -25,10 +25,7 @@ class DocumentsIndexController
 
       @fetchDocuments(page)
 
-    @fetchDocuments()
-
   fetchDocuments: (page = 1) ->
-    return if @loading # TODO workaround for double request
     @loading = true
 
     params = dbName: @$scope.dbName, collectionName: @$scope.collectionName, page: page

@@ -23,6 +23,7 @@ describe "documents index controller", ->
     $controller "documents.index",
       $scope: $scope
 
+    $scope.$digest()
     $httpBackend.flush()
 
   afterEach ->
