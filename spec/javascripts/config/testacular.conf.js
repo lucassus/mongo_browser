@@ -25,7 +25,7 @@ files = [
   "spec/javascripts/**/*_spec.js.coffee",
 
   // Templates
-  "app/assets/javascripts/templates/*.html.js"
+  "app/assets/javascripts/compiled_templates/*.html.js"
 ];
 
 preprocessors = {

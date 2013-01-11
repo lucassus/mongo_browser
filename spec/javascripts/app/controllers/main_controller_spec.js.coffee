@@ -1,6 +1,5 @@
-describe "serverInfo", ->
+describe "main", ->
   beforeEach module("mb.controllers")
-  beforeEach module("mocks")
 
   $scope = null
   $httpBackend = null
@@ -9,13 +8,13 @@ describe "serverInfo", ->
     $scope = $rootScope.$new()
 
     $httpBackend = $injector.get('$httpBackend')
-    $httpBackend.when("GET", "/api/server_info.json").respond([])
+    $httpBackend.whenGET("/api/version.json").respond([])
 
-    $controller "serverInfo",
+    $controller "main",
       $scope: $scope
 
     $httpBackend.flush()
 
-  it "fetches information about the server", ->
+  it "fetches the app version", ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()

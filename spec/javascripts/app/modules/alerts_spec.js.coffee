@@ -41,7 +41,7 @@ describe "mb.alerts", ->
     $scope = null
     element = null
 
-    beforeEach module("app/assets/templates/alerts.html")
+    beforeEach module("public/ng/templates/alerts.html")
 
     beforeEach inject ($rootScope, $compile) ->
       $scope = $rootScope
