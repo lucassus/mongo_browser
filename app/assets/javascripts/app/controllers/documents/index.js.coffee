@@ -48,7 +48,7 @@ class DocumentsIndexController
     params = dbName: @$scope.dbName, collectionName: @$scope.collectionName, id: data.id
     document = new @Document(params)
     document.$delete =>
-      @alerts.info("Document #{document.id} has been deleted.")
+      @alerts.info("Document #{data.id} has been deleted.")
       @fetchDocuments()
 
 module.controller "documents.index", DocumentsIndexController

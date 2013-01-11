@@ -4,13 +4,12 @@ describe "collections index controller", ->
   beforeEach module("mb.alerts")
   beforeEach module("mocks")
 
+  controller = null
   $scope = null
+
   $httpBackend = null
-  alerts = null
 
   beforeEach inject ($injector, $rootScope, $controller) ->
-    alerts = $injector.get("alerts")
-
     $routeParams = $injector.get("$routeParams")
     $routeParams.dbName = "test_database"
 
@@ -19,7 +18,7 @@ describe "collections index controller", ->
       .respond([])
 
     $scope = $rootScope.$new()
-    $controller "collections.index",
+    controller = $controller "collections.index",
       $scope: $scope
 
     $httpBackend.flush()
@@ -28,48 +27,71 @@ describe "collections index controller", ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()
 
-  describe "#isLoading", ->
-    it "returns true when the resouce it loading", ->
-      $scope.loading = true
-      expect($scope.isLoading()).toBeTruthy()
+  describe "$scope", ->
 
-    it "otherwise returns false", ->
-      $scope.loading = false
-      expect($scope.isLoading()).toBeFalsy()
+    describe "$scope.isLoading", ->
+      it "returns true when the resouce it loading", ->
+        $scope.loading = true
+        expect($scope.isLoading()).toBeTruthy()
 
-  # TODO refactor this spec
-  describe "#delete", ->
-    collection = null
+      it "otherwise returns false", ->
+        $scope.loading = false
+        expect($scope.isLoading()).toBeFalsy()
 
-    beforeEach ->
-      collection = dbName: "test_database", name: "dummy-collection-id"
+    describe "$scope.delete", ->
+      collection = null
+      dialogsHandler = null
 
-    it "shows a confirmation dialog", inject (dialogsHandler) ->
-      spyOn(dialogsHandler, "confirm")
+      beforeEach inject ($injector) ->
+        dialogsHandler = $injector.get("dialogsHandler")
+        collection = name: "dummy-collection-id"
 
-      $scope.delete(collection)
-
-      expect(dialogsHandler.confirm).toHaveBeenCalledWith "Deleting dummy-collection-id. Are you sure?",
-        jasmine.any(Function)
-
-    describe "when the dialog was confirmed", ->
-      beforeEach inject (dialogsHandler) ->
-        $httpBackend.whenDELETE("/api/databases/test_database/collections/dummy-collection-id.json")
-          .respond([])
-
-        spyOn(alerts, "info")
+      it "shows the confirmation dialog", ->
+        spyOn(dialogsHandler, "confirm")
         $scope.delete(collection)
-        dialogsHandler.confirmed()
+
+        expect(dialogsHandler.confirm).toHaveBeenCalledWith "Deleting dummy-collection-id. Are you sure?",
+          jasmine.any(Function)
+
+      describe "when the dialog was confirmed", ->
+        it "calls delete method", ->
+          spyOn(controller, "deleteWithConfirmation").andCallThrough()
+          spyOn(controller, "delete")
+
+          $scope.delete(collection)
+          dialogsHandler.confirmed()
+
+          expect(controller.deleteWithConfirmation).toHaveBeenCalledWith(collection)
+          expect(controller.delete).toHaveBeenCalledWith(collection)
+
+      describe "when the dialog was disposed", ->
+        it "does nothing", ->
+          spyOn(controller, "delete")
+
+          $scope.delete(collection)
+          dialogsHandler.disposed()
+
+          expect(controller.delete).not.toHaveBeenCalled()
+
+  describe "controller", ->
+
+    describe "controller.delete", ->
+      collection = null
+      alerts = null
+
+      beforeEach inject ($injector) ->
+        alerts = $injector.get("alerts")
+
+        collection = dbName: "test_database", name: "dummy-collection-id"
+        $httpBackend.whenDELETE("/api/databases/test_database/collections/dummy-collection-id.json")
+          .respond(true)
+
+        controller.delete(collection)
 
       it "sends a delete request", ->
         $httpBackend.flush()
 
       it "displays a flash message", ->
+        spyOn(alerts, "info")
         $httpBackend.flush()
         expect(alerts.info).toHaveBeenCalledWith("Collection dummy-collection-id has been deleted.")
-
-    describe "when the dialog was disposed", ->
-      it "does nothing", inject (dialogsHandler) ->
-        # When
-        $scope.delete(name: "dummy-collection-id")
-        dialogsHandler.disposed()

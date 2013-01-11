@@ -4,9 +4,10 @@ describe "databases index controller", ->
   beforeEach module("mb.alerts")
   beforeEach module("mocks")
 
+  controller = null
   $scope = null
+
   $httpBackend = null
-  alerts = null
 
   beforeEach inject ($injector, $rootScope, $controller) ->
     alerts = $injector.get("alerts")
@@ -15,7 +16,7 @@ describe "databases index controller", ->
     $httpBackend.whenGET("/api/databases.json").respond([])
 
     $scope = $rootScope.$new()
-    $controller "databases.index",
+    controller = $controller "databases.index",
       $scope: $scope
 
     $httpBackend.flush()
@@ -24,32 +25,71 @@ describe "databases index controller", ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()
 
-  # TODO rewrite this spec
-  describe "#delete", ->
-    it "shows a confirmation dialog", inject (dialogsHandler) ->
-      spyOn(dialogsHandler, "confirm")
-      $scope.delete(name: "test_database_name")
-      expect(dialogsHandler.confirm).toHaveBeenCalledWith "Deleting test_database_name. Are you sure?",
-        jasmine.any(Function)
+  describe "$scope", ->
 
-    describe "when the dialog was confirmed", ->
-      beforeEach inject (dialogsHandler) ->
-        $httpBackend.whenDELETE("/api/databases/test_database_name.json")
-          .respond([])
+    describe "$scope.isLoading", ->
+      it "returns true when the resouce it loading", ->
+        $scope.loading = true
+        expect($scope.isLoading()).toBeTruthy()
 
-        spyOn(alerts, "info")
-        $scope.delete(name: "test_database_name")
-        dialogsHandler.confirmed()
+      it "otherwise returns false", ->
+        $scope.loading = false
+        expect($scope.isLoading()).toBeFalsy()
+
+    describe "$scope.delete", ->
+      database = null
+      dialogsHandler = null
+
+      beforeEach inject ($injector) ->
+        dialogsHandler = $injector.get("dialogsHandler")
+        database = name: "test_database"
+
+      it "shows the confirmation dialog", ->
+        spyOn(dialogsHandler, "confirm")
+        $scope.delete(database)
+
+        expect(dialogsHandler.confirm).toHaveBeenCalledWith "Deleting test_database. Are you sure?",
+          jasmine.any(Function)
+
+      describe "when the dialog was confirmed", ->
+        it "calls delete method", ->
+          spyOn(controller, "dropWithConfirmation").andCallThrough()
+          spyOn(controller, "drop")
+
+          $scope.delete(database)
+          dialogsHandler.confirmed()
+
+          expect(controller.dropWithConfirmation).toHaveBeenCalledWith(database)
+          expect(controller.drop).toHaveBeenCalledWith(database)
+
+      describe "when the dialog was disposed", ->
+        it "does nothing", ->
+          spyOn(controller, "drop")
+
+          $scope.delete(database)
+          dialogsHandler.disposed()
+
+          expect(controller.drop).not.toHaveBeenCalled()
+
+  describe "controller", ->
+
+    describe "controller.drop", ->
+      database = null
+      alerts = null
+
+      beforeEach inject ($injector) ->
+        alerts = $injector.get("alerts")
+
+        database = name: "test_database"
+        $httpBackend.whenDELETE("/api/databases/test_database.json")
+          .respond(true)
+
+        controller.drop(database)
 
       it "sends a delete request", ->
         $httpBackend.flush()
 
       it "displays a flash message", ->
+        spyOn(alerts, "info")
         $httpBackend.flush()
-        expect(alerts.info).toHaveBeenCalledWith("Database test_database_name has been deleted.")
-
-    describe "when the dialog was disposed", ->
-      it "does nothing", inject (dialogsHandler) ->
-        # When
-        $scope.delete(name: "test_database_name")
-        dialogsHandler.disposed()
+        expect(alerts.info).toHaveBeenCalledWith("Database test_database has been deleted.")
