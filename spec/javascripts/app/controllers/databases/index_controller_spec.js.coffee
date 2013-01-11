@@ -29,11 +29,11 @@ describe "databases index controller", ->
 
     describe "$scope.isLoading", ->
       it "returns true when the resouce it loading", ->
-        $scope.loading = true
+        controller.loading = true
         expect($scope.isLoading()).toBeTruthy()
 
       it "otherwise returns false", ->
-        $scope.loading = false
+        controller.loading = false
         expect($scope.isLoading()).toBeFalsy()
 
     describe "$scope.delete", ->

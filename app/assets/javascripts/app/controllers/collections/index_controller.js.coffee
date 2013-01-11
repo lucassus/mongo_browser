@@ -10,7 +10,7 @@ class CollectionsIndexController
     @$scope.filterValue = ""
 
     # Scope methods
-    @$scope.isLoading = -> @loading
+    @$scope.isLoading = => @loading
     @$scope.delete = (collection) => @deleteWithConfirmation(collection)
 
     @fetchCollections()
