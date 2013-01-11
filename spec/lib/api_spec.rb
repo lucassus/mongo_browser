@@ -163,7 +163,7 @@ describe MongoBrowser::Api do
             let(:page) { "invalid" }
 
             it { should_not be_successful }
-            it("responds with 400") { expect(response.status).to eq(400) }
+            it("responds with 403") { expect(response.status).to eq(403) }
 
             it("should notify about invalid param") do
               error = JSON.parse(response.body)["error"]

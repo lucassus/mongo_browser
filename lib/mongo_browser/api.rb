@@ -3,6 +3,7 @@ require "grape"
 module MongoBrowser
   class Api < Grape::API
     format :json
+    rescue_from :all, backtrace: true
 
     helpers do
       def server
