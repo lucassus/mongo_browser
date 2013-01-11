@@ -15,24 +15,24 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = MongoBrowser::VERSION
 
-  gem.add_development_dependency("rdoc", "~> 3.12")
-  gem.add_development_dependency("rake", "~> 10.0.2")
+  gem.add_development_dependency("rdoc", "3.12")
+  gem.add_development_dependency("rake", "10.0.3")
 
-  gem.add_development_dependency("thin", "~> 1.5.0")
-  gem.add_development_dependency("rspec", "~> 2.12.0")
-  gem.add_development_dependency("rack-test", "~> 0.6.2")
-  gem.add_development_dependency("simplecov", "~> 0.7.1")
-  gem.add_development_dependency("debugger", "~> 1.2.2")
+  gem.add_development_dependency("thin", "1.5.0")
+  gem.add_development_dependency("rspec", "2.12.0")
+  gem.add_development_dependency("rack-test", "0.6.2")
+  gem.add_development_dependency("simplecov", "0.7.1")
+  gem.add_development_dependency("debugger", "1.2.3")
 
-  gem.add_dependency("mongo", "~> 1.8.0")
-  gem.add_dependency("bson_ext", "~> 1.8.0")
-  gem.add_dependency("vegas", "~> 0.1.11")
+  gem.add_dependency("mongo", "1.8.1")
+  gem.add_dependency("bson_ext", "1.8.1")
+  gem.add_dependency("vegas", "0.1.11")
 
-  gem.add_dependency("sinatra", "~> 1.3.3")
-  gem.add_dependency("sinatra-contrib", "~> 1.3.2")
-  gem.add_dependency("grape", "~> 0.2.2")
+  gem.add_dependency("sinatra", "1.3.3")
+  gem.add_dependency("sinatra-contrib", "1.3.2")
+  gem.add_dependency("grape", "0.2.6")
 
-  gem.add_dependency("sprockets", "~> 2.8.1")
-  gem.add_dependency("coffee-script", "~> 2.2.0")
-  gem.add_dependency("sass", "~> 3.2.3")
+  gem.add_dependency("sprockets", "2.8.2")
+  gem.add_dependency("coffee-script", "2.2.0")
+  gem.add_dependency("sass", "3.2.3")
 end
