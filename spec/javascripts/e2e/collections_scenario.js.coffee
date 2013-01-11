@@ -56,10 +56,6 @@ describe "collections list page", ->
     element("button:contains('Clear')").click()
     expect(collectionsList.count()).toBe(4)
 
-  it "displays a tab with database stats", ->
-    element(".tabbable a:contains('Database stats')").click()
-    expect(repeater("table tbody tr").count()).toBeGreaterThan(0)
-
   describe "delete a collection", ->
     deleteCollection = (name) ->
       element("table.collections tbody tr:contains('#{name}') td:last-child a:contains('Delete')")

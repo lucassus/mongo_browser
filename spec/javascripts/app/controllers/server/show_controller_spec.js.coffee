@@ -1,4 +1,4 @@
-describe "main", ->
+describe "servers show controller", ->
   beforeEach module("mb.controllers")
 
   $scope = null
@@ -7,14 +7,14 @@ describe "main", ->
   beforeEach inject ($injector, $rootScope, $controller) ->
     $scope = $rootScope.$new()
 
-    $httpBackend = $injector.get('$httpBackend')
-    $httpBackend.when("GET", "/api/version.json").respond([])
+    $httpBackend = $injector.get("$httpBackend")
+    $httpBackend.whenGET("/api/server_info.json").respond([])
 
-    $controller "main",
+    $controller "servers.show",
       $scope: $scope
 
     $httpBackend.flush()
 
-  it "fetches the app version", ->
+  it "fetches information about the server", ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()

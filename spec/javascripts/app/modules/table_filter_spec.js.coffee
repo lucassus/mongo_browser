@@ -29,7 +29,7 @@ describe "mb.tableFilter", ->
     $scope = null
     element = null
 
-    beforeEach module("app/assets/templates/table_filter.html")
+    beforeEach module("public/ng/templates/table_filter.html")
 
     beforeEach inject ($rootScope, $compile) ->
       $scope = $rootScope
