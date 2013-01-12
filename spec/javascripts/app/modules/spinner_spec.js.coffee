@@ -101,4 +101,20 @@ describe "mb.spinner", ->
           expect($scope.showSpinner()).toBeFalsy()
 
   describe "directive", ->
-    # TODO
+    element = null
+
+    beforeEach inject ($compile, $rootScope) ->
+      $scope = $rootScope
+      $scope.showSpinner = -> false
+
+      element = angular.element """
+      <spinner></spinner>
+      """
+      $compile(element)($scope)
+      $scope.$digest()
+
+    it "renders the spinner", ->
+      img = element.find("img")
+
+      expect(img.length).toBe(1)
+      expect(img.attr("src")).toEqual("/assets/ajax-loader.gif")
