@@ -79,7 +79,26 @@ describe "mb.spinner", ->
         expect(pendingRequests.counter).toEqual(1)
 
   describe "controller", ->
-    # TODO
+    controller = null
+    $scope = null
+
+    beforeEach inject ($rootScope, $controller) ->
+      $scope = $rootScope.$new()
+      controller = $controller "spinner",
+        $scope: $scope
+
+    describe "#showSpinner", ->
+      describe "when there is a pending request", ->
+        beforeEach -> pendingRequests.counter = 3
+
+        it "returns true", ->
+          expect($scope.showSpinner()).toBeTruthy()
+
+      describe "otherwise", ->
+        beforeEach -> pendingRequests.counter = 0
+
+        it "returns false", ->
+          expect($scope.showSpinner()).toBeFalsy()
 
   describe "directive", ->
     # TODO
