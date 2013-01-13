@@ -12,6 +12,7 @@ angular.module("mb", requires)
     ($provide, $httpProvider, $routeProvider, $locationProvider) ->
       $provide.value("alertTimeout", 3000)
 
+      # TODO refactor this interceptor, see spinner
       httpErrorsInterceptor = ($q, $log, alerts) ->
         (promise) ->
           onSuccess = (response) ->
