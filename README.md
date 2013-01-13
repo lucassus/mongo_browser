@@ -37,7 +37,7 @@ In order to execute rspec scenarios for backend just execute:
 #### Inside the console
 
 * `./script/ci_javascript` will execute jasmine specs
-* `./script/ci_e2e` will execute angular e2e scenarios
+* `./script/ci_e2e` will execute angularjs e2e scenarios
 
 #### Inside the browser
 
