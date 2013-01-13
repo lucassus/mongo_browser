@@ -3,14 +3,16 @@ module = angular.module("mb.controllers")
 class ServersShowController
   @$inject = ["$scope", "$http"]
   constructor: (@$scope, @$http) ->
-    @$scope.loading = true
+    @loading = true
     @fetchServerInfo()
+
+    $scope.isLoading = => @loading
 
   fetchServerInfo: ->
     @$http.get("/api/server_info.json").success(@onLoadComplete)
 
   onLoadComplete: (data) =>
     @$scope.serverInfo = data
-    @$scope.loading = false
+    @loading = false
 
 module.controller "servers.show", ServersShowController
