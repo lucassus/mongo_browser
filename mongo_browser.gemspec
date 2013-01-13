@@ -34,5 +34,5 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency("sprockets", "2.8.2")
   gem.add_dependency("coffee-script", "2.2.0")
-  gem.add_dependency("sass", "3.2.3")
+  gem.add_dependency("sass", "3.2.5")
 end
