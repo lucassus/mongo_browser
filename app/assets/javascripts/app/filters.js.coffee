@@ -7,7 +7,7 @@ module.filter "humanSize", -> (bytes) ->
 
   "#{scaledSize} #{sizes[n]}"
 
-module.filter "jsonDocument", -> (document) ->
+module.filter "jsonDocument", -> (document = {}) ->
   str = JSON.stringify(document, undefined, 2)
 
   # Replace for the ObjectId
