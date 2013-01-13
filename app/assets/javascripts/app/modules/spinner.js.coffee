@@ -1,48 +1,45 @@
 spinner = angular.module("mb.spinner", [])
 
-# TODO refactor this, create service?
-spinner.config [
-  "$httpProvider",
-  ($httpProvider) ->
-    pendingRequests = 0
+spinner.value "pendingRequests",
+  counter: 0
+  increment: -> @counter += 1
+  decrement: -> if @isPending() then @counter -= 1
+  isPending: -> @counter > 0
 
-    showSpinner = (data) ->
-      pendingRequests += 1
-      $scope = angular.element("li.spinner").scope()
-      $scope.pendingRequests = pendingRequests if $scope
+spinner.factory "pendingRequestsInterceptor", [
+  "$injector", "$q", "pendingRequests", ($injector, $q, pendingRequests) ->
+    (promise) ->
+      $http = $injector.get("$http")
+
+      onSuccess = (response) ->
+        pendingRequests.decrement()
+        response
+
+      onError = (response) ->
+        pendingRequests.decrement()
+        $q.reject(response)
+
+      promise.then(onSuccess, onError)
+]
+
+spinner.config [
+  "$httpProvider", "pendingRequestsProvider", ($httpProvider, pendingRequestsProvider) ->
+    # TODO use request interceptor
+    pendingRequests = pendingRequestsProvider.$get()
+    $httpProvider.defaults.transformRequest.push (data) ->
+      pendingRequests.increment()
       data
 
-    $httpProvider.defaults.transformRequest.push(showSpinner)
-
-    httpSpinnerInterceptor = ($q) ->
-      hideSpinner = ->
-        pendingRequests -= 1
-        $scope = angular.element("li.spinner").scope()
-        $scope.pendingRequests = pendingRequests if $scope
-
-      (promise) ->
-        onSuccess = (response) ->
-          hideSpinner()
-          response
-
-        onError = (response) ->
-          hideSpinner()
-          $q.reject(response)
-
-        promise.then(onSuccess, onError)
-    httpSpinnerInterceptor.$inject = ["$q", "$rootScope"]
-
-    $httpProvider.responseInterceptors.push(httpSpinnerInterceptor)
+    $httpProvider.responseInterceptors.push("pendingRequestsInterceptor")
 ]
 
 class SpinnerController
-  @$inject = ["$scope"]
-  constructor: (@$scope) ->
-    $scope.pendingRequests = 0
+  @$inject = ["$scope", "pendingRequests"]
+  constructor: (@$scope, @pendingRequests) ->
     @$scope.showSpinner = @showSpinner
 
   showSpinner: =>
-    @$scope.pendingRequests > 0
+    @pendingRequests.isPending()
 
 spinner.controller "spinner", SpinnerController
 
