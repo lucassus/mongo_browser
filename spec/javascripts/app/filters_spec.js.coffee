@@ -98,6 +98,19 @@ describe "filters", ->
       collection = { dbName: "foo", name: "bars" }
       expect(filter(collection)).toEqual("/databases/foo/collections/bars/documents")
 
+  describe "#documentPath", ->
+    filter = null
+
+    beforeEach inject (documentPathFilter) ->
+      filter = documentPathFilter
+
+    it "without parameters generates an url with placeholders", ->
+      expect(filter()).toEqual("/databases/:dbName/collections/:collectionName/documents/:id")
+
+    it "generates na url for the given collection documents", ->
+      document = { dbName: "foo", collectionName: "bars", id: "documentId" }
+      expect(filter(document)).toEqual("/databases/foo/collections/bars/documents/documentId")
+
   describe "documentPrettyTime", ->
     filter = null
 

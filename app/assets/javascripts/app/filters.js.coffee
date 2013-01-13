@@ -47,6 +47,14 @@ module.filter "documentsPath", (collectionsPathFilter) ->
 
     "#{collectionsPathFilter(name: dbName)}/#{collectionName}/documents"
 
+module.filter "documentPath", (documentsPathFilter) ->
+  (document = {}) ->
+    dbName = document.dbName || ":dbName"
+    collectionName = document.collectionName || ":collectionName"
+    id = document.id || ":id"
+
+    "#{documentsPathFilter(dbName: dbName, name: collectionName)}/#{id}"
+
 module.filter "documentPrettyTime", ->
   (document) ->
     timestamp = document.id.toString().substring(0, 8)

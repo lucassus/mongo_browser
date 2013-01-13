@@ -16,7 +16,7 @@
       ng-mouseleave="showActions = false"
       ng-mouseenter="showActions = true">
     <td class="data">
-      <span class="id">{{document.id}}</span>
+      <span class="id"><a href="{{{dbName: dbName, collectionName: collectionName, id: document.id} | documentPath}}">{{document.id}}</a></span>
       <span>{{document | documentPrettyTime}}</span>
       <div ng-bind-html="document.data | jsonDocument"></div>
     </td>

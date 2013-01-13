@@ -175,6 +175,20 @@ describe MongoBrowser::Api do
       end
     end
 
+    describe_endpoint :get, "/databases/:db_name/collections/:collection_name/documents/:id" do
+      let(:id) do
+        document = server.database(db_name).collection(collection_name).mongo_collection.find({}, limit: 1).first
+        document["_id"]
+      end
+
+      it { should be_successful }
+
+      it "returns the document" do
+        data = JSON.parse(response.body)
+        expect(data["id"]).to eq(id.to_s)
+      end
+    end
+
     describe_endpoint :delete, "/databases/:db_name/collections/:collection_name/documents/:id" do
       let(:id) do
         document = server.database(db_name).collection(collection_name).mongo_collection.find({}, limit: 1).first

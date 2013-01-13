@@ -80,6 +80,15 @@ describe "reources", ->
         document.$query()
         $httpBackend.flush()
 
+    describe "$get", ->
+      it "gets a document", ->
+        $httpBackend.whenGET("/api/databases/test_database/collections/test_collection/documents/document-id.json").respond([])
+
+        document = new Document(dbName: "test_database", collectionName: "test_collection", id: "document-id")
+        document.$get()
+
+        $httpBackend.flush()
+
     describe "$delete", ->
       it "deletes a document", ->
         $httpBackend.whenDELETE("/api/databases/test_database/collections/test_collection/documents/document-id.json").respond([])

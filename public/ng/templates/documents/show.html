@@ -1,0 +1,11 @@
+<table class="table table-striped table-hover documents">
+  <tbody>
+  <tr class="document">
+    <td class="data">
+      <span class="id">{{document.id}}</span>
+      <span>{{document | documentPrettyTime}}</span>
+      <div ng-bind-html="document.data | jsonDocument"></div>
+    </td>
+  </tr>
+  </tbody>
+</table>
