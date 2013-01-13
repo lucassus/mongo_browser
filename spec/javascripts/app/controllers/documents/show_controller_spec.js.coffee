@@ -19,10 +19,10 @@ describe "documents show controller", ->
 
     $httpBackend = $injector.get("$httpBackend")
     $httpBackend.whenGET("/api/databases/test_database/collections/test_collection/documents/document_id.json")
-      .respond([])
+      .respond({})
 
     $scope = $rootScope.$new()
-    controller = $controller "documents.index",
+    controller = $controller "documents.show",
       $scope: $scope
 
     $scope.$digest()
@@ -31,3 +31,18 @@ describe "documents show controller", ->
   afterEach ->
     $httpBackend.verifyNoOutstandingExpectation()
     $httpBackend.verifyNoOutstandingRequest()
+
+  describe "$scope", ->
+    it "assigns variables from $routeParams", ->
+      expect($scope.dbName).toEqual("test_database")
+      expect($scope.collectionName).toEqual("test_collection")
+
+    # TODO create a macro / shared examples
+    describe "$scope.isLoading", ->
+      it "returns true when the resouce it loading", ->
+        controller.loading = true
+        expect($scope.isLoading()).toBeTruthy()
+
+      it "otherwise returns false", ->
+        controller.loading = false
+        expect($scope.isLoading()).toBeFalsy()

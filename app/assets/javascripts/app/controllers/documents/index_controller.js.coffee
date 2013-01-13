@@ -5,10 +5,11 @@ class DocumentsIndexController
               "Document", "confirmationDialog", "alerts"]
   constructor: (@$scope, $routeParams, $location, @Document, @confirmationDialog, @alerts) ->
     @loading = false
+    { @dbName, @collectionName } = $routeParams
 
     # Scope variables
-    @$scope.dbName = $routeParams.dbName
-    @$scope.collectionName = $routeParams.collectionName
+    @$scope.dbName = @dbName
+    @$scope.collectionName = @collectionName
 
     @$scope.page = parseInt($location.search().page || 1)
 
@@ -28,7 +29,7 @@ class DocumentsIndexController
   fetchDocuments: (page = 1) ->
     @loading = true
 
-    params = dbName: @$scope.dbName, collectionName: @$scope.collectionName, page: page
+    params = dbName: @dbName, collectionName: @collectionName, page: page
     @Document.query(params, @onLoadComplete)
 
   onLoadComplete: (data) =>
@@ -45,7 +46,7 @@ class DocumentsIndexController
       onOk: => @delete(document)
 
   delete: (data) ->
-    params = dbName: @$scope.dbName, collectionName: @$scope.collectionName, id: data.id
+    params = dbName: @dbName, collectionName: @collectionName, id: data.id
     document = new @Document(params)
     document.$delete =>
       @alerts.info("Document #{data.id} has been deleted.")

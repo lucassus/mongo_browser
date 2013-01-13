@@ -2,23 +2,24 @@ module = angular.module("mb.controllers")
 
 class DocumentsShowController
   @$inject = ["$scope", "$routeParams", "Document"]
-  constructor: (@$scope, $routeParams, @Document) ->
+  constructor: ($scope, $routeParams, Document) ->
     @loading = false
 
+    { @dbName, @collectionName, @id } = $routeParams
+    @document = new Document(dbName: @dbName, collectionName: @collectionName, id: @id)
+
     # Scope variables
-    @$scope.dbName = $routeParams.dbName
-    @$scope.collectionName = $routeParams.collectionName
-    @$scope.id = $routeParams.id
+    $scope.dbName = @dbName
+    $scope.collectionName = @collectionName
+    $scope.document = @document
 
     # Scope methods
-    @$scope.isLoading = => @loading
+    $scope.isLoading = => @loading
 
     @fetchDocument()
 
   fetchDocument: ->
     @loading = true
-    @$scope.document = new @Document(dbName: @$scope.dbName, collectionName: @$scope.collectionName, id: @$scope.id, data: {})
-    @$scope.document.$get =>
-      @loading = false
+    @document.$get => @loading = false
 
 module.controller "documents.show", DocumentsShowController
