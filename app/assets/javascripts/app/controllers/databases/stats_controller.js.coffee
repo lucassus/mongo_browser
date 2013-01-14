@@ -3,9 +3,10 @@ module = angular.module("mb.controllers")
 class DatabasesStatsController
   @$inject = ["$scope", "$routeParams", "Database"]
   constructor: (@$scope, $routeParams, Database) ->
-    @$scope.dbName = $routeParams.dbName
+    { @dbName } = $routeParams
+    @$scope.dbName = @dbName
 
-    @database = new Database(name: @$scope.dbName)
+    @database = new Database(name: @dbName)
     @fetchStats()
 
   fetchStats: ->

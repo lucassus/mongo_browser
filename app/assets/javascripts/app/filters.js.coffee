@@ -7,7 +7,7 @@ module.filter "humanSize", -> (bytes) ->
 
   "#{scaledSize} #{sizes[n]}"
 
-module.filter "jsonDocument", -> (document) ->
+module.filter "jsonDocument", -> (document = {}) ->
   str = JSON.stringify(document, undefined, 2)
 
   # Replace for the ObjectId
@@ -46,6 +46,14 @@ module.filter "documentsPath", (collectionsPathFilter) ->
     collectionName = collection.name || ":collectionName"
 
     "#{collectionsPathFilter(name: dbName)}/#{collectionName}/documents"
+
+module.filter "documentPath", (documentsPathFilter) ->
+  (document = {}) ->
+    dbName = document.dbName || ":dbName"
+    collectionName = document.collectionName || ":collectionName"
+    id = document.id || ":id"
+
+    "#{documentsPathFilter(dbName: dbName, name: collectionName)}/#{id}"
 
 module.filter "documentPrettyTime", ->
   (document) ->

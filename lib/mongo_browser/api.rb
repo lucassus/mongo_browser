@@ -69,11 +69,18 @@ module MongoBrowser
                 present documents, with: Api::Entities::PagedDocuments
               end
 
-              desc "Deletes a document with the given id"
               params do
                 requires :id, type: String, desc: "Document id"
               end
               segment "/:id" do
+                desc "Get a document"
+                get do
+                  collection = server.database(params[:db_name]).collection(params[:collection_name])
+                  document = collection.find(params[:id])
+                  present document, with: Api::Entities::Document
+                end
+
+                desc "Deletes a document with the given id"
                 delete do
                   collection = server.database(params[:db_name]).collection(params[:collection_name])
                   document = collection.find(params[:id])
