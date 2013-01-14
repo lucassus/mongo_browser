@@ -3,7 +3,7 @@
 # App Module
 requires = [
   "ngSanitize",
-  "mb.controllers", "mb.directives", "mb.filters",
+  "mb.controllers", "mb.directives", "mb.filters", "mb.services",
   "mb.dialogs", "mb.pager", "mb.tableFilter", "mb.alerts", "mb.spinner"]
 
 angular.module("mb", requires)
@@ -12,22 +12,7 @@ angular.module("mb", requires)
     ($provide, $httpProvider, $routeProvider, $locationProvider) ->
       $provide.value("alertTimeout", 3000)
 
-      # TODO refactor this interceptor, see spinner
-      httpErrorsInterceptor = ($q, $log, alerts) ->
-        (promise) ->
-          onSuccess = (response) ->
-            $log.info("Http response:",response)
-            response
-
-          onError = (response) ->
-            $log.info("HTTP error", response)
-            alerts.push("error", "HTTP error")
-            $q.reject(response)
-
-          promise.then(onSuccess, onError)
-      httpErrorsInterceptor.$inject = ["$q", "$log", "alerts"]
-
-      $httpProvider.responseInterceptors.push(httpErrorsInterceptor)
+      $httpProvider.responseInterceptors.push("httpErrorsInterceptor")
 
       $routeProvider
         # Main page, list of all available databases
