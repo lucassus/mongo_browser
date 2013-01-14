@@ -9,12 +9,15 @@ describe "mb.spinner", ->
       httpRequestTracker = $injector.get("httpRequestTracker")
       $http = $injector.get("$http")
 
-    it "should not report pending requests if no requests in progress", ->
-      expect(httpRequestTracker.hasPendingRequests()).toBeFalsy()
+    describe "when no requests is progress", ->
+      it "does not report pending requests", ->
+        expect(httpRequestTracker.hasPendingRequests()).toBeFalsy()
 
-    it "should report pending requests if requests are in progress", ->
-      $http.pendingRequests.push {}
-      expect(httpRequestTracker.hasPendingRequests()).toBeTruthy()
+    describe "when requests are in progress", ->
+      beforeEach -> $http.pendingRequests.push({})
+
+      it "reports pending requests", ->
+        expect(httpRequestTracker.hasPendingRequests()).toBeTruthy()
 
   describe "controller", ->
     httpRequestTracker = null
