@@ -77,6 +77,8 @@ module MongoBrowser
                 get do
                   collection = server.database(params[:db_name]).collection(params[:collection_name])
                   document = collection.find(params[:id])
+
+                  error!("Document not found", 404) if document.nil?
                   present document, with: Api::Entities::Document
                 end
 
