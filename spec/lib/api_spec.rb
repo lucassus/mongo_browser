@@ -181,11 +181,30 @@ describe MongoBrowser::Api do
         document["_id"]
       end
 
-      it { should be_successful }
+      context "whe the document has been found" do
+        it { should be_successful }
 
-      it "returns the document" do
-        data = JSON.parse(response.body)
-        expect(data["id"]).to eq(id.to_s)
+        it "returns the document" do
+          data = JSON.parse(response.body)
+          expect(data["id"]).to eq(id.to_s)
+        end
+      end
+
+      context "when the documents has not been found" do
+        before do
+          collection = server.database(db_name).collection(collection_name)
+          document = collection.find(id)
+          collection.remove!(document)
+        end
+
+        it { should_not be_successful }
+        its(:status) { should == 404 }
+
+        it("should notify about not found document") do
+          error = JSON.parse(response.body)["error"]
+          expect(error).not_to be_nil
+          expect(error).to eq("Document not found")
+        end
       end
     end
 
