@@ -4,9 +4,10 @@ class CollectionsIndexController
   @$inject = ["$scope", "$routeParams", "Collection", "confirmationDialog", "alerts"]
   constructor: (@$scope, $routeParams, @Collection, @confirmationDialog, @alerts) ->
     @loading = false
+    { @dbName } = $routeParams
 
     # Scope variables
-    @$scope.dbName = $routeParams.dbName
+    @$scope.dbName = @dbName
     @$scope.filterValue = ""
 
     # Scope methods
@@ -17,7 +18,7 @@ class CollectionsIndexController
 
   fetchCollections: ->
     @loading = true
-    params = dbName: @$scope.dbName
+    params = dbName: @dbName
     @$scope.collections = @Collection.query(params, @onLoadComplete)
 
   onLoadComplete: (data) =>

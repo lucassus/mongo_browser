@@ -56,6 +56,10 @@ angular.module("mb", requires)
             controller: "documents.index",
             reloadOnSearch: false
 
+        .when "/databases/:dbName/collections/:collectionName/documents/:id",
+          templateUrl: "/ng/templates/documents/show.html",
+          controller: "documents.show",
+
         # Information about the server
         .when "/server_info",
             templateUrl: "/ng/templates/server/show.html",

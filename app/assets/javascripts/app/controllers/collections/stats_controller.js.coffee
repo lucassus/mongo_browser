@@ -3,10 +3,12 @@ module = angular.module("mb.controllers")
 class CollectionsStatsController
   @$inject = ["$scope", "$routeParams", "Collection"]
   constructor: (@$scope, $routeParams, Collection) ->
-    @$scope.dbName = $routeParams.dbName
-    @$scope.collectionName = $routeParams.collectionName
+    { @dbName, @collectionName } = $routeParams
 
-    @collection = new Collection(dbName: @$scope.dbName, name: @$scope.collectionName)
+    @$scope.dbName = @dbName
+    @$scope.collectionName = @collectionName
+
+    @collection = new Collection(dbName: @dbName, name: @collectionName)
     @fetchStats()
 
   fetchStats: ->
