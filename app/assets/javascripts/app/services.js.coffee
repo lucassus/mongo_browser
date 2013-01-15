@@ -6,7 +6,8 @@ module.factory "httpErrorsInterceptor", [
       $http = $injector.get("$http")
 
       onError = (response) ->
-        alerts.push("error", "HTTP error")
+        errorMessage = response.data?.error || "Unexpected HTTP error"
+        alerts.error(errorMessage)
         $q.reject(response)
 
       promise.then(null, onError)

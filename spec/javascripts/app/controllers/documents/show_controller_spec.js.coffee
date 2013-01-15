@@ -46,3 +46,21 @@ describe "documents show controller", ->
       it "otherwise returns false", ->
         controller.loading = false
         expect($scope.isLoading()).toBeFalsy()
+
+  describe "controller", ->
+    describe "controller.handleNotFoundDocument", ->
+      $location = null
+
+      beforeEach inject ($injector) ->
+        $location = $injector.get("$location")
+        spyOn($location, "path")
+
+      describe "when the response status is 404", ->
+        it "redirects to the documents list page", ->
+          controller.handleNotFoundDocument(status: 404)
+          expect($location.path).toHaveBeenCalledWith("/databases/test_database/collections/test_collection/documents")
+
+      describe "when the rsponse status is not 404", ->
+        it "should not redirect", ->
+          controller.handleNotFoundDocument(status: 500)
+          expect($location.path).not.toHaveBeenCalled()
