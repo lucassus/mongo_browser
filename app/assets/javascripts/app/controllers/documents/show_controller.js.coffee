@@ -1,8 +1,8 @@
 module = angular.module("mb.controllers")
 
 class DocumentsShowController
-  @$inject = ["$scope", "$routeParams", "Document"]
-  constructor: ($scope, $routeParams, Document) ->
+  @$inject = ["$scope", "$routeParams", "$location", "Document"]
+  constructor: ($scope, $routeParams, @$location, Document) ->
     @loading = false
 
     { @dbName, @collectionName, @id } = $routeParams
@@ -20,6 +20,11 @@ class DocumentsShowController
 
   fetchDocument: ->
     @loading = true
-    @document.$get => @loading = false
+    onSuccess = => @loading = false
+    @document.$get(onSuccess, @handleNotFoundDocument)
+
+  handleNotFoundDocument: (response) =>
+    return unless response.status is 404
+    @$location.path("/databases/#{@dbName}/collections/#{@collectionName}/documents")
 
 module.controller "documents.show", DocumentsShowController
