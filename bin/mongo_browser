@@ -13,6 +13,8 @@ builder = Rack::Builder.new do
   end
 end
 
+ENV["RACK_ENV"] ||= "production"
+
 Vegas::Runner.new(builder, "mongo_browser") do |runner, opts, app|
   opts.on("--mongodb-port PORT", "Specify mongodb port") do |port|
     runner.logger.info "Using mongodb port #{port}"
