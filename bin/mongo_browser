@@ -3,7 +3,17 @@
 require "vegas"
 require "mongo_browser"
 
-Vegas::Runner.new(MongoBrowser::Application, "mongo_browser") do |runner, opts, app|
+builder = Rack::Builder.new do
+  map '/' do
+    run MongoBrowser::Application.new
+  end
+
+  map '/api' do
+    run MongoBrowser::Api.new
+  end
+end
+
+Vegas::Runner.new(builder, "mongo_browser") do |runner, opts, app|
   opts.on("--mongodb-port PORT", "Specify mongodb port") do |port|
     runner.logger.info "Using mongodb port #{port}"
     MongoBrowser.mongodb_port = port.to_i
