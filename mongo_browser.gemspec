@@ -22,10 +22,10 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency("rspec", "2.12.0")
   gem.add_development_dependency("rack-test", "0.6.2")
   gem.add_development_dependency("simplecov", "0.7.1")
-  gem.add_development_dependency("debugger", "1.2.3")
+  gem.add_development_dependency("debugger", "1.2.4")
 
-  gem.add_dependency("mongo", "1.8.1")
-  gem.add_dependency("bson_ext", "1.8.1")
+  gem.add_dependency("mongo", "1.8.2")
+  gem.add_dependency("bson_ext", "1.8.2")
   gem.add_dependency("vegas", "0.1.11")
 
   gem.add_dependency("sinatra", "1.3.3")
