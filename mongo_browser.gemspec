@@ -30,7 +30,8 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency("sinatra", "1.3.3")
   gem.add_dependency("sinatra-contrib", "1.3.2")
-  gem.add_dependency("grape", "0.2.6")
+  gem.add_dependency("grape", "0.4.1")
+  gem.add_dependency("grape-entity", "0.3.0")
 
   gem.add_dependency("sprockets", "2.8.2")
   gem.add_dependency("coffee-script", "2.2.0")
