@@ -1,4 +1,5 @@
 require "grape"
+require "grape-entity"
 
 module MongoBrowser
   class Api < Grape::API
