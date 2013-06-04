@@ -6,7 +6,7 @@ bundle exec thin start -R config-e2e.ru -e test -p 3001 -d
 # Wait for thin
 sleep 1
 
-testacular start spec/javascripts/config/testacular-e2e.conf.js --single-run
+karma start spec/javascripts/config/karma-e2e.conf.js --single-run
 RESULT=$?
 
 # Kill test backend instance

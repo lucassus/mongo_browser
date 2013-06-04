@@ -1,4 +1,4 @@
 #!/bin/bash
 
 grunt html2js
-testacular start spec/javascripts/config/testacular.conf.js --single-run
+karma start spec/javascripts/config/karma.conf.js --single-run

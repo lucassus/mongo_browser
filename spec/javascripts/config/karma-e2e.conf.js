@@ -13,7 +13,7 @@ browsers = ["PhantomJS"];
 autoWatch = false;
 singleRun = true;
 
-urlRoot = '/__testacular/';
+urlRoot = '/__karma__/';
 proxies = {
   "/": "http://localhost:3001/"
 };

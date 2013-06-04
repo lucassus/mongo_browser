@@ -26,11 +26,13 @@ module.exports = function(grunt) {
       var parts = file.split("/").slice(3);
       var name = parts.join("/");
 
-      grunt.file.write("app/assets/javascripts/compiled_templates/" + name + ".js", grunt.template.process(TPL, {
+      var data = {
         file: file,
         path: "/ng/templates/" + file.split("/").pop(),
         content: escapeContent(grunt.file.read(file))
-      }));
+      };
+      var content = grunt.template.process(TPL, { data: data });
+      grunt.file.write("app/assets/javascripts/compiled_templates/" + name + ".js", content);
     });
   });
 };
