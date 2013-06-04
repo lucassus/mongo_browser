@@ -9,7 +9,7 @@ describe "databases stats controller", ->
     $routeParams.dbName = "test_database"
 
     $httpBackend = $injector.get("$httpBackend")
-    $httpBackend.whenGET("/api/databases/test_database/stats.json")
+    $httpBackend.whenGET("/api/databases/test_database/stats")
       .respond(foo: "bar")
 
     $scope = $rootScope.$new()

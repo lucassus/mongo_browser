@@ -4,7 +4,7 @@ angular.module "mb.resources", ["ngResource", "mb.filters"], ($provide) ->
     "$resource", ($resource) ->
 
       paramDefaults = dbName: "@name"
-      $resource "/api/databases/:dbName/:action.json", paramDefaults,
+      $resource "/api/databases/:dbName/:action", paramDefaults,
         query: { method: "GET", isArray: true },
         stats: { method: "GET", params: { action: "stats" } }
   ]
@@ -13,7 +13,7 @@ angular.module "mb.resources", ["ngResource", "mb.filters"], ($provide) ->
     "$resource", "$filter", ($resource, $filter) ->
 
       paramDefaults = dbName: "@dbName", collectionName: "@name"
-      $resource "/api#{$filter("collectionsPath")()}/:collectionName/:action.json",
+      $resource "/api#{$filter("collectionsPath")()}/:collectionName/:action",
         paramDefaults,
           query: { method: "GET", isArray: true },
           stats: { method: "GET", params: { action: "stats" } }
@@ -23,6 +23,6 @@ angular.module "mb.resources", ["ngResource", "mb.filters"], ($provide) ->
     "$resource", "$filter", ($resource, $filter) ->
 
       paramDefaults = dbName: "@dbName", collectionName: "@collectionName", id: "@id"
-      $resource "/api#{$filter("documentsPath")()}/:id.json", paramDefaults,
+      $resource "/api#{$filter("documentsPath")()}/:id", paramDefaults,
         query: method: "GET", isArray: false
   ]

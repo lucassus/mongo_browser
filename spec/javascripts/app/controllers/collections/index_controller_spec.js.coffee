@@ -14,7 +14,7 @@ describe "collections index controller", ->
     $routeParams.dbName = "test_database"
 
     $httpBackend = $injector.get("$httpBackend")
-    $httpBackend.whenGET("/api/databases/test_database/collections.json")
+    $httpBackend.whenGET("/api/databases/test_database/collections")
       .respond([])
 
     $scope = $rootScope.$new()
@@ -83,7 +83,7 @@ describe "collections index controller", ->
         alerts = $injector.get("alerts")
 
         collection = dbName: "test_database", name: "dummy-collection-id"
-        $httpBackend.whenDELETE("/api/databases/test_database/collections/dummy-collection-id.json")
+        $httpBackend.whenDELETE("/api/databases/test_database/collections/dummy-collection-id")
           .respond(true)
 
         controller.delete(collection)

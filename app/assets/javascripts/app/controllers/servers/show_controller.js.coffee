@@ -9,7 +9,7 @@ class ServersShowController
     $scope.isLoading = => @loading
 
   fetchServerInfo: ->
-    @$http.get("/api/server_info.json").success(@onLoadComplete)
+    @$http.get("/api/server_info").success(@onLoadComplete)
 
   onLoadComplete: (data) =>
     @$scope.serverInfo = data

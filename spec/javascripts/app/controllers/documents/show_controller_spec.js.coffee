@@ -18,7 +18,7 @@ describe "documents show controller", ->
     $routeParams.id = "document_id"
 
     $httpBackend = $injector.get("$httpBackend")
-    $httpBackend.whenGET("/api/databases/test_database/collections/test_collection/documents/document_id.json")
+    $httpBackend.whenGET("/api/databases/test_database/collections/test_collection/documents/document_id")
       .respond({})
 
     $scope = $rootScope.$new()

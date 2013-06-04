@@ -9,7 +9,7 @@ class MainController
       @$scope.environment != "production"
 
   fetchVersion: ->
-    @$http.get("/api/version.json").success (data) =>
+    @$http.get("/api/version").success (data) =>
       @$scope.appVersion = data.version
       @$scope.environment = data.environment
 

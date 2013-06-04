@@ -13,7 +13,7 @@ describe "databases index controller", ->
     alerts = $injector.get("alerts")
 
     $httpBackend = $injector.get("$httpBackend")
-    $httpBackend.whenGET("/api/databases.json").respond([])
+    $httpBackend.whenGET("/api/databases").respond([])
 
     $scope = $rootScope.$new()
     controller = $controller "databases.index",
@@ -81,7 +81,7 @@ describe "databases index controller", ->
         alerts = $injector.get("alerts")
 
         database = name: "test_database"
-        $httpBackend.whenDELETE("/api/databases/test_database.json")
+        $httpBackend.whenDELETE("/api/databases/test_database")
           .respond(true)
 
         controller.drop(database)
