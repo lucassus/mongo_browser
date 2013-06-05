@@ -31,3 +31,13 @@ module.directive "deleteButton", ->
               Delete
             </a>
             """
+
+module.directive "refreshButton", ->
+  replace: true
+  restrict: "E"
+  template: """
+            <a class="btn">
+            <i class="icon-refresh"></i>
+            Refresh
+            </a>
+            """

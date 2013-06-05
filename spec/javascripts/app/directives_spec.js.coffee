@@ -112,3 +112,31 @@ describe "directives", ->
       button.click()
 
       expect($scope.bar).not.toHaveBeenCalled()
+
+  describe "refreshButton", ->
+    beforeEach inject ($compile, $rootScope) ->
+      $scope = $rootScope
+      $scope.refresh = ->
+
+      element = angular.element """
+      <div>
+        <refresh-button ng-click="refresh()" />
+      </div>
+      """
+      $compile(element)($scope)
+      $scope.$digest()
+
+    it "renders delete button", ->
+      button = element.find("a")
+
+      expect(button.length).toBe(1)
+      expect(button.hasClass("btn")).toBeTruthy()
+      expect(button.text()).toContain("Refresh")
+
+    it "ng-click", ->
+      spyOn($scope, "refresh")
+
+      button = element.find("button")
+      button.click()
+
+      expect($scope.refresh).not.toHaveBeenCalled()
