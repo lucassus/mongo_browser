@@ -19,7 +19,12 @@ Run the application
 Application will be available by default at http://localhost:5678
 In order to run it on custom port number pass the `--port` option with selected port.
 
-## Running specs
+## Getting started with the development
+
+```
+bundle install
+sudo npm install -g grunt grunt-cli karma
+```
 
 The main goal of this project is to achieve the highest testability with 100% code coverage. 
 

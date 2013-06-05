@@ -5,7 +5,7 @@ rvm:
   - 1.9.3
 
 before_script:
-  - "npm install -g grunt-cli karma --quiet"
+  - "npm install -g grunt-cli grunt karma --quiet"
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 
