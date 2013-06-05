@@ -45,6 +45,27 @@ describe "documents show controller", ->
         controller.loading = false
         expect($scope.isLoading()).toBeFalsy()
 
+    describe "$scope.refresh", ->
+      alerts = null
+
+      beforeEach inject ($injector) ->
+        alerts = $injector.get("alerts")
+
+      it "displays a flash message", ->
+        spyOn(alerts, "info")
+        $scope.refresh()
+        expect(alerts.info).toHaveBeenCalledWith("Document was refreshed")
+
+      # TODO think how to dry it
+      it "fetches a document from the database", ->
+        $httpBackend.whenGET("/api/databases/test_database/collections/test_collection/documents/document_id")
+          .respond({})
+
+        $scope.refresh()
+
+        $httpBackend.verifyNoOutstandingExpectation()
+        $httpBackend.verifyNoOutstandingRequest()
+
   describe "controller", ->
     describe "controller.handleNotFoundDocument", ->
       $location = null

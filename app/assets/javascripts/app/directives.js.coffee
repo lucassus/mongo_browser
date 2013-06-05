@@ -37,7 +37,7 @@ module.directive "refreshButton", ->
   restrict: "E"
   template: """
             <a class="btn">
-            <i class="icon-refresh"></i>
-            Refresh
+              <i class="icon-refresh"></i>
+              Refresh
             </a>
             """

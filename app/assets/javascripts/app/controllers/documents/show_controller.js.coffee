@@ -1,6 +1,6 @@
 class DocumentsShowCtrl
-  @$inject = ["$scope", "$routeParams", "$location", "Document"]
-  constructor: ($scope, $routeParams, @$location, Document) ->
+  @$inject = ["$scope", "$routeParams", "$location", "Document", "alerts"]
+  constructor: ($scope, $routeParams, @$location, Document, @alerts) ->
     @loading = false
 
     { @dbName, @collectionName, @id } = $routeParams
@@ -13,6 +13,8 @@ class DocumentsShowCtrl
 
     # Scope methods
     $scope.isLoading = => @loading
+    $scope.refresh = =>
+      @alerts.info("Document was refreshed")
 
     @fetchDocument()
 

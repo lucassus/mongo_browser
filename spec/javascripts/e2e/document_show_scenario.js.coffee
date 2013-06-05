@@ -10,6 +10,13 @@ describe "documents list page", ->
   it "shows the document page", ->
     expect(browser().location().url()).toMatch(/\/databases\/first_database\/collections\/first_collection\/documents\/.+/)
 
+  it "shows the alerts when the document has been refreshed", ->
+    element("a:contains('Refresh')").click()
+
+    expect(repeater("aside#alerts .alert").count()).toBe(1)
+    expect(repeater("aside#alerts .alert").column("message.text"))
+      .toContain("Document was refreshed")
+
   describe "when the document has not been found", ->
     beforeEach ->
       notExistingDocumentId = "50f486f1dac5d50540000003"
