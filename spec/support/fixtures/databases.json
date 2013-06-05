@@ -41,7 +41,10 @@
     "name": "third_database",
     "collections": [
       {
-        "name": "first_collection"
+        "name": "fs.files"
+      },
+      {
+        "name": "fs.chunks"
       }
     ]
   }

@@ -65,7 +65,7 @@ module MongoBrowser
               params do
                 optional :page, type: Integer, desc: "Page number"
               end
-              get do
+              get "/", requirements: { collection_name: /.*/ } do
                 collection = server.database(params[:db_name]).collection(params[:collection_name])
                 documents = collection.documents_with_pagination(params[:page])
                 present documents, with: Api::Entities::PagedDocuments

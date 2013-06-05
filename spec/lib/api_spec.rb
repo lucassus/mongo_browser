@@ -138,6 +138,13 @@ describe MongoBrowser::Api do
 
           include_examples :returned_documents
         end
+
+        context "when the collection name contains dots" do
+          let(:database_name) { "third_database" }
+          let(:collection_name) { "fs.files" }
+
+          it { should be_successful }
+        end
       end
 
       describe "for a large set of documents" do
