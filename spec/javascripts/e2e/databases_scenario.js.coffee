@@ -1,6 +1,14 @@
 describe "databases list page", ->
   databasesList = null
 
+  shouldShowDatabase = (name) ->
+    expect(databasesList.column("database.name")).toContain(name)
+
+  shouldShowAllDatabases = ->
+    shouldShowDatabase("first_database")
+    shouldShowDatabase("second_database")
+    shouldShowDatabase("third_database")
+
   beforeEach ->
     browser().navigateTo("/e2e/load_fixtures")
     browser().navigateTo("/")
@@ -22,16 +30,14 @@ describe "databases list page", ->
   describe "filtering by database name", ->
     it "displays all databases when the filter is not provided", ->
       input("value").enter("")
-      expect(databasesList.column("database.name")).toContain("first_database")
-      expect(databasesList.column("database.name")).toContain("second_database")
-      expect(databasesList.column("database.name")).toContain("third_database")
+      shouldShowAllDatabases()
 
     it "filters by database name", ->
       input("value").enter("first")
-      expect(databasesList.column("database.name")).toContain("first_database")
+      shouldShowDatabase("first_database")
 
       input("value").enter("second")
-      expect(databasesList.column("database.name")).toContain("second_database")
+      shouldShowDatabase("second_database")
 
       input("value").enter("not existing database")
       expect(databasesList.count()).toBe(0)
@@ -39,9 +45,7 @@ describe "databases list page", ->
 
     it "displays all records when the filter is cleared", ->
       element("button:contains('Clear')").click()
-      expect(databasesList.column("database.name")).toContain("first_database")
-      expect(databasesList.column("database.name")).toContain("second_database")
-      expect(databasesList.column("database.name")).toContain("third_database")
+      shouldShowAllDatabases()
 
   describe "delete a database", ->
     deleteDatabase = (name) ->
@@ -57,9 +61,7 @@ describe "databases list page", ->
       beforeEach -> disposeDialog()
 
       it "does nothig", ->
-        expect(databasesList.column("database.name")).toContain("first_database")
-        expect(databasesList.column("database.name")).toContain("second_database")
-        expect(databasesList.column("database.name")).toContain("third_database")
+        shouldShowAllDatabases()
 
     describe "when the dialog was confirmed", ->
       beforeEach -> confirmDialog()
