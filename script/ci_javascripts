@@ -1,4 +1,4 @@
 #!/bin/bash
 
-grunt html2js
+grunt --gruntfile Gruntfile.js html2js
 karma start spec/javascripts/config/karma.conf.js --single-run
