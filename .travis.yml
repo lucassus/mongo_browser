@@ -4,6 +4,9 @@ rvm:
   - 1.9.2
   - 1.9.3
 
+services:
+  - mongodb
+
 before_script:
   - "npm install -g grunt-cli grunt karma --quiet"
   - "export DISPLAY=:99.0"
