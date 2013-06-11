@@ -4,21 +4,21 @@ class MongoBrowser::Application
 
       app.register Sinatra::Reloader
 
-      app.set :spec_root, File.join(settings.root, "../../spec")
+      app.set :spec_root, File.join(app.settings.root, "../../spec")
 
       # Execute jasmine runner
       app.get "/jasmine" do
-        File.read(File.join(settings.spec_root, "javascripts/runner.html"))
+        File.read(File.join(app.settings.spec_root, "javascripts/runner.html"))
       end
 
       # Execute e2e runner
       app.get "/e2e" do
-        File.read(File.join(settings.spec_root, "javascripts/runner_e2e.html"))
+        File.read(File.join(app.settings.spec_root, "javascripts/runner_e2e.html"))
       end
 
       # Load database fixtures
       app.get "/e2e/load_fixtures" do
-        require File.join(settings.spec_root, "support/fixtures")
+        require File.join(app.settings.spec_root, "support/fixtures")
         fixtures = Fixtures.instance
 
         fixtures.load!
