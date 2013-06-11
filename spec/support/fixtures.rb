@@ -34,12 +34,6 @@ class Fixtures
   def cleanup!
     fixture_databases = data.map { |db| db["name"] }
 
-    # Drop all databases outside fixtures
-    other_databases = connection.database_names - fixture_databases
-    other_databases.each do |db_name|
-      connection.drop_database(db_name)
-    end
-
     # Drop collections inside databases
     fixture_databases.each do |db_name|
       collection_names = connection[db_name].collection_names - ["system.indexes"]
