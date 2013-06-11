@@ -10,6 +10,7 @@ require "mongo_browser/middleware/sprockets_sinatra"
 
 module MongoBrowser
   class Application < Sinatra::Base
+    set :logging, true
     set :root, File.join(File.dirname(__FILE__), "../../app")
     set :public_folder, Proc.new { File.join(root, "../public") }
 
