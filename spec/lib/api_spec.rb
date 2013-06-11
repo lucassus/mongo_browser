@@ -15,7 +15,7 @@ describe MongoBrowser::Api do
         subject(:data) { JSON.parse(response.body) }
 
         it { should_not be_empty }
-        it("contains all databases") { should have(3).items }
+        it("contains all databases") { should have_at_least(3).items }
 
         describe "a database" do
           subject(:database) { data.find { |db| db["name"] == "first_database" } }

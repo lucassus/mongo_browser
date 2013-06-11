@@ -28,11 +28,6 @@ sudo npm install -g grunt grunt-cli karma
 
 The main goal of this project is to achieve the highest testability with 100% code coverage. 
 
-### Running backend specs
-
-All specs are running against isolated mongodb instance and the primary local database won't be affected.
-See [https://github.com/lucassus/mongo_browser/blob/master/spec/support/mongod.rb](https://github.com/lucassus/mongo_browser/blob/master/spec/support/mongod.rb) helper class for more details.
-
 In order to execute rspec scenarios for backend just execute:
 
     rspec spec
@@ -48,7 +43,10 @@ In order to execute rspec scenarios for backend just execute:
 
 Run thin in the test environment:
 
-     thin start -R config-e2e.ru -e test -p 3001
+     thin start -R config.ru -e test -p 3001
+
+or
+     foreman start
 
 Navigate to the one of the following url:
 

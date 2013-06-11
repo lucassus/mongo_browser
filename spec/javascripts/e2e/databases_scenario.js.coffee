@@ -1,6 +1,14 @@
 describe "databases list page", ->
   databasesList = null
 
+  shouldShowDatabase = (name) ->
+    expect(databasesList.column("database.name")).toContain(name)
+
+  shouldShowAllDatabases = ->
+    shouldShowDatabase("first_database")
+    shouldShowDatabase("second_database")
+    shouldShowDatabase("third_database")
+
   beforeEach ->
     browser().navigateTo("/e2e/load_fixtures")
     browser().navigateTo("/")
@@ -19,37 +27,25 @@ describe "databases list page", ->
     title = element("h2").text()
     expect(title).toEqual("localhost databases")
 
-  it "displays available databases ordered by name", ->
-    expect(databasesList.column("database.name"))
-      .toEqual(["first_database", "second_database", "third_database"])
-
   describe "filtering by database name", ->
     it "displays all databases when the filter is not provided", ->
       input("value").enter("")
-      expect(databasesList.count()).toBe(3)
-      expect(databasesList.column("database.name"))
-        .toEqual(["first_database", "second_database", "third_database"])
+      shouldShowAllDatabases()
 
     it "filters by database name", ->
       input("value").enter("first")
-      expect(databasesList.count()).toBe(1)
-      expect(databasesList.column("database.name"))
-        .toEqual(["first_database"])
+      shouldShowDatabase("first_database")
 
       input("value").enter("second")
-      expect(databasesList.count()).toBe(1)
-      expect(databasesList.column("database.name"))
-        .toEqual(["second_database"])
+      shouldShowDatabase("second_database")
 
-      input("value").enter("not existing")
+      input("value").enter("not existing database")
       expect(databasesList.count()).toBe(0)
       expect(element(".alert:visible").text()).toMatch(/Nothing has been found./)
 
     it "displays all records when the filter is cleared", ->
       element("button:contains('Clear')").click()
-      expect(databasesList.count()).toBe(3)
-      expect(databasesList.column("database.name"))
-        .toEqual(["first_database", "second_database", "third_database"])
+      shouldShowAllDatabases()
 
   describe "delete a database", ->
     deleteDatabase = (name) ->
@@ -65,9 +61,7 @@ describe "databases list page", ->
       beforeEach -> disposeDialog()
 
       it "does nothig", ->
-        expect(databasesList.count()).toBe(3)
-        expect(databasesList.column("database.name"))
-          .toEqual(["first_database", "second_database", "third_database"])
+        shouldShowAllDatabases()
 
     describe "when the dialog was confirmed", ->
       beforeEach -> confirmDialog()
@@ -78,6 +72,4 @@ describe "databases list page", ->
           .toContain("Database third_database has been deleted.")
 
       it "deletes a database", ->
-        expect(databasesList.count()).toBe(2)
-        expect(databasesList.column("database.name"))
-          .toEqual(["first_database", "second_database"])
+        expect(databasesList.column("database.name")).not().toContain("third_database")
