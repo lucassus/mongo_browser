@@ -1,6 +1,6 @@
 require "sinatra"
 require "sinatra/reloader"
-require "sinatra/respond_with"
+require "sinatra/json"
 
 require "sprockets"
 require "sass"

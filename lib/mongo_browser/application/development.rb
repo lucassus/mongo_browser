@@ -1,10 +1,11 @@
 class MongoBrowser::Application
   module Development
     def self.registered(app)
+      app.helpers Sinatra::JSON
 
       app.register Sinatra::Reloader
 
-      app.set :spec_root, File.join(app.settings.root, "../../spec")
+      app.set :spec_root, File.join(app.settings.root, "../spec")
 
       # Execute jasmine runner
       app.get "/jasmine" do
@@ -24,11 +25,8 @@ class MongoBrowser::Application
         fixtures.load!
         fixtures.load_documents!
 
-        respond_to do |format|
-          format.json { true }
-        end
+        json success: true
       end
-
     end
   end
 end
