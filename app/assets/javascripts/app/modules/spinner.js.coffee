@@ -6,7 +6,7 @@ spinner.factory "httpRequestTracker", [
       $http.pendingRequests.length > 0
 ]
 
-class SpinnerController
+class SpinnerCtrl
   @$inject = ["$scope", "httpRequestTracker"]
   constructor: (@$scope, @httpRequestTracker) ->
     @$scope.showSpinner = @showSpinner
@@ -14,7 +14,7 @@ class SpinnerController
   showSpinner: =>
     @httpRequestTracker.hasPendingRequests()
 
-spinner.controller "spinner", SpinnerController
+spinner.controller "spinner", SpinnerCtrl
 
 spinner.directive "spinner", ->
   replace: true

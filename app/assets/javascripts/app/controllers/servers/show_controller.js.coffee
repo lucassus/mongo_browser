@@ -1,6 +1,4 @@
-module = angular.module("mb.controllers")
-
-class ServersShowController
+class ServersShowCtrl
   @$inject = ["$scope", "$http"]
   constructor: (@$scope, @$http) ->
     @loading = true
@@ -15,4 +13,5 @@ class ServersShowController
     @$scope.serverInfo = data
     @loading = false
 
-module.controller "servers.show", ServersShowController
+angular.module("mb")
+  .controller("servers.show", ServersShowCtrl)

@@ -1,6 +1,4 @@
-module = angular.module("mb.controllers")
-
-class DocumentsShowController
+class DocumentsShowCtrl
   @$inject = ["$scope", "$routeParams", "$location", "Document"]
   constructor: ($scope, $routeParams, @$location, Document) ->
     @loading = false
@@ -27,4 +25,5 @@ class DocumentsShowController
     return unless response.status is 404
     @$location.path("/databases/#{@dbName}/collections/#{@collectionName}/documents")
 
-module.controller "documents.show", DocumentsShowController
+angular.module("mb")
+  .controller("documents.show", DocumentsShowCtrl)

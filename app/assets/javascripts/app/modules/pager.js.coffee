@@ -46,7 +46,7 @@ pager.factory "pager", ->
       left.concat(middle).concat(right)
 
 # TODO block button when the resource is loading
-class PagerController
+class PagerCtrl
   constructor: (@$scope, @pager) ->
     @$scope.$watch "page", => @paginate()
     @$scope.$watch "totalPages", => @paginate()
@@ -73,7 +73,7 @@ class PagerController
     prepare = @pager(page: @$scope.page, totalPages: @$scope.totalPages)
     @$scope.windowedPageNumbers = prepare.windowedPageNumbers()
 
-pager.controller "pager", PagerController
+pager.controller "pager", PagerCtrl
 
 pager.directive "pager", ->
   templateUrl: "/ng/templates/pager.html"

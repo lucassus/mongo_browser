@@ -1,6 +1,4 @@
-module = angular.module("mb.controllers")
-
-class DocumentsIndexController
+class DocumentsIndexCtrl
   @$inject = ["$scope", "$routeParams", "$location",
               "Document", "confirmationDialog", "alerts"]
   constructor: (@$scope, $routeParams, $location, @Document, @confirmationDialog, @alerts) ->
@@ -52,4 +50,5 @@ class DocumentsIndexController
       @alerts.info("Document #{data.id} has been deleted.")
       @fetchDocuments()
 
-module.controller "documents.index", DocumentsIndexController
+angular.module("mb")
+  .controller("documents.index", DocumentsIndexCtrl)

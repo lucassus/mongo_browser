@@ -1,6 +1,4 @@
-module = angular.module("mb.controllers")
-
-class CollectionsIndexController
+class CollectionsIndexCtrl
   @$inject = ["$scope", "$routeParams", "Collection", "confirmationDialog", "alerts"]
   constructor: (@$scope, $routeParams, @Collection, @confirmationDialog, @alerts) ->
     @loading = false
@@ -36,4 +34,5 @@ class CollectionsIndexController
       @alerts.info("Collection #{data.name} has been deleted.")
       @fetchCollections()
 
-module.controller "collections.index", CollectionsIndexController
+angular.module("mb")
+  .controller("collections.index", CollectionsIndexCtrl)

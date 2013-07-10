@@ -1,6 +1,6 @@
 alerts = angular.module("mb.alerts", [])
 
-class AlertsController
+class AlertsCtrl
   @$inject = ["$scope", "alerts"]
   constructor: (@$scope, @alerts) ->
     @$scope.alertMessages = @alerts.messages
@@ -8,7 +8,7 @@ class AlertsController
     @$scope.disposeAlert = (id) =>
       @alerts.dispose(id)
 
-alerts.controller "alerts", AlertsController
+alerts.controller "alerts", AlertsCtrl
 
 # TODO figure out how to create coffeescript class for services
 alerts.factory "alerts", [

@@ -1,5 +1,5 @@
 describe "databases stats controller", ->
-  beforeEach module("mb.controllers")
+  beforeEach module("mb")
 
   $scope = null
   $httpBackend = null

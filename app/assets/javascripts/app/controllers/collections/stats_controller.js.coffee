@@ -1,6 +1,4 @@
-module = angular.module("mb.controllers")
-
-class CollectionsStatsController
+class CollectionsStatsCtrl
   @$inject = ["$scope", "$routeParams", "Collection"]
   constructor: (@$scope, $routeParams, Collection) ->
     { @dbName, @collectionName } = $routeParams
@@ -15,4 +13,5 @@ class CollectionsStatsController
     @collection.$stats (data) =>
       @$scope.stats = data
 
-module.controller "collections.stats", CollectionsStatsController
+angular.module("mb")
+  .controller("collections.stats", CollectionsStatsCtrl)

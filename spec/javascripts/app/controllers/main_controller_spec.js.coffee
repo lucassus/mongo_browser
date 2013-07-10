@@ -1,5 +1,5 @@
 describe "main", ->
-  beforeEach module("mb.controllers")
+  beforeEach module("mb")
 
   $scope = null
   $httpBackend = null

@@ -1,6 +1,4 @@
-module = angular.module("mb.controllers")
-
-class MainController
+class MainCtrl
   @$inject = ["$scope", "$http"]
   constructor: (@$scope, @$http) ->
     @fetchVersion()
@@ -13,4 +11,5 @@ class MainController
       @$scope.appVersion = data.version
       @$scope.environment = data.environment
 
-module.controller "main", MainController
+angular.module("mb")
+  .controller("main", MainCtrl)

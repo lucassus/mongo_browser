@@ -13,9 +13,8 @@ files = [
   "vendor/assets/javascripts/*.js",
 
   // The app
-  "app/assets/javascripts/app/controllers.js.coffee",
-  "app/assets/javascripts/app/**/*.js.coffee",
   "app/assets/javascripts/application.js.coffee",
+  "app/assets/javascripts/app/**/*.js.coffee",
 
   // Specs
   "spec/javascripts/lib/angular-mocks.js",

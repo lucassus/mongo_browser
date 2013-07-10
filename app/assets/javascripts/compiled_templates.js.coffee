@@ -1,1 +1,1 @@
-#= require_tree ./compiled_templates
+#= require_tree compiled_templates

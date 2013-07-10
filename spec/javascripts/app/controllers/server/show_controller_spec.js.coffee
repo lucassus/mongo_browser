@@ -1,5 +1,5 @@
 describe "servers show controller", ->
-  beforeEach module("mb.controllers")
+  beforeEach module("mb")
 
   $scope = null
   $httpBackend = null

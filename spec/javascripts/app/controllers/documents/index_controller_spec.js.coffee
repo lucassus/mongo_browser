@@ -1,7 +1,5 @@
 describe "documents index controller", ->
-  beforeEach module("mb.controllers")
-  beforeEach module("mb.dialogs")
-  beforeEach module("mb.alerts")
+  beforeEach module("mb")
   beforeEach module("mocks")
 
   controller = null

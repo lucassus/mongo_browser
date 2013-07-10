@@ -1,5 +1,5 @@
 describe "breadcrumbs", ->
-  beforeEach module("mb.controllers")
+  beforeEach module("mb")
 
   $scope = null
 
