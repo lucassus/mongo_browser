@@ -12,5 +12,7 @@ Gemfile.lock
 *.iml
 *.gem
 
+node_modules
+
 # ignore compiled templates
 app/assets/javascripts/compiled_templates
