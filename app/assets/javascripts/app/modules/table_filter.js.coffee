@@ -16,9 +16,9 @@ taleFilter.controller "tableFilter", TableFilterCtrl
 taleFilter.directive "tableFilter", ->
   restrict: "E"
   transclude: true
+  replace: true
 
   templateUrl: "/ng/templates/table_filter.html"
-  replace: true
 
   scope:
     placeholder: "@placeholder"
