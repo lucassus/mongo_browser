@@ -4,7 +4,7 @@
 
 <refresh-button ng-click="refresh()"></refresh-button>
 
-<table class="table table-striped table-hover documents">
+<table ng-hide="isLoading()" class="table table-striped table-hover documents">
   <tbody>
   <tr class="document">
     <td class="data">
