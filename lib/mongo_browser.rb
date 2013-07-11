@@ -29,4 +29,3 @@ require "mongo_browser/models/document"
 
 require "mongo_browser/application"
 require "mongo_browser/api"
-require "mongo_browser/api/entities"
