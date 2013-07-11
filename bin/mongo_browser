@@ -4,11 +4,13 @@ require "vegas"
 require "mongo_browser"
 
 builder = Rack::Builder.new do
-  map '/' do
+  # mount sinatra application
+  map "/" do
     run MongoBrowser::Application.new
   end
 
-  map '/api' do
+  # mount the api
+  map "/api" do
     run MongoBrowser::API.new
   end
 end
