@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe MongoBrowser::Api::Entities::Database do
-  let(:database) { mock }
+  let(:database) { double }
   subject(:database_entity) { described_class.new(database) }
 
   it { should expose :name }
@@ -10,7 +10,7 @@ describe MongoBrowser::Api::Entities::Database do
 end
 
 describe MongoBrowser::Api::Entities::Collection do
-  let(:collection) { mock }
+  let(:collection) { double }
   subject(:database_entity) { described_class.new(collection) }
 
   it { should expose :dbName }
@@ -19,7 +19,7 @@ describe MongoBrowser::Api::Entities::Collection do
 end
 
 describe MongoBrowser::Api::Entities::Document do
-  let(:document) { mock }
+  let(:document) { double }
   subject(:database_entity) { described_class.new(document) }
 
   it { should expose :id }
@@ -27,7 +27,7 @@ describe MongoBrowser::Api::Entities::Document do
 end
 
 describe MongoBrowser::Api::Entities::PagedDocuments do
-  let(:pager) { mock }
+  let(:pager) { double }
   subject(:database_entity) { described_class.new(pager) }
 
   it { should expose :page }
