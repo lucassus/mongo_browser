@@ -1,4 +1,4 @@
-module MongoBrowser::Api
+module MongoBrowser::API
   class Databases < Grape::API
 
     desc "Get a list of all databases for the current server"
@@ -24,7 +24,7 @@ module MongoBrowser::Api
       end
 
       resources :collections do
-        mount MongoBrowser::Api::Collections
+        mount MongoBrowser::API::Collections
       end
     end
 

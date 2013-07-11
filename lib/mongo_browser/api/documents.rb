@@ -1,4 +1,4 @@
-module MongoBrowser::Api
+module MongoBrowser::API
   class Documents < Grape::API
 
     desc "Get a list of paginated documents"

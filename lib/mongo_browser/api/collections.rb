@@ -1,4 +1,4 @@
-module MongoBrowser::Api
+module MongoBrowser::API
   class Collections < Grape::API
 
     desc "Get a list of all collections for the given database"
@@ -26,7 +26,7 @@ module MongoBrowser::Api
       end
 
       resources :documents do
-        mount MongoBrowser::Api::Documents
+        mount MongoBrowser::API::Documents
       end
     end
 

@@ -7,5 +7,5 @@ require "mongo_browser/api/collections"
 require "mongo_browser/api/databases"
 require "mongo_browser/api/mongo"
 
-module MongoBrowser::Api
+module MongoBrowser::API
 end

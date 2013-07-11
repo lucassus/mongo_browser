@@ -1,4 +1,4 @@
-module MongoBrowser::Api
+module MongoBrowser::API
   class Mongo < Grape::API
     format :json
     rescue_from :all, backtrace: true
@@ -21,7 +21,7 @@ module MongoBrowser::Api
     end
 
     resource :databases do
-      mount MongoBrowser::Api::Databases
+      mount MongoBrowser::API::Databases
     end
 
     desc "Returns info about the server"

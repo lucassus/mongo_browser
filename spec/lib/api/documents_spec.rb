@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MongoBrowser::Api::Documents do
+describe MongoBrowser::API::Documents do
   include ApiExampleGroup
 
   def app

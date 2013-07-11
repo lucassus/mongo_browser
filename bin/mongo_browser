@@ -9,7 +9,7 @@ builder = Rack::Builder.new do
   end
 
   map '/api' do
-    run MongoBrowser::Api.new
+    run MongoBrowser::API.new
   end
 end
 
