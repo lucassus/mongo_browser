@@ -2,7 +2,6 @@
   <h2>Document {{document.id}}</h2>
 </header>
 
-<refresh-button ng-click="refresh()"></refresh-button>
 
 <table ng-hide="isLoading()" class="table table-striped table-hover documents">
   <tbody>
@@ -10,6 +9,7 @@
     <td class="data">
       <span class="id">{{document.id}}</span>
       <span>{{document | documentPrettyTime}}</span>
+      <refresh-button ng-click="refresh()" class="pull-right"></refresh-button>
       <div ng-bind-html="document.data | jsonDocument"></div>
     </td>
   </tr>
