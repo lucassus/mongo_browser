@@ -4,7 +4,7 @@ require "thor"
 require "thin"
 
 module MongoBrowser
-  RACK_CONFIG = File.expand_path("config.ru")
+  RACK_CONFIG = File.join(File.dirname(__FILE__), "../..", "config.ru")
 
   class CLI < Thor
     desc :start, "Starts the application"
