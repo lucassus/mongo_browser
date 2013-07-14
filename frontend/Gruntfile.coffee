@@ -1,4 +1,6 @@
 livereloadSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
+proxySnippet = require("grunt-connect-proxy/lib/utils").proxyRequest
+modRewrite = require("connect-modrewrite")
 
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
@@ -230,19 +232,35 @@ module.exports = (grunt) ->
       options:
         hostname: "localhost"
 
-      e2e:
-        options:
-          port: 9001
-          middleware: (connect) ->
-            [mountFolder(connect, appConfig.dev)]
+      proxies: [
+        context: "/api"
+        host: "localhost"
+        port: 4000
+        https: false
+        changeOrigin: false
+      ]
 
       livereload:
         options:
           port: 9000
           middleware: (connect) ->
             [
+              modRewrite [
+                "!^/api|\\.html|\\.js|\\.css|\\.swf|\\.jp(e?)g|\\.png|\\.gif$ /"
+              ]
+
               livereloadSnippet
               mountFolder(connect, appConfig.dev)
+              proxySnippet
+            ]
+
+      e2e:
+        options:
+          port: 9001
+          middleware: (connect) ->
+            [
+              mountFolder(connect, appConfig.dev)
+              proxySnippet
             ]
 
   grunt.renameTask "regarde", "watch"
@@ -263,6 +281,7 @@ module.exports = (grunt) ->
   grunt.registerTask "server", [
     "build:dev"
 
+    "configureProxies"
     "livereload-start"
     "connect:livereload"
     "watch"
@@ -275,12 +294,14 @@ module.exports = (grunt) ->
 
   grunt.registerTask "test:e2e", [
     "build:dev"
+    "configureProxies"
     "connect:e2e"
     "karma:e2e"
   ]
 
   grunt.registerTask "test:casperjs", [
     "build:dev"
+    "configureProxies"
     "connect:e2e"
     "casperjs"
   ]
