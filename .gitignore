@@ -8,11 +8,14 @@ reports
 
 Gemfile.lock
 
+# Project files
 .idea
 *.iml
 *.gem
 
-node_modules
-
-# ignore compiled templates
-app/assets/javascripts/compiled_templates
+# front-end application
+frontend/*.log
+frontend/node_modules
+frontend/bower_components
+frontend/dev
+frontend/public

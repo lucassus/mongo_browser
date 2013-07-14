@@ -1,5 +1,9 @@
 # mongo_browser changelog
 
+## 0.2.4
+
+* separate front-end app from the back-end application #28
+
 ## 0.2.3 (07/14/2013)
 
 * feature: refreshing the document page #99
