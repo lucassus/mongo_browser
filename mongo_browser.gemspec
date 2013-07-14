@@ -20,12 +20,12 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency("coveralls", "0.6.7")
   gem.add_development_dependency("foreman", "0.63.0")
-  gem.add_development_dependency("thin", "1.5.1")
-  gem.add_development_dependency("rspec", "2.14.0")
+  gem.add_development_dependency("rspec", "2.14.1")
   gem.add_development_dependency("rack-test", "0.6.2")
   gem.add_development_dependency("simplecov", "0.7.1")
   gem.add_development_dependency("debugger", "1.6.1")
 
+  gem.add_dependency("thin", "1.5.1")
   gem.add_dependency("mongo", "1.9.1")
   gem.add_dependency("bson_ext", "1.9.1")
 
