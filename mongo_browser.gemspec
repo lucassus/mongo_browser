@@ -35,6 +35,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency("grape-entity", "0.3.0")
 
   gem.add_dependency("sprockets", "2.10.0")
+  gem.add_dependency("execjs", "1.4.0")
+  gem.add_dependency("therubyracer", "0.11.4")
   gem.add_dependency("coffee-script", "2.2.0")
   gem.add_dependency("sass", "3.2.9")
 end
