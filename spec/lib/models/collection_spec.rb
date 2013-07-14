@@ -1,14 +1,14 @@
 require "spec_helper"
 
 describe MongoBrowser::Models::Collection do
-  let(:mongo_db_name) { "first_database" }
-  let(:mongo_collection_name) { "first_collection" }
+  let(:db_name) { "first_database" }
+  let(:collection_name) { "first_collection" }
 
   let(:server) { MongoBrowser::Models::Server.current }
 
   let(:mongo_collection) do
-    server.connection[mongo_db_name]
-        .collection(mongo_collection_name)
+    server.connection[db_name]
+        .collection(collection_name)
   end
 
   let(:collection) { described_class.new(mongo_collection) }
@@ -18,8 +18,8 @@ describe MongoBrowser::Models::Collection do
     collection.mongo_collection.should == mongo_collection
   end
 
-  its(:db_name) { should == mongo_db_name }
-  its(:name) { should == mongo_collection_name }
+  its(:db_name) { should == db_name }
+  its(:name) { should == collection_name }
   its(:size) { should == 2 }
 
   describe "#stats" do
@@ -32,7 +32,7 @@ describe MongoBrowser::Models::Collection do
   end
 
   describe "#drop!" do
-    let(:database) { server.database(mongo_db_name) }
+    let(:database) { server.database(db_name) }
 
     it "drops the collection" do
       collection.drop!
@@ -76,7 +76,7 @@ describe MongoBrowser::Models::Collection do
   end
 
   describe "#remove!" do
-    let(:document) { MongoBrowser::Models::Document.new(mongo_collection.find.first) }
+    let(:document) { MongoBrowser::Models::Document.new(db_name, collection_name, mongo_collection.find.first) }
 
     it "removes a document from the collection" do
       expect(collection.remove!(document)).to be_true

@@ -88,6 +88,8 @@ describe MongoBrowser::API::Documents do
         it "returns the document" do
           data = JSON.parse(response.body)
           expect(data["id"]).to eq(id.to_s)
+          expect(data["dbName"]).to eq(db_name)
+          expect(data["collectionName"]).to eq(collection_name)
         end
       end
 

@@ -1,9 +1,13 @@
 module MongoBrowser
   module Models
     class Document
+      attr_reader :db_name, :collection_name
       attr_reader :mongo_document
 
-      def initialize(mongo_document)
+      def initialize(db_name, collection_name, mongo_document)
+        @db_name = db_name
+        @collection_name = collection_name
+
         @mongo_document = mongo_document
       end
 

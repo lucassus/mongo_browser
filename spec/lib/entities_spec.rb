@@ -23,6 +23,8 @@ describe MongoBrowser::Entities::Document do
   subject(:database_entity) { described_class.new(document) }
 
   it { should expose :id }
+  it { should expose :dbName }
+  it { should expose :collectionName }
   it { should expose :data }
 end
 
