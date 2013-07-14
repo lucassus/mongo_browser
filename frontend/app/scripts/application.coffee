@@ -9,7 +9,9 @@ mb = angular.module "mb", [
 mb.config [
   "$provide", "$httpProvider", "$routeProvider", "$locationProvider",
   ($provide, $httpProvider, $routeProvider, $locationProvider) ->
-    $provide.value("alertTimeout", 3000)
+
+    # TODO temporary disable alerts disposing
+    $provide.value("alertTimeout", null)
 
     $httpProvider.responseInterceptors.push("httpErrorsInterceptor")
 
