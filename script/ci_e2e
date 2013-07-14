@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Start test backend instance
-bundle exec thin start -R config.ru -e test -p 3001 -d
+bundle exec thin start -R config.ru -e test -p 4000 -d
 
 # Wait for thin
 sleep 1
 
-karma start spec/javascripts/config/karma-e2e.conf.js --single-run
+(cd frontend ; grunt test:e2e)
 RESULT=$?
 
 # Kill test backend instance

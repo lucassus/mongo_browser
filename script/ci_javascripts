@@ -1,4 +1,3 @@
 #!/bin/bash
 
-grunt html2js
-karma start spec/javascripts/config/karma.conf.js --single-run
+(cd frontend ; grunt test)

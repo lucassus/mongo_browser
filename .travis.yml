@@ -4,8 +4,18 @@ rvm:
   - 1.9.3
   - 2.0.0
 
+node_js:
+  - 0.10.12
+
 services:
   - mongodb
 
+before_install:
+  - "npm install -g grunt-cli bower"
+  - "(cd ./frontend && npm install)"
+  - "(cd ./frontend && bower install)"
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
 script:
-  - "bundle exec rspec spec"
+  - "./script/ci_all"

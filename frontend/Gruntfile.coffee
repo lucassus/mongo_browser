@@ -265,9 +265,9 @@ module.exports = (grunt) ->
           port: 9000
           middleware: (connect) ->
             [
+              modRewriteSnippet
               livereloadSnippet
               mountFolder(connect, appConfig.dev)
-              modRewriteSnippet
               proxySnippet
             ]
 
@@ -276,8 +276,8 @@ module.exports = (grunt) ->
           port: 9001
           middleware: (connect) ->
             [
-              mountFolder(connect, appConfig.dev)
               modRewriteSnippet
+              mountFolder(connect, appConfig.dev)
               proxySnippet
             ]
 
