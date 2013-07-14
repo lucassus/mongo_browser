@@ -17,7 +17,7 @@ describe "documents show controller", ->
 
     $httpBackend = $injector.get("$httpBackend")
     $httpBackend.whenGET("/api/databases/test_database/collections/test_collection/documents/document_id")
-      .respond({})
+      .respond(dbName: "test_database", collectionName: "test_collection", id: "document_id")
 
     $scope = $rootScope.$new()
     controller = $controller "documents.show",
@@ -52,17 +52,26 @@ describe "documents show controller", ->
         alerts = $injector.get("alerts")
 
       it "displays a flash message", ->
+        # Given
         spyOn(alerts, "info")
+
+        # When
         $scope.refresh()
+        $httpBackend.flush()
+
+        # Then
         expect(alerts.info).toHaveBeenCalledWith("Document was refreshed")
 
-      # TODO think how to dry it
       it "fetches a document from the database", ->
+        # Given
         $httpBackend.whenGET("/api/databases/test_database/collections/test_collection/documents/document_id")
           .respond({})
 
+        # When
         $scope.refresh()
+        $httpBackend.flush()
 
+        # Then
         $httpBackend.verifyNoOutstandingExpectation()
         $httpBackend.verifyNoOutstandingRequest()
 

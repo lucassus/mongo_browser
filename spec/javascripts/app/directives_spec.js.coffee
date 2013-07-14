@@ -1,35 +1,35 @@
 describe "directives", ->
   beforeEach module("mb.directives")
 
-  $scope = null
+  $rootScope = null
   element = null
 
   describe "osEsc", ->
-    beforeEach inject ($compile, $rootScope) ->
-      $scope = $rootScope
-      $scope.bar = ->
+    beforeEach inject ($compile, _$rootScope_) ->
+      $rootScope = _$rootScope_
+      $rootScope.bar = ->
 
       element = angular.element """
       <input type="text" on-esc="bar()" />
       """
-      $compile(element)($scope)
-      $scope.$digest()
+      $compile(element)($rootScope)
+      $rootScope.$digest()
 
     it "calls the given function when the ESC was pressed", ->
-      spyOn($scope, 'bar')
+      spyOn($rootScope, 'bar')
 
       event = jQuery.Event("keyup", keyCode: 27)
       element.trigger(event)
 
-      expect($scope.bar).toHaveBeenCalled()
+      expect($rootScope.bar).toHaveBeenCalled()
 
     it "does nothing on other keys", ->
-      spyOn($scope, 'bar')
+      spyOn($rootScope, 'bar')
 
       event = jQuery.Event("keyup", keyCode: 13)
       element.trigger(event)
 
-      expect($scope.bar).not.toHaveBeenCalled()
+      expect($rootScope.bar).not.toHaveBeenCalled()
 
   describe "showButton", ->
     renderedButton = null
@@ -86,16 +86,16 @@ describe "directives", ->
 
   describe "deleteButton", ->
     beforeEach inject ($compile, $rootScope) ->
-      $scope = $rootScope
-      $scope.bar = ->
+      $rootScope = $rootScope
+      $rootScope.bar = ->
 
       element = angular.element """
       <div>
         <delete-button ng-click="bar()" />
       </div>
       """
-      $compile(element)($scope)
-      $scope.$digest()
+      $compile(element)($rootScope)
+      $rootScope.$digest()
 
     it "renders delete button", ->
       button = element.find("a")
@@ -106,25 +106,24 @@ describe "directives", ->
       expect(button.text()).toContain("Delete")
 
     it "ng-click", ->
-      spyOn($scope, 'bar')
+      spyOn($rootScope, 'bar')
 
       button = element.find("button")
       button.click()
 
-      expect($scope.bar).not.toHaveBeenCalled()
+      expect($rootScope.bar).not.toHaveBeenCalled()
 
   describe "refreshButton", ->
-    beforeEach inject ($compile, $rootScope) ->
-      $scope = $rootScope
-      $scope.refresh = ->
+    beforeEach inject ($compile) ->
+      $rootScope.refresh = ->
 
       element = angular.element """
       <div>
         <refresh-button ng-click="refresh()" />
       </div>
       """
-      $compile(element)($scope)
-      $scope.$digest()
+      $compile(element)($rootScope)
+      $rootScope.$digest()
 
     it "renders delete button", ->
       button = element.find("a")
@@ -133,10 +132,11 @@ describe "directives", ->
       expect(button.hasClass("btn")).toBeTruthy()
       expect(button.text()).toContain("Refresh")
 
-    it "ng-click", ->
-      spyOn($scope, "refresh")
+    describe "ng-click on the button", ->
+      it "calls #refresh() method", ->
+        spyOn($rootScope, "refresh")
 
-      button = element.find("button")
-      button.click()
+        button = element.find("a")
+        button.click()
 
-      expect($scope.refresh).not.toHaveBeenCalled()
+        expect($rootScope.refresh).toHaveBeenCalled()
