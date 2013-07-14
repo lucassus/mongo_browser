@@ -1,6 +1,6 @@
 # mongo_browser changelog
 
-## 0.2.4 (07/14/2013)
+## 0.2.5 (07/15/2013)
 
 * feature: refreshing the document page #99
 * feature: better CLI runner #103
