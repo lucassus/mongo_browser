@@ -5,6 +5,8 @@ class MongoBrowser::Application
 
       app.register Sinatra::Reloader
 
+      app.set :spec_root, File.join(app.settings.root, "../spec")
+
       # Load database fixtures
       app.get "/e2e/load_fixtures" do
         require File.join(app.settings.spec_root, "support/fixtures")

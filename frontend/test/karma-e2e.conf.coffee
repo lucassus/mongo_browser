@@ -8,7 +8,8 @@ module.exports = (config) ->
 
     # list of files / patterns to load in the browser
     files: [
-      "test/e2e/**/*_spec.js"
+      "test/e2e/helpers/**/*.js"
+      "test/e2e/**/*_scenario.js"
     ]
 
     # web server port

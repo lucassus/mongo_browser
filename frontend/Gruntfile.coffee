@@ -1,6 +1,8 @@
 livereloadSnippet = require("grunt-contrib-livereload/lib/utils").livereloadSnippet
 proxySnippet = require("grunt-connect-proxy/lib/utils").proxyRequest
-modRewrite = require("connect-modrewrite")
+modRewriteSnippet = require("connect-modrewrite")([
+  "!^/api|^/e2e|\\.html|\\.js|\\.css|\\.swf|\\.jp(e?)g|\\.png|\\.gif$ /"
+])
 
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
@@ -236,8 +238,10 @@ module.exports = (grunt) ->
         context: "/api"
         host: "localhost"
         port: 4000
-        https: false
-        changeOrigin: false
+      ,
+        context: "/e2e"
+        host: "localhost"
+        port: 4000
       ]
 
       livereload:
@@ -245,12 +249,9 @@ module.exports = (grunt) ->
           port: 9000
           middleware: (connect) ->
             [
-              modRewrite [
-                "!^/api|\\.html|\\.js|\\.css|\\.swf|\\.jp(e?)g|\\.png|\\.gif$ /"
-              ]
-
               livereloadSnippet
               mountFolder(connect, appConfig.dev)
+              modRewriteSnippet
               proxySnippet
             ]
 
@@ -260,6 +261,7 @@ module.exports = (grunt) ->
           middleware: (connect) ->
             [
               mountFolder(connect, appConfig.dev)
+              modRewriteSnippet
               proxySnippet
             ]
 
