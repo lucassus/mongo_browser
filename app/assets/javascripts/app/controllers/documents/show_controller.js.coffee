@@ -1,6 +1,6 @@
 class DocumentsShowCtrl
-  @$inject = ["$scope", "$routeParams", "$location", "Document"]
-  constructor: ($scope, $routeParams, @$location, Document) ->
+  @$inject = ["$scope", "$routeParams", "$location", "Document", "alerts"]
+  constructor: ($scope, $routeParams, @$location, Document, @alerts) ->
     @loading = false
 
     { @dbName, @collectionName, @id } = $routeParams
@@ -13,16 +13,25 @@ class DocumentsShowCtrl
 
     # Scope methods
     $scope.isLoading = => @loading
+    $scope.refresh = => @refreshDocument()
 
-    @fetchDocument()
+    @fetchDocument =>
+      @loading = false
 
-  fetchDocument: ->
+  fetchDocument: (onSuccess = ->) ->
     @loading = true
-    onSuccess = => @loading = false
     @document.$get(onSuccess, @handleNotFoundDocument)
 
+  refreshDocument: ->
+    @fetchDocument =>
+      @loading = false
+      @alerts.info("Document was refreshed")
+
+  # Redirects to the collection page
+  # alert.error will be set by the `httpErrorsInterceptor`
   handleNotFoundDocument: (response) =>
     return unless response.status is 404
+    # TODO use filter here
     @$location.path("/databases/#{@dbName}/collections/#{@collectionName}/documents")
 
 angular.module("mb")

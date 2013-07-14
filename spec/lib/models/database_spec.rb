@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe MongoBrowser::Models::Database do
   let(:connection) { MongoBrowser::Models::Server.current.connection }
-  let(:mongo_db_name) { "first_database" }
-  let(:mongo_db) { connection[mongo_db_name] }
+  let(:db_name) { "first_database" }
+  let(:mongo_db) { connection[db_name] }
 
   let(:database) { described_class.new(mongo_db) }
   subject { database }
@@ -12,8 +12,8 @@ describe MongoBrowser::Models::Database do
     database.mongo_db.should == mongo_db
   end
 
-  its(:id) { should == mongo_db_name }
-  its(:name) { should == mongo_db_name }
+  its(:id) { should == db_name }
+  its(:name) { should == db_name }
 
   its(:size) { should be_an_instance_of(Fixnum) }
 

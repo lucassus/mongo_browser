@@ -35,7 +35,7 @@ module MongoBrowser
         documents = mongo_collection.find
           .skip(pager.offset)
           .limit(pager.per_page)
-          .map { |doc| Document.new(doc) }
+          .map { |document| Document.new(db_name, name, document) }
 
         OpenStruct.new pager.to_hash.merge(documents: documents)
       end
@@ -50,7 +50,7 @@ module MongoBrowser
       def find(id)
         condition = { _id: BSON::ObjectId(id.to_s) }
         mongo_document = mongo_collection.find(condition).first
-        Document.new(mongo_document) if mongo_document
+        Document.new(db_name, name, mongo_document) if mongo_document
       end
 
       # Removes the given document from the collection.

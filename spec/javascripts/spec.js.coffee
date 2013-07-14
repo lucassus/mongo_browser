@@ -1,2 +1,2 @@
-#= require_tree helpers
-#= require_tree app
+#= require_tree ./helpers
+#= require_tree ./app
