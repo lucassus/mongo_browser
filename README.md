@@ -16,7 +16,7 @@ Install the gem:
 
 Run the application
 
-    mongo_browser
+    mongo_browser start
 
 Application will be available by default at http://localhost:5678
 In order to run it on custom port number pass the `--port` option with selected port.
