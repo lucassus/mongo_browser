@@ -90,7 +90,7 @@ module.exports = (grunt) ->
     less:
       dist:
         files:
-          "<%= appConfig.dev %>/styles/style.css": "<%= appConfig.app %>/styles/style.less"
+          "<%= appConfig.dev %>/styles/application.css": "<%= appConfig.app %>/styles/application.less"
 
     concat:
       dist:
@@ -141,7 +141,7 @@ module.exports = (grunt) ->
             "**/*.html"
             "!templates/**/*.html"
             "components/**/*"
-            "images/**/*.{gif,webp}"
+            "images/**/*.{gif,png,webp}"
             "styles/fonts/*"
           ]
         ]

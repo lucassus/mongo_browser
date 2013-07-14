@@ -2,7 +2,14 @@
 <html ng-app="mb">
   <head>
     <title>Mongo Browser</title>
-    <link href="/assets/application.css" rel="stylesheet" media="screen">
+
+    <!-- build:css(dev) styles/vendor.min.css -->
+    <link rel="stylesheet" href="components/bootstrap/css/bootstrap.css">
+    <!-- endbuild -->
+
+    <!-- build:css(dev) styles/application.min.css -->
+    <link rel="stylesheet" href="styles/application.css">
+    <!-- endbuild -->
   </head>
   <body ng-controller="main" ng-cloak>
     <div class="navbar navbar navbar-fixed-top">
@@ -37,9 +44,40 @@
       <section ng-view></section>
     </section>
 
-    <!--<link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Rokkitt:400,700|Source+Code+Pro">-->
-    <script src="/assets/vendor.js"></script>
-    <script src="/assets/application.js"></script>
+    <!-- build:js(dev) scripts/vendor.min.js -->
+    <script type="text/javascript" src="components/jquery/jquery.js"></script>
+    <script type="text/javascript" src="components/underscore/underscore.js"></script>
+    <script type="text/javascript" src="components/bootbox/bootbox.js"></script>
+    <script type="text/javascript" src="components/angular/angular.js"></script>
+    <script type="text/javascript" src="components/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="components/angular-sanitize/angular-sanitize.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js(dev) scripts/scripts.min.js -->
+    <script type="text/javascript" src="scripts/templates.js"></script>
+    <script type="text/javascript" src="scripts/directives.js"></script>
+    <script type="text/javascript" src="scripts/filters.js"></script>
+    <script type="text/javascript" src="scripts/resources.js"></script>
+    <script type="text/javascript" src="scripts/services.js"></script>
+
+    <script type="text/javascript" src="scripts/modules/alerts.js"></script>
+    <script type="text/javascript" src="scripts/modules/dialogs.js"></script>
+    <script type="text/javascript" src="scripts/modules/pager.js"></script>
+    <script type="text/javascript" src="scripts/modules/spinner.js"></script>
+    <script type="text/javascript" src="scripts/modules/table_filter.js"></script>
+
+    <script type="text/javascript" src="scripts/application.js"></script>
+
+    <script type="text/javascript" src="scripts/controllers/breadcrumbs_controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/main_controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/collections/index_controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/collections/stats_controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/databases/index_controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/databases/stats_controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/documents/index_controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/documents/show_controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/servers/show_controller.js"></script>
+    <!-- endbuild -->
 
     <!-- TODO use different trick -->
     <!--<% if settings.test? %>-->

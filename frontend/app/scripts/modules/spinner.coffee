@@ -22,7 +22,7 @@ spinner.directive "spinner", ->
   template: """
             <li class="spinner">
               <a href="#">
-                <img ng-show="showSpinner()" src="/assets/ajax-loader.gif" />
+                <img ng-show="showSpinner()" src="/images/ajax-loader.gif" />
               </a>
             </li>
             """
