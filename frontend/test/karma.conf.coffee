@@ -9,7 +9,7 @@ module.exports = (config) ->
     # list of files / patterns to load in the browser
     files: [
       "components/jquery/jquery.js"
-      "components/underscore/underscore.js"
+      "components/underscore/js/underscore.js"
       "components/angular/angular.js"
       "components/angular-resource/angular-resource.js"
       "components/angular-sanitize/angular-sanitize.js"

@@ -21,6 +21,12 @@
       "css": "docs/assets/css/bootstrap.css",
       "img": "img/*.png"
     },
+    "underscore": {
+      "js": "underscore.js"
+    },
+    "bootbox": {
+      "js": "bootbox.js"
+    },
     "jasmine": {
       "js": [
           "lib/jasmine-core/jasmine.js",
