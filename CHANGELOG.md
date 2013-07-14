@@ -1,8 +1,9 @@
 # mongo_browser changelog
 
-## 0.2.2 (07/14/2013)
+## 0.2.3 (07/14/2013)
 
 * feature: refreshing the document page #99
+* feature: better CLI runner #103
 * add `execjs` and `therubyracer` into `Gemfile`
 
 ## 0.2.1 (01/15/2013)

@@ -1,30 +1,5 @@
 #!/usr/bin/env ruby
 
-require "vegas"
-require "mongo_browser"
+require "mongo_browser/cli"
 
-builder = Rack::Builder.new do
-  # mount sinatra application
-  map "/" do
-    run MongoBrowser::Application.new
-  end
-
-  # mount the api
-  map "/api" do
-    run MongoBrowser::API.new
-  end
-end
-
-ENV["RACK_ENV"] ||= "production"
-
-Vegas::Runner.new(builder, "mongo_browser") do |runner, opts, app|
-  opts.on("--mongodb-port PORT", "Specify mongodb port") do |port|
-    runner.logger.info "Using mongodb port #{port}"
-    MongoBrowser.mongodb_port = port.to_i
-  end
-
-  opts.on("--mongodb-host HOST", "Specify mongodb host") do |host|
-    runner.logger.info "Using mongodb host #{host}"
-    MongoBrowser.mongodb_host = host.to_i
-  end
-end
+MongoBrowser::CLI.start(ARGV)
