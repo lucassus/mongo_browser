@@ -15,6 +15,8 @@ mb.config [
 
     $httpProvider.responseInterceptors.push("httpErrorsInterceptor")
 
+    $locationProvider.html5Mode(true)
+
     $routeProvider
       # Main page, list of all available databases
       .when "/",
@@ -52,6 +54,4 @@ mb.config [
           controller: "servers.show"
 
       .otherwise(redirectTo: "/")
-
-    $locationProvider.html5Mode(true)
 ]

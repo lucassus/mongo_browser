@@ -1,7 +1,7 @@
 module = angular.module("mb.filters", [])
 
 module.filter "humanSize", -> (bytes) ->
-  sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB']
+  sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB"]
   n = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10)
   scaledSize = (bytes / Math.pow(1024, n)).toFixed(0)
 
@@ -40,21 +40,26 @@ module.filter "collectionsPath", ->
 
     "/databases/#{dbName}/collections"
 
-module.filter "documentsPath", (collectionsPathFilter) ->
-  (collection = {}) ->
-    dbName = collection.dbName || ":dbName"
-    collectionName = collection.name || ":collectionName"
+module.filter "documentsPath", [
+  "collectionsPathFilter", (collectionsPathFilter) ->
+    (collection = {}) ->
+      dbName = collection.dbName || ":dbName"
+      collectionName = collection.name || ":collectionName"
 
-    "#{collectionsPathFilter(name: dbName)}/#{collectionName}/documents"
+      "#{collectionsPathFilter(name: dbName)}/#{collectionName}/documents"
+]
 
-module.filter "documentPath", (documentsPathFilter) ->
-  (document = {}) ->
-    dbName = document.dbName || ":dbName"
-    collectionName = document.collectionName || ":collectionName"
-    id = document.id || ":id"
+module.filter "documentPath", [
+  "documentsPathFilter", (documentsPathFilter) ->
+    (document = {}) ->
+      dbName = document.dbName || ":dbName"
+      collectionName = document.collectionName || ":collectionName"
+      id = document.id || ":id"
 
-    "#{documentsPathFilter(dbName: dbName, name: collectionName)}/#{id}"
+      "#{documentsPathFilter(dbName: dbName, name: collectionName)}/#{id}"
+]
 
+# Extracts and formats a time from mongodb document id
 module.filter "documentPrettyTime", ->
   (document) ->
     timestamp = document.id.toString().substring(0, 8)

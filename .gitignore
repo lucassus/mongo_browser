@@ -5,9 +5,11 @@ html
 log/*.log
 tmp
 reports
+public
 
 Gemfile.lock
 
+# Project files
 .idea
 *.iml
 *.gem

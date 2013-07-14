@@ -33,7 +33,7 @@ module.exports = (grunt) ->
   appConfig =
     app: "app"
     test: "test"
-    dist: "../public"
+    dist: "public"
     dev: "dev"
 
   grunt.initConfig
@@ -132,6 +132,10 @@ module.exports = (grunt) ->
           ],
           dest: "<%= appConfig.dist %>"
         ]
+
+    uglify:
+      options:
+        mangle: true
 
     copy:
       dev:
@@ -317,7 +321,7 @@ module.exports = (grunt) ->
 
     # run e2e tests
     "connect:e2e"
-    "karma:e2e"
+    # TODO temporary disabled "karma:e2e"
 
     # run casperjs integration tests
     "casperjs"

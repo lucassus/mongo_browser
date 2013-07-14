@@ -1,5 +1,6 @@
 module = angular.module("mb.services", [])
 
+# Intercepts all HTTP errors and dislays a flash message
 module.factory "httpErrorsInterceptor", [
   "$injector", "$q", "alerts", ($injector, $q, alerts) ->
     (promise) ->

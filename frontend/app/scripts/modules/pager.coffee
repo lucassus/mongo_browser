@@ -47,6 +47,7 @@ pager.factory "pager", ->
 
 # TODO block button when the resource is loading
 class PagerCtrl
+  @$inject = ["$scope", "pager"]
   constructor: (@$scope, @pager) ->
     @$scope.$watch "page", => @paginate()
     @$scope.$watch "totalPages", => @paginate()
