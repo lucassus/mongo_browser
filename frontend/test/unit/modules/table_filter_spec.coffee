@@ -1,4 +1,5 @@
 describe "mb.tableFilter", ->
+  beforeEach module("mb.templates")
   beforeEach module("mb.tableFilter")
 
   describe "controller", ->
@@ -28,8 +29,6 @@ describe "mb.tableFilter", ->
   describe "directive", ->
     $scope = null
     element = null
-
-    beforeEach module("public/ng/templates/table_filter.html")
 
     beforeEach inject ($rootScope, $compile) ->
       $scope = $rootScope

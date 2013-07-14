@@ -76,7 +76,7 @@ class PagerCtrl
 pager.controller "pager", PagerCtrl
 
 pager.directive "pager", ->
-  templateUrl: "/ng/templates/pager.html"
+  templateUrl: "templates/pager.html"
   restrict: "E"
   replace: true
 

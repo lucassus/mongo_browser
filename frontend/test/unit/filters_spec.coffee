@@ -1,4 +1,5 @@
 describe "filters", ->
+  beforeEach module("mb.templates")
   beforeEach module("mb.filters")
 
   describe "humanSize", ->

@@ -52,7 +52,7 @@ alerts.directive "alerts", ->
   restrict: "E"
   transclude: true
 
-  templateUrl: "/ng/templates/alerts.html"
+  templateUrl: "templates/alerts.html"
   replace: true
 
   controller: "alerts"

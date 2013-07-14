@@ -1,4 +1,5 @@
 describe "mb.alerts", ->
+  beforeEach module("mb.templates")
   beforeEach module("mb.alerts")
   beforeEach module("mocks")
 
@@ -40,8 +41,6 @@ describe "mb.alerts", ->
   describe "directive", ->
     $scope = null
     element = null
-
-    beforeEach module("public/ng/templates/alerts.html")
 
     beforeEach inject ($rootScope, $compile) ->
       $scope = $rootScope
