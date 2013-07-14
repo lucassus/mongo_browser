@@ -18,6 +18,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency("rdoc", "4.0.1")
   gem.add_development_dependency("rake", "10.1.0")
 
+  gem.add_development_dependency("coveralls", "0.6.7")
   gem.add_development_dependency("foreman", "0.63.0")
   gem.add_development_dependency("thin", "1.5.1")
   gem.add_development_dependency("rspec", "2.14.0")
