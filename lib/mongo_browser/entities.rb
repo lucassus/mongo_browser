@@ -18,6 +18,15 @@ module MongoBrowser::Entities
     expose(:id, documentation: { type: String, desc: "Document id." }) do |document|
       document.id.to_s
     end
+
+    expose(:dbName, documentation: { type: String, desc: "Database name." }) do |document|
+      document.db_name
+    end
+
+    expose(:collectionName, documentation: { type: String, desc: "Collection name." }) do |document|
+      document.collection_name
+    end
+
     expose :data, documentation: { type: Hash, desc: "Document" }
   end
 
@@ -27,6 +36,7 @@ module MongoBrowser::Entities
     expose(:totalPages, documentation: { type: Integer, desc: "Total number of pages" }) do |paged|
       paged.total_pages
     end
+
     expose :documents, using: Document
   end
 
