@@ -6,8 +6,10 @@ require "debugger"
 require "rspec"
 require "rack/test"
 
-require "coveralls"
-Coveralls.wear!
+if ENV["TRAVIS"]
+  require "coveralls"
+  Coveralls.wear!
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # from spec/support/ and its subdirectories.
