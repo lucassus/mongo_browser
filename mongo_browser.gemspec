@@ -29,6 +29,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency("mongo", "1.9.1")
   gem.add_dependency("bson_ext", "1.9.1")
 
+  gem.add_dependency("thor", "0.18.1")
   gem.add_dependency("sinatra", "1.4.3")
   gem.add_dependency("sinatra-contrib", "1.4.0")
   gem.add_dependency("grape", "0.5.0")
