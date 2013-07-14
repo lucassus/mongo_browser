@@ -62,4 +62,4 @@ describe "mb.spinner", ->
       img = element.find("img")
 
       expect(img.length).toBe(1)
-      expect(img.attr("src")).toEqual("/images/ajax-loader.gif")
+      expect(img.attr("src")).toEqual("/img/ajax-loader.gif")

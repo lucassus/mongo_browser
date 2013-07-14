@@ -141,7 +141,6 @@ module.exports = (grunt) ->
       dev:
         files: [
           expand: true
-          dot: true
           cwd: "<%= appConfig.app %>"
           dest: "<%= appConfig.dev %>"
           src: [
@@ -149,8 +148,21 @@ module.exports = (grunt) ->
             "**/*.html"
             "!templates/**/*.html"
             "components/**/*"
-            "images/**/*.{gif,png,webp}"
+            "img/**/*.{gif,png,webp}"
             "styles/fonts/*"
+          ]
+        ]
+
+      # Copy images and bootstrap icons
+      dist:
+        files: [
+          expand: true
+          flatten: true
+          cwd: "<%= appConfig.dev %>"
+          dest: "<%= appConfig.dist %>/img"
+          src: [
+            "img/**/*.{gif,png,webp}"
+            "../bower_components/bootstrap/img/*.png"
           ]
         ]
 
@@ -335,6 +347,7 @@ module.exports = (grunt) ->
     "usemin"
     "uglify"
     "cssmin"
+    "copy:dist"
   ]
 
   grunt.registerTask "test:watch", [
